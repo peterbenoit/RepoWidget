@@ -1,0 +1,41 @@
+name: Update Portfolio Site
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: [published]
+
+env:
+  PORTFOLIO_REPO: "peterbenoit.github.io"
+  PORTFOLIO_REPO_URL: "https://peterbenoit:${{ secrets.PAT_FOR_PORTFOLIO_REPO }}@github.com/peterbenoit/${{ env.PORTFOLIO_REPO }}"
+  GIT_USER_NAME: "peterbenoit"
+  GIT_USER_EMAIL: "peterbenoit@gmail.com"
+  SOURCE_FOLDER: "./dist"            				# Specify the folder to copy
+  DESTINATION_FOLDER: "./portfolio/dist"  			# Specify where to copy it
+  COMMIT_MESSAGE: "Update dist folder in portfolio"
+
+jobs:
+  update-portfolio:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Clone Portfolio Repo
+        run: |
+          git clone ${{ env.PORTFOLIO_REPO_URL }} portfolio
+          cd portfolio
+          git config user.name "${{ env.GIT_USER_NAME }}"
+          git config user.email "${{ env.GIT_USER_EMAIL }}"
+
+      - name: Copy Updated Folder
+        run: cp -r ${{ env.SOURCE_FOLDER }}/* ${{ env.DESTINATION_FOLDER }}
+
+      - name: Commit and Push Changes
+        run: |
+          cd portfolio
+          git add .
+          git commit -m "${{ env.COMMIT_MESSAGE }}"
+          git push ${{ env.PORTFOLIO_REPO_URL }}
