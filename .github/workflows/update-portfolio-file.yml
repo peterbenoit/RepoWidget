@@ -11,9 +11,9 @@ env:
   PORTFOLIO_REPO: "peterbenoit.github.io"
   GIT_USER_NAME: "peterbenoit"
   GIT_USER_EMAIL: "peterbenoit@gmail.com"
-  FILE_TO_UPDATE: "./OSP.js"
-  DESTINATION_PATH: "./portfolio/js/OSP.js"
-  COMMIT_MESSAGE: "Update OSP in portfolio"
+  FILE_TO_UPDATE: "./repoWidget.js"
+  DESTINATION_PATH: "./portfolio/js/repoWidget.js"
+  COMMIT_MESSAGE: "Update repoWidget in portfolio"
 
 jobs:
   update-portfolio:
