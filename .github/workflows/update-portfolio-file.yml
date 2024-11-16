@@ -10,7 +10,7 @@ on:
 # using env to define vars in the jobs
 env:
   PORTFOLIO_REPO: "peterbenoit.github.io"
-  PORTFOLIO_REPO_URL: "https://peterbenoit:${{ secrets.PAT_FOR_PORTFOLIO_REPO }}@github.com/peterbenoit/${{ env.PORTFOLIO_REPO }}"
+  PORTFOLIO_REPO_URL: "https://${{ secrets.PAT_FOR_PORTFOLIO_REPO }}@github.com/peterbenoit/${{ env.PORTFOLIO_REPO }}"
   GIT_USER_NAME: "peterbenoit"
   GIT_USER_EMAIL: "peterbenoit@gmail.com"
   FILE_TO_UPDATE: "./OSP.js"
