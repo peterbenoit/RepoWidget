@@ -6,7 +6,8 @@
 		cardStyles = {}, // Optional custom styles for the card background and container
 		textStyles = {}, // Optional custom styles for text and icon colors
 		scaleOnHover = 1.05, // Default scale factor on hover; set to 0 or false to disable
-		maxRepos = columns.desktop * 2 // Default maxRepos is double the desktop column count
+		maxRepos = columns.desktop * 2, // Default maxRepos is double the desktop column count
+		sortBy = 'stars' // Sorting parameter; options: "stars", "forks", "size", "name"
 	}) {
 		const repoContainer = document.getElementById(containerId);
 
@@ -92,13 +93,31 @@
 			return repos;
 		}
 
+		// Sort repositories based on the provided sortBy parameter
+		function sortRepositories(repos) {
+			switch (sortBy) {
+				case 'stars':
+					return repos.sort((a, b) => b.stargazers_count - a.stargazers_count);
+				case 'forks':
+					return repos.sort((a, b) => b.forks_count - a.forks_count);
+				case 'size':
+					return repos.sort((a, b) => b.size - a.size);
+				case 'name':
+					return repos.sort((a, b) => a.name.localeCompare(b.name));
+				default:
+					return repos;
+			}
+		}
+
 		async function initializeWidget() {
-			const repos = await fetchRepos();
-			const displayedRepos = repos.slice(0, maxRepos);
+			let repos = await fetchRepos();
+
+			// Sort and limit the repositories to display based on maxRepos
+			repos = sortRepositories(repos).slice(0, maxRepos);
 
 			repoContainer.innerHTML = '';
 
-			displayedRepos.forEach(repo => {
+			repos.forEach(repo => {
 				const card = document.createElement('div');
 				card.style.cssText = `
 					background: #fff;
