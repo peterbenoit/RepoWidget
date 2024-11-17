@@ -64,10 +64,44 @@
 		styleSheet.innerText = styles;
 		document.head.appendChild(styleSheet);
 
+		// Cache expiration in milliseconds (1 day)
+		const CACHE_EXPIRATION = 24 * 60 * 60 * 1000;
+
 		async function fetchRepos() {
+			const cacheKey = `repos_${username}`;
+			const cachedData = localStorage.getItem(cacheKey);
+			const cacheTimestamp = localStorage.getItem(`${cacheKey}_timestamp`);
+			const now = Date.now();
+
+			// Use cached data if it's still valid
+			if (cachedData && cacheTimestamp && now - cacheTimestamp < CACHE_EXPIRATION) {
+				return JSON.parse(cachedData);
+			}
+
+			// Fetch fresh data if no cache or cache is expired
 			const response = await fetch(`https://api.github.com/users/${username}/repos`);
+			if (!response.ok) {
+				console.error('GitHub API error:', response.statusText);
+				return [];
+			}
+
 			const repos = await response.json();
 
+			// Store the fetched data in localStorage with a timestamp
+			localStorage.setItem(cacheKey, JSON.stringify(repos));
+			localStorage.setItem(`${cacheKey}_timestamp`, now);
+
+			return repos;
+		}
+
+		// Initialize the widget
+		async function initializeWidget() {
+			const repos = await fetchRepos();
+
+			// Clear the container
+			repoContainer.innerHTML = '';
+
+			// Render each repo card
 			repos.forEach(repo => {
 				const card = document.createElement('div');
 				card.style.cssText = `
@@ -127,28 +161,8 @@
 			});
 		}
 
-		fetchRepos();
+		initializeWidget(); // Run the widget
 	}
 
 	window.createRepoWidget = createRepoWidget;
 })();
-
-// Example usage:
-// createRepoWidget({
-// 	username: 'peterbenoit',
-// 	containerId: 'repo-container',
-// 	columns: { mobile: 1, tablet: 2, desktop: 3 },
-// 	cardStyles: {
-// 		backgroundColor: '#2b2b2b',
-// 		boxShadow: '0 6px 12px rgba(0, 0, 0, 0.2)',
-// 		borderRadius: '10px',
-// 		padding: '20px'
-// 	},
-// 	textStyles: {
-// 		titleColor: '#fff',
-// 		descriptionColor: '#ccc',
-// 		iconColor: '#f0ad4e',
-// 		sizeColor: '#bbb'
-// 	},
-// 	scaleOnHover: 1.1
-// });
