@@ -6,7 +6,7 @@
 		cardStyles = {}, // Optional custom styles for the card background and container
 		textStyles = {}, // Optional custom styles for text and icon colors
 		scaleOnHover = 1.05, // Default scale factor on hover; set to 0 or false to disable
-		maxRepos = columns.desktop * 2, // Default maxRepos is double the desktop column count
+		maxRepos = columns.desktop === 1 ? 10 : columns.desktop * 2, // Default maxRepos is double the desktop column count
 		sortBy = 'stars' // Sorting parameter; options: "stars", "forks", "size", "name"
 	}) {
 		const repoContainer = document.getElementById(containerId);
