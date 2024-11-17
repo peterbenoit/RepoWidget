@@ -85,20 +85,20 @@
 					card.onmouseleave = () => (card.style.transform = 'scale(1)');
 				}
 
-				const languageColor = languageColors[repo.language] || '#ccc';
+				const languageColor = languageColors[repo.language] || '#cccccc';
 
 				card.innerHTML = `
 					<a href="${
 						repo.html_url
 					}" target="_blank" style="text-decoration: none; color: inherit; display: block; padding: 16px;">
-						<h3 style="font-size: 1.25rem; font-weight: bold; color: ${textStyles.titleColor || '#333'};">${
+						<h3 style="font-size: 1.25rem; font-weight: bold; color: ${textStyles.titleColor || '#333333'};">${
 					repo.name
 				}</h3>
-						<p style="color: ${textStyles.descriptionColor || '#666'}; margin: 8px 0;">${
+						<p style="color: ${textStyles.descriptionColor || '#666666'}; margin: 8px 0;">${
 					repo.description || 'No description provided'
 				}</p>
 						<div style="display: flex; align-items: center; color: ${
-							textStyles.iconColor || '#888'
+							textStyles.iconColor || '#888888'
 						}; font-size: 0.875rem;">
 							<span style="display: flex; align-items: center; margin-right: 16px;">
 								<span style="width: 10px; height: 10px; background-color: ${languageColor}; border-radius: 50%; margin-right: 4px;"></span>
@@ -106,20 +106,20 @@
 							</span>
 							<span style="display: flex; align-items: center; margin-right: 16px;">
 								<svg width="16" height="16" fill="${
-									textStyles.iconColor || '#888'
+									textStyles.iconColor || '#888888'
 								}" style="margin-right: 4px;"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"></path></svg>
 								${repo.forks_count}
 							</span>
 							<span style="display: flex; align-items: center;">
 								<svg width="16" height="16" fill="${
-									textStyles.iconColor || '#888'
+									textStyles.iconColor || '#888888'
 								}" style="margin-right: 4px;"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"></path></svg>
 								${repo.stargazers_count}
 							</span>
 						</div>
-						<div style="color: ${textStyles.sizeColor || '#aaa'}; font-size: 0.75rem; margin-top: 8px;">Size: ${
-					repo.size
-				} KB</div>
+						<div style="color: ${
+							textStyles.sizeColor || '#aaaaaa'
+						}; font-size: 0.75rem; margin-top: 8px;">Size: ${repo.size} KB</div>
 					</a>
 				`;
 
