@@ -5,7 +5,8 @@
 		columns = { mobile: 1, tablet: 2, desktop: 3 },
 		cardStyles = {}, // Optional custom styles for the card background and container
 		textStyles = {}, // Optional custom styles for text and icon colors
-		scaleOnHover = 1.05 // Default scale factor on hover; set to 0 or false to disable
+		scaleOnHover = 1.05, // Default scale factor on hover; set to 0 or false to disable
+		maxRepos = columns.desktop * 2 // Default maxRepos is double the desktop column count
 	}) {
 		const repoContainer = document.getElementById(containerId);
 
@@ -64,7 +65,7 @@
 		styleSheet.innerText = styles;
 		document.head.appendChild(styleSheet);
 
-		// Cache expiration in milliseconds (1 day)
+		// Cache response for 1 day
 		const CACHE_EXPIRATION = 24 * 60 * 60 * 1000;
 
 		async function fetchRepos() {
@@ -73,12 +74,10 @@
 			const cacheTimestamp = localStorage.getItem(`${cacheKey}_timestamp`);
 			const now = Date.now();
 
-			// Use cached data if it's still valid
 			if (cachedData && cacheTimestamp && now - cacheTimestamp < CACHE_EXPIRATION) {
 				return JSON.parse(cachedData);
 			}
 
-			// Fetch fresh data if no cache or cache is expired
 			const response = await fetch(`https://api.github.com/users/${username}/repos`);
 			if (!response.ok) {
 				console.error('GitHub API error:', response.statusText);
@@ -87,22 +86,19 @@
 
 			const repos = await response.json();
 
-			// Store the fetched data in localStorage with a timestamp
 			localStorage.setItem(cacheKey, JSON.stringify(repos));
 			localStorage.setItem(`${cacheKey}_timestamp`, now);
 
 			return repos;
 		}
 
-		// Initialize the widget
 		async function initializeWidget() {
 			const repos = await fetchRepos();
+			const displayedRepos = repos.slice(0, maxRepos);
 
-			// Clear the container
 			repoContainer.innerHTML = '';
 
-			// Render each repo card
-			repos.forEach(repo => {
+			displayedRepos.forEach(repo => {
 				const card = document.createElement('div');
 				card.style.cssText = `
 					background: #fff;
@@ -161,7 +157,7 @@
 			});
 		}
 
-		initializeWidget(); // Run the widget
+		initializeWidget();
 	}
 
 	window.createRepoWidget = createRepoWidget;
