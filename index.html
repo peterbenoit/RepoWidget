@@ -3,7 +3,26 @@
     <head>
         <meta charset="UTF-8" />
         <title>GitHub Repository Widget Documentation</title>
+        <!-- Add SEO meta tags -->
+        <meta
+            name="description"
+            content="GitHub Repository Widget - A lightweight, customizable widget to showcase your GitHub repositories"
+        />
+        <meta name="keywords" content="GitHub, widget, repositories, JavaScript" />
+
+        <!-- Add Open Graph tags -->
+        <meta property="og:title" content="GitHub Repository Widget" />
+        <meta property="og:description" content="Showcase your GitHub repositories with style" />
+        <meta property="og:image" content="path/to/preview-image.jpg" />
+
+        <!-- Add Twitter Card tags -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="GitHub Repository Widget" />
+        <meta name="twitter:description" content="Showcase your GitHub repositories with style" />
+
         <link href="output.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
         <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
             rel="stylesheet"
@@ -179,6 +198,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
     </head>
     <body class="bg-slate-50" x-data="{ currentSection: 'introduction' }">
+        <a href="#main-content" class="skip-link">Skip to main content</a>
         <nav
             class="fixed top-0 left-0 h-full w-64 bg-white border-r border-slate-200 p-6 overflow-y-auto"
         >
@@ -604,9 +624,9 @@
                             button on the right.
                         </p>
 
-                        <div id="repo-container"></div>
+                        <div id="repo-contain" role="region" aria-live="polite"></div>
 
-                        <div class="sidebar" id="color-controls">
+                        <div class="sidebar" id="color-controls" aria-expanded="false">
                             <div class="flex justify-between items-center mb-4">
                                 <h3 class="text-lg font-semibold">Customize RepoWidget</h3>
                                 <button id="close-controls" class="text-lg focus:outline-none">
@@ -771,7 +791,11 @@
                             </div>
                         </div>
 
-                        <button id="toggle-controls" class="toggle-button">
+                        <button
+                            id="toggle-controls"
+                            class="toggle-button"
+                            aria-label="Toggle widget controls"
+                        >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="1.5em"
@@ -1034,6 +1058,6 @@
 
             initializeWidget();
         </script>
-        <script src="https://www.peterbenoit.com/js/badge.js"></script>
+        <script async src="https://www.peterbenoit.com/js/badge.js"></script>
     </body>
 </html>
