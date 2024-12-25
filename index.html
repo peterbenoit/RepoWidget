@@ -600,8 +600,8 @@
                         <h2 class="text-3xl font-bold text-slate-900 mb-6">Demo</h2>
                         <p class="text-slate-600 ml-8">
                             The GitHub Repository Widget is highly configurable. You can edit its
-                            appearance and behavior using various options by using the RepoWidget
-                            settings button on the right.
+                            appearance and behavior using various options by using the settings
+                            button on the right.
                         </p>
 
                         <div id="repo-container"></div>
@@ -791,32 +791,68 @@
 
                 <div x-show="currentSection === 'contributing'" class="space-y-8 m-8">
                     <h2 class="text-3xl font-bold text-slate-900 mb-6">Contributing</h2>
-                    <p class="text-slate-600">
-                        Contributions are welcome! Feel free to submit issues and pull requests.
-                        Follow these steps to contribute:
-                    </p>
-                    <ol class="list-decimal list-inside space-y-2 text-slate-600">
-                        <li>Fork the repository</li>
-                        <li>
-                            Create your feature branch (<code
-                                class="font-mono bg-gray-100 px-2 py-0.5 rounded"
-                                >git checkout -b feature/amazing-feature</code
-                            >)
-                        </li>
-                        <li>
-                            Commit your changes (<code
-                                class="font-mono bg-gray-100 px-2 py-0.5 rounded"
-                                >git commit -m 'Add amazing feature'</code
-                            >)
-                        </li>
-                        <li>
-                            Push to the branch (<code
-                                class="font-mono bg-gray-100 px-2 py-0.5 rounded"
-                                >git push origin feature/amazing-feature</code
-                            >)
-                        </li>
-                        <li>Open a Pull Request</li>
-                    </ol>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-3">
+                                Ready to Help?
+                            </h3>
+                            <p class="text-slate-600 mb-4">
+                                We welcome contributions from developers of all skill levels.
+                                Whether you're fixing bugs, adding features, or improving
+                                documentation - your help makes this widget better.
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-3">
+                                Quick Start Guide
+                            </h3>
+                            <div class="space-y-3 text-slate-600">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="bg-blue-100 text-blue-700 rounded-full w-6 h-6 flex items-center justify-center font-semibold"
+                                        >1</span
+                                    >
+                                    <span>Fork the repository</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="bg-blue-100 text-blue-700 rounded-full w-6 h-6 flex items-center justify-center font-semibold"
+                                        >2</span
+                                    >
+                                    <code class="bg-slate-100 px-2 py-1 rounded"
+                                        >git checkout -b feature/amazing-feature</code
+                                    >
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="bg-blue-100 text-blue-700 rounded-full w-6 h-6 flex items-center justify-center font-semibold"
+                                        >3</span
+                                    >
+                                    <code class="bg-slate-100 px-2 py-1 rounded"
+                                        >git commit -m 'Add amazing feature'</code
+                                    >
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="bg-blue-100 text-blue-700 rounded-full w-6 h-6 flex items-center justify-center font-semibold"
+                                        >4</span
+                                    >
+                                    <code class="bg-slate-100 px-2 py-1 rounded"
+                                        >git push origin feature/amazing-feature</code
+                                    >
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="bg-blue-100 text-blue-700 rounded-full w-6 h-6 flex items-center justify-center font-semibold"
+                                        >5</span
+                                    >
+                                    <span>Open a Pull Request</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -889,12 +925,10 @@
                         </li>
                     </div>
                 </template>
-                <template x-if="currentSection === 'examples'">
+                <template x-if="currentSection === 'config'">
                     <div class="space-y-2">
                         <li>
-                            <a href="#examples" class="text-slate-600 hover:text-slate-900"
-                                >Example</a
-                            >
+                            <a href="#config" class="text-slate-600 hover:text-slate-900">Demo</a>
                         </li>
                     </div>
                 </template>
