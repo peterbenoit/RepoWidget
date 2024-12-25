@@ -1,0 +1,39 @@
+{
+    "name": "repowidget",
+    "version": "1.0.1",
+    "type": "module",
+    "description": "A lightweight, customizable widget to showcase GitHub repositories on any website",
+    "main": "dist/index.js",
+    "module": "dist/index.esm.js",
+    "files": [
+        "dist",
+        "src"
+    ],
+    "scripts": {
+        "build": "rollup -c",
+        "dev": "rollup -c -w"
+    },
+    "keywords": [
+        "github",
+        "widget",
+        "repository",
+        "portfolio",
+        "showcase"
+    ],
+    "author": "Peter Benoit <peterbenoit@gmail.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/peterbenoit/RepoWidget.git"
+    },
+    "bugs": {
+        "url": "https://github.com/peterbenoit/RepoWidget/issues"
+    },
+    "homepage": "https://github.com/peterbenoit/RepoWidget#readme",
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^28.0.2",
+        "@rollup/plugin-node-resolve": "^16.0.0",
+        "@rollup/plugin-terser": "^0.4.4",
+        "rollup": "^4.29.1"
+    }
+}
