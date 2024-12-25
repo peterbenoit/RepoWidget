@@ -3,9 +3,9 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "build": "tailwindcss -i ./src/input.css -o ./dist/output.css && cp index.html dist/",
+        "build": "tailwindcss -i ./src/input.css -o ./dist/output.css && cp index.html dist/ && cp demo.html dist/ && cp lib/repoWidget.js dist/",
         "watch": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
-        "dev": "concurrently \"chokidar index.html -c 'cp index.html dist/'\" \"npm run watch\" \"browser-sync start --server 'dist' --files 'dist/**/*'\""
+        "dev": "concurrently \"chokidar 'index.html demo.html lib/repoWidget.js' -c 'cp index.html dist/ && cp demo.html dist/ && cp lib/repoWidget.js dist/'\" \"npm run watch\" \"browser-sync start --server 'dist' --files 'dist/**/*'\""
     },
     "keywords": [],
     "author": "",
