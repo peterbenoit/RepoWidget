@@ -5,7 +5,7 @@
     "scripts": {
         "build": "tailwindcss -i ./src/input.css -o ./dist/output.css && cp index.html dist/ && cp demo.html dist/ && cp lib/repoWidget.js dist/",
         "watch": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
-        "dev": "concurrently \"chokidar 'index.html demo.html lib/repoWidget.js' -c 'cp index.html dist/ && cp demo.html dist/ && cp lib/repoWidget.js dist/'\" \"npm run watch\" \"browser-sync start --server 'dist' --files 'dist/**/*'\""
+        "dev": "concurrently \"nodemon --watch index.html --watch demo.html --watch lib/repoWidget.js --exec 'cp index.html dist/ && cp demo.html dist/ && cp lib/repoWidget.js dist/'\" \"npm run watch\" \"browser-sync start --server 'dist' --files 'dist/**/*'\""
     },
     "keywords": [],
     "author": "",
@@ -19,7 +19,7 @@
     },
     "devDependencies": {
         "browser-sync": "^3.0.3",
-        "chokidar-cli": "^3.0.0",
-        "concurrently": "^9.1.0"
+        "concurrently": "^9.1.0",
+        "nodemon": "^3.1.9"
     }
 }

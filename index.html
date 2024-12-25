@@ -34,9 +34,136 @@
                 display: flex;
                 flex-direction: column;
             }
-            iframe {
-                flex: 1;
+            button {
+                padding: 8px 16px;
+                font-size: 16px;
+                cursor: pointer;
+                margin-bottom: 20px;
+            }
+
+            #repo-container {
+                padding: 1.5rem;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.5rem;
+                width: 100%;
+            }
+
+            #repo-container > div {
+                background-color: #ffffff;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                transition: transform 0.3s;
+                padding: 1rem;
+            }
+
+            #repo-container > div:hover {
+                transform: scale(1.05);
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                right: -350px;
+                width: 350px;
+                height: 100%;
+                background-color: #333333;
+                color: #ffffff;
+                padding: 20px;
+                z-index: 90;
+                transition: right 0.3s ease;
+                overflow-y: auto;
+            }
+
+            .sidebar input,
+            .sidebar select {
+                color: #000;
+            }
+
+            .sidebar.visible {
+                right: 0;
+            }
+
+            .sidebar.visible + .toggle-button {
+                right: 350px;
+            }
+
+            .controls-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                margin-top: 10px;
+            }
+
+            .controls-grid label {
+                display: block;
+                margin-bottom: 5px;
+                font-size: 14px;
+                color: #ffffff;
+            }
+
+            .controls-grid input[type='color'] {
+                width: 100%;
+                height: 40px;
                 border: none;
+                cursor: pointer;
+            }
+
+            .config-output {
+                margin-top: 20px;
+                background-color: #222;
+                padding: 10px;
+                border-radius: 5px;
+                color: #ffffff;
+                font-size: 0.9rem;
+            }
+
+            .config-output h4 {
+                margin-bottom: 10px;
+            }
+
+            .config-output pre {
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
+
+            .toggle-button {
+                position: fixed;
+                top: 180px;
+                right: 0rem;
+                background-color: #e74c3c;
+                border: none;
+                color: #ffffff;
+                padding: 10px;
+                border-radius: 5px;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                cursor: pointer;
+                transition: right 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                z-index: 90;
+            }
+
+            .toggle-button:hover {
+                background-color: #c0392b;
+            }
+
+            .toggle-button svg {
+                width: 24px;
+                height: 24px;
+                fill: #ffffff;
+            }
+
+            .close-button {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: none;
+                color: #ffffff;
+                border: none;
+                font-size: 18px;
+                cursor: pointer;
             }
         </style>
         <link
@@ -140,7 +267,9 @@
             </div>
 
             <div>
-                <h2 class="text-sm font-semibold text-slate-900 px-3 mb-2">Examples & Support</h2>
+                <h2 class="text-sm font-semibold text-slate-900 px-3 mb-2">
+                    Configuring &amp; Contributing
+                </h2>
                 <ul class="space-y-2">
                     <li>
                         <a
@@ -148,7 +277,7 @@
                             @click.prevent="currentSection = 'examples'"
                             :class="currentSection === 'examples' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
                             class="block px-3 py-2 rounded-md transition"
-                            >Examples</a
+                            >Configuration</a
                         >
                     </li>
                     <li>
@@ -307,7 +436,193 @@
                 </div>
 
                 <div x-show="currentSection === 'examples'" class="flex">
-                    <iframe src="demo.html" class="h-[1000px]"></iframe>
+                    <div class="demo-area">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-6 ml-8 mt-8">Example</h2>
+                        <p class="text-slate-600 ml-8">
+                            Here are some examples of how to use the GitHub Repository Widget in
+                            different scenarios:
+                        </p>
+                        <div id="repo-container"></div>
+
+                        <div class="sidebar" id="color-controls">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold">Customize RepoWidget</h3>
+                                <button id="close-controls" class="text-lg focus:outline-none">
+                                    &times;
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="flex flex-col">
+                                    <label class="text-sm font-medium mb-1">GitHub Username</label>
+                                    <input
+                                        type="text"
+                                        id="username"
+                                        value="peterbenoit"
+                                        class="w-full h-10 px-2 border border-gray-600 rounded"
+                                    />
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="text-sm font-medium mb-1">Target ID</label>
+                                    <input
+                                        type="text"
+                                        id="containerId"
+                                        value="repo-container"
+                                        class="w-full h-10 px-2 border border-gray-600 rounded"
+                                    />
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="text-sm font-medium mb-1">Sort By</label>
+                                    <select
+                                        id="sortBy"
+                                        class="w-full h-10 px-2 border border-gray-600 rounded"
+                                    >
+                                        <option value="stars">Stars</option>
+                                        <option value="forks">Forks</option>
+                                        <option value="size">Size</option>
+                                        <option value="name">Name</option>
+                                    </select>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="text-sm font-medium mb-1">Max Repos</label>
+                                    <input
+                                        type="number"
+                                        id="maxRepos"
+                                        value="8"
+                                        min="1"
+                                        class="w-full h-10 px-2 border border-gray-600 rounded"
+                                    />
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="text-sm font-medium mb-1">Mobile</label>
+                                    <input
+                                        type="number"
+                                        id="columnsMobile"
+                                        value="1"
+                                        min="1"
+                                        max="4"
+                                        class="w-full h-10 px-2 border border-gray-600 rounded"
+                                    />
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="text-sm font-medium mb-1">Tablet</label>
+                                    <input
+                                        type="number"
+                                        id="columnsTablet"
+                                        value="2"
+                                        min="1"
+                                        max="4"
+                                        class="w-full h-10 px-2 border border-gray-600 rounded"
+                                    />
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="text-sm font-medium mb-1">Desktop</label>
+                                    <input
+                                        type="number"
+                                        id="columnsDesktop"
+                                        value="4"
+                                        min="1"
+                                        max="6"
+                                        class="w-full h-10 px-2 border border-gray-600 rounded"
+                                    />
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="text-sm font-medium mb-1">Scale</label>
+                                    <input
+                                        type="number"
+                                        id="scaleOnHover"
+                                        value="1.02"
+                                        step="0.01"
+                                        min="1"
+                                        max="2"
+                                        class="w-full h-10 px-2 border border-gray-600 rounded"
+                                    />
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="text-sm font-medium mb-1">Title Color</label>
+                                    <input
+                                        type="color"
+                                        id="titleColor"
+                                        value="#333333"
+                                        class="w-full h-10 border border-gray-600 rounded"
+                                    />
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="text-sm font-medium mb-1"
+                                        >Description Color</label
+                                    >
+                                    <input
+                                        type="color"
+                                        id="descriptionColor"
+                                        value="#666666"
+                                        class="w-full h-10 border border-gray-600 rounded"
+                                    />
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="text-sm font-medium mb-1">Icon Color</label>
+                                    <input
+                                        type="color"
+                                        id="iconColor"
+                                        value="#888888"
+                                        class="w-full h-10 border border-gray-600 rounded"
+                                    />
+                                </div>
+                                <div class="flex flex-col">
+                                    <label class="text-sm font-medium mb-1">Background Color</label>
+                                    <input
+                                        type="color"
+                                        id="backgroundColor"
+                                        value="#ffffff"
+                                        class="w-full h-10 border border-gray-600 rounded"
+                                    />
+                                </div>
+                            </div>
+                            <button
+                                id="apply-config"
+                                class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
+                            >
+                                Apply
+                            </button>
+
+                            <div class="mt-6 bg-gray-700 p-4 rounded">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-sm font-medium mb-2 text-white">
+                                        Configuration:
+                                    </h4>
+                                    <button
+                                        id="copy-config"
+                                        class="text-blue-300 text-xs hover:text-blue-500 relative"
+                                    >
+                                        Copy
+                                        <span
+                                            id="copy-tooltip"
+                                            class="absolute bottom-full mb-1 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded opacity-0 transition-opacity duration-300"
+                                            >Copied!</span
+                                        >
+                                    </button>
+                                </div>
+                                <pre
+                                    id="config-display"
+                                    class="text-xs bg-gray-800 p-2 rounded text-gray-300 overflow-auto"
+                                ></pre>
+                            </div>
+                        </div>
+
+                        <button id="toggle-controls" class="toggle-button">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="1.5em"
+                                height="1.5em"
+                                viewBox="0 0 16 16"
+                                class="w-6 h-6"
+                            >
+                                <path
+                                    fill="none"
+                                    stroke="currentColor"
+                                    d="M8 4.5h6m-12 0h2.5m0 0a2 2 0 1 0 4 0a2 2 0 0 0-4 0Zm-2.5 7h6m3.5 0H14m-2.5 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0Z"
+                                />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
                 <div x-show="currentSection === 'contributing'" class="space-y-8 m-8">
@@ -414,7 +729,7 @@
                     <div class="space-y-2">
                         <li>
                             <a href="#examples" class="text-slate-600 hover:text-slate-900"
-                                >Examples</a
+                                >Example</a
                             >
                         </li>
                     </div>
@@ -431,12 +746,95 @@
             </ul>
         </aside>
 
+        <script src="repoWidget.js"></script>
         <script>
             document.addEventListener('alpine:init', () => {
                 Alpine.data('visibility', () => ({
                     currentSection: 'introduction',
                 }));
             });
+
+            function initializeWidget() {
+                const username = document.getElementById('username').value;
+                const containerId = document.getElementById('containerId').value;
+                const columns = {
+                    mobile: parseInt(document.getElementById('columnsMobile').value),
+                    tablet: parseInt(document.getElementById('columnsTablet').value),
+                    desktop: parseInt(document.getElementById('columnsDesktop').value),
+                };
+                const scaleOnHover = parseFloat(document.getElementById('scaleOnHover').value);
+                const sortBy = document.getElementById('sortBy').value;
+                const maxRepos = parseInt(document.getElementById('maxRepos').value); // New maxRepos setting
+                const titleColor = document.getElementById('titleColor').value;
+                const descriptionColor = document.getElementById('descriptionColor').value;
+                const iconColor = document.getElementById('iconColor').value;
+                const backgroundColor = document.getElementById('backgroundColor').value;
+
+                createRepoWidget({
+                    username,
+                    containerId,
+                    columns,
+                    cardStyles: { backgroundColor },
+                    textStyles: { titleColor, descriptionColor, iconColor },
+                    scaleOnHover,
+                    sortBy,
+                    maxRepos,
+                });
+
+                updateConfigDisplay();
+            }
+
+            function updateConfigDisplay() {
+                const config = {
+                    username: document.getElementById('username').value,
+                    containerId: document.getElementById('containerId').value,
+                    columns: {
+                        mobile: parseInt(document.getElementById('columnsMobile').value),
+                        tablet: parseInt(document.getElementById('columnsTablet').value),
+                        desktop: parseInt(document.getElementById('columnsDesktop').value),
+                    },
+                    cardStyles: {
+                        backgroundColor: document.getElementById('backgroundColor').value,
+                    },
+                    textStyles: {
+                        titleColor: document.getElementById('titleColor').value,
+                        descriptionColor: document.getElementById('descriptionColor').value,
+                        iconColor: document.getElementById('iconColor').value,
+                    },
+                    scaleOnHover: parseFloat(document.getElementById('scaleOnHover').value),
+                    sortBy: document.getElementById('sortBy').value,
+                    maxRepos: parseInt(document.getElementById('maxRepos').value),
+                };
+                document.getElementById('config-display').textContent = JSON.stringify(
+                    config,
+                    null,
+                    2
+                );
+            }
+
+            document.getElementById('apply-config').addEventListener('click', initializeWidget);
+
+            document.getElementById('copy-config').addEventListener('click', () => {
+                const configText = document.getElementById('config-display').textContent;
+                navigator.clipboard.writeText(configText).then(() => {
+                    const tooltip = document.getElementById('copy-tooltip');
+                    tooltip.style.opacity = 1;
+                    setTimeout(() => (tooltip.style.opacity = 0), 1500);
+                });
+            });
+
+            const colorControls = document.getElementById('color-controls');
+            const toggleControls = document.getElementById('toggle-controls');
+
+            toggleControls.addEventListener('click', () => {
+                colorControls.classList.toggle('visible');
+            });
+
+            document.getElementById('close-controls').addEventListener('click', () => {
+                colorControls.classList.remove('visible');
+            });
+
+            initializeWidget();
         </script>
         <script src="https://www.peterbenoit.com/js/badge.js"></script>
     </body>
