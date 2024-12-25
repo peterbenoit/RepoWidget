@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>GitHub Repository Widget Documentation</title>
+        <link href="output.css" rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            body {
+                font-family: 'Inter', sans-serif;
+            }
+        </style>
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css"
+            rel="stylesheet"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    </head>
+    <body class="bg-slate-50" x-data="{ currentSection: 'introduction' }">
+        <nav
+            class="fixed top-0 left-0 h-full w-64 bg-white border-r border-slate-200 p-6 overflow-y-auto"
+        >
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold text-slate-800">RepoWidget Documentation</h1>
+                <a
+                    href="https://github.com/peterbenoit/RepoWidget"
+                    class="text-sm text-slate-500 hover:text-slate-700 mt-2 block"
+                    >View on GitHub →</a
+                >
+            </div>
+
+            <div class="mb-8">
+                <h2 class="text-sm font-semibold text-slate-900 px-3 mb-2">Getting Started</h2>
+                <ul class="space-y-2">
+                    <li>
+                        <a
+                            href="#introduction"
+                            @click.prevent="currentSection = 'introduction'"
+                            :class="currentSection === 'introduction' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
+                            class="block px-3 py-2 rounded-md transition"
+                            >Introduction</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="#installation"
+                            @click.prevent="currentSection = 'installation'"
+                            :class="currentSection === 'installation' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
+                            class="block px-3 py-2 rounded-md transition"
+                            >Installation</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="#configuration"
+                            @click.prevent="currentSection = 'configuration'"
+                            :class="currentSection === 'configuration' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
+                            class="block px-3 py-2 rounded-md transition"
+                            >Configuration</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="#features"
+                            @click.prevent="currentSection = 'features'"
+                            :class="currentSection === 'features' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
+                            class="block px-3 py-2 rounded-md transition"
+                            >Features</a
+                        >
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mb-8">
+                <h2 class="text-sm font-semibold text-slate-900 px-3 mb-2">Usage</h2>
+                <ul class="space-y-2">
+                    <li>
+                        <a
+                            href="#styling"
+                            @click.prevent="currentSection = 'styling'"
+                            :class="currentSection === 'styling' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
+                            class="block px-3 py-2 rounded-md transition"
+                            >Styling</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="#sorting"
+                            @click.prevent="currentSection = 'sorting'"
+                            :class="currentSection === 'sorting' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
+                            class="block px-3 py-2 rounded-md transition"
+                            >Sorting Options</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="#responsive-design"
+                            @click.prevent="currentSection = 'responsive-design'"
+                            :class="currentSection === 'responsive-design' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
+                            class="block px-3 py-2 rounded-md transition"
+                            >Responsive Design</a
+                        >
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h2 class="text-sm font-semibold text-slate-900 px-3 mb-2">Examples & Support</h2>
+                <ul class="space-y-2">
+                    <li>
+                        <a
+                            href="#examples"
+                            @click.prevent="currentSection = 'examples'"
+                            :class="currentSection === 'examples' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
+                            class="block px-3 py-2 rounded-md transition"
+                            >Examples</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="#contributing"
+                            @click.prevent="currentSection = 'contributing'"
+                            :class="currentSection === 'contributing' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
+                            class="block px-3 py-2 rounded-md transition"
+                            >Contributing</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="ml-64 mr-64 p-8">
+            <div x-show="currentSection === 'introduction'" class="space-y-8">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">GitHub Repository Widget</h2>
+                    <p class="text-lg text-slate-600 mb-8">
+                        A lightweight, customizable widget to showcase your GitHub repositories on
+                        any website. Features responsive design, caching, and beautiful repository
+                        cards with rich metadata.
+                    </p>
+                </div>
+            </div>
+
+            <div x-show="currentSection === 'installation'" class="space-y-6">
+                <h2 class="text-3xl font-bold text-slate-900 mb-6">Installation</h2>
+                <p class="text-slate-600">
+                    To use the GitHub Repository Widget, include the script in your HTML:
+                </p>
+                <pre
+                    class="language-html rounded-lg p-4"
+                ><code class="language-html">&lt;script src="path/to/repoWidget.js"&gt;&lt;/script&gt;</code></pre>
+                <p class="text-slate-600">
+                    Add a container element where the widget will be rendered:
+                </p>
+                <pre
+                    class="language-html rounded-lg p-4"
+                ><code class="language-html">&lt;div id="my-repos"&gt;&lt;/div&gt;</code></pre>
+                <p class="text-slate-600">
+                    Initialize the widget with your GitHub username and container ID:
+                </p>
+                <pre
+                    class="language-javascript rounded-lg p-4"
+                ><code class="language-javascript">createRepoWidget({
+    username: 'your-github-username',
+    containerId: 'my-repos'
+});</code></pre>
+            </div>
+
+            <div x-show="currentSection === 'configuration'" class="space-y-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-6">Configuration</h2>
+                <p class="text-slate-600">
+                    The widget provides several configuration options to customize its behavior and
+                    appearance:
+                </p>
+                <ul class="space-y-4 text-slate-600">
+                    <li><strong>username</strong>: Your GitHub username (required)</li>
+                    <li><strong>containerId</strong>: ID of the container element (required)</li>
+                    <li><strong>columns</strong>: Number of columns for different screen sizes</li>
+                    <li><strong>cardStyles</strong>: Custom styles for repository cards</li>
+                    <li><strong>textStyles</strong>: Custom styles for text elements</li>
+                    <li><strong>scaleOnHover</strong>: Scale factor on hover</li>
+                    <li><strong>maxRepos</strong>: Maximum number of repositories to display</li>
+                    <li><strong>sortBy</strong>: Sort criteria (e.g., 'stars', 'forks')</li>
+                </ul>
+            </div>
+
+            <div x-show="currentSection === 'features'" class="space-y-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-6">Features</h2>
+                <ul class="space-y-4 text-slate-600">
+                    <li>Fully customizable styling</li>
+                    <li>Responsive grid layout</li>
+                    <li>Local caching for better performance</li>
+                    <li>Language color coding</li>
+                    <li>Multiple sorting options</li>
+                    <li>Hover animations</li>
+                    <li>Configurable display limits</li>
+                </ul>
+            </div>
+
+            <div x-show="currentSection === 'styling'" class="space-y-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-6">Styling</h2>
+                <p class="text-slate-600">
+                    Customize the appearance of the repository cards using the
+                    <strong>cardStyles</strong> and <strong>textStyles</strong> options. Example:
+                </p>
+                <pre
+                    class="language-javascript rounded-lg p-4"
+                ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'my-repos',
+    cardStyles: {
+        background: 'linear-gradient(145deg, #ffffff, #f0f0f0)',
+        boxShadow: '5px 5px 15px #d1d1d1, -5px -5px 15px #ffffff'
+    },
+    textStyles: {
+        titleColor: '#2d3748',
+        descriptionColor: '#4a5568',
+        iconColor: '#718096'
+    }
+});</code></pre>
+            </div>
+
+            <div x-show="currentSection === 'sorting'" class="space-y-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-6">Sorting Options</h2>
+                <p class="text-slate-600">
+                    The widget allows sorting repositories by various criteria. Use the
+                    <strong>sortBy</strong> option to specify the sorting method:
+                </p>
+                <ul class="space-y-4 text-slate-600">
+                    <li>
+                        <strong>stars</strong>: Display most starred repositories first (default)
+                    </li>
+                    <li><strong>forks</strong>: Sort by number of repository forks</li>
+                    <li><strong>size</strong>: Order by repository size</li>
+                    <li><strong>name</strong>: Alphabetical sorting by repository name</li>
+                </ul>
+                <pre
+                    class="language-javascript rounded-lg p-4"
+                ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'my-repos',
+    sortBy: 'forks',
+    maxRepos: 6
+});</code></pre>
+            </div>
+
+            <div x-show="currentSection === 'responsive-design'" class="space-y-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-6">Responsive Design</h2>
+                <p class="text-slate-600">
+                    The widget automatically adjusts its layout based on screen size. Customize the
+                    number of columns for different devices using the
+                    <strong>columns</strong> option:
+                </p>
+                <pre
+                    class="language-javascript rounded-lg p-4"
+                ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'my-repos',
+    columns: { mobile: 1, tablet: 2, desktop: 3 }
+});</code></pre>
+            </div>
+
+            <div x-show="currentSection === 'examples'" class="space-y-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-6">Examples</h2>
+                <p class="text-slate-600">
+                    Here are some examples of how to use the GitHub Repository Widget in different
+                    scenarios:
+                </p>
+                <!-- Add example code snippets or use cases here -->
+            </div>
+
+            <div x-show="currentSection === 'contributing'" class="space-y-8">
+                <h2 class="text-3xl font-bold text-slate-900 mb-6">Contributing</h2>
+                <p class="text-slate-600">
+                    Contributions are welcome! Feel free to submit issues and pull requests. Follow
+                    these steps to contribute:
+                </p>
+                <ol class="list-decimal list-inside space-y-2 text-slate-600">
+                    <li>Fork the repository</li>
+                    <li>
+                        Create your feature branch (<code
+                            class="font-mono bg-gray-100 px-2 py-0.5 rounded"
+                            >git checkout -b feature/amazing-feature</code
+                        >)
+                    </li>
+                    <li>
+                        Commit your changes (<code class="font-mono bg-gray-100 px-2 py-0.5 rounded"
+                            >git commit -m 'Add amazing feature'</code
+                        >)
+                    </li>
+                    <li>
+                        Push to the branch (<code class="font-mono bg-gray-100 px-2 py-0.5 rounded"
+                            >git push origin feature/amazing-feature</code
+                        >)
+                    </li>
+                    <li>Open a Pull Request</li>
+                </ol>
+            </div>
+        </main>
+
+        <aside
+            class="fixed top-0 right-0 h-full w-64 bg-white border-l border-slate-200 p-6 overflow-y-auto"
+        >
+            <h3 class="font-semibold text-slate-900 mb-4">On This Page</h3>
+            <ul class="text-sm">
+                <template x-if="currentSection === 'introduction'">
+                    <div class="space-y-2">
+                        <li>
+                            <a href="#introduction" class="text-slate-600 hover:text-slate-900"
+                                >Introduction</a
+                            >
+                        </li>
+                    </div>
+                </template>
+                <template x-if="currentSection === 'installation'">
+                    <div class="space-y-2">
+                        <li>
+                            <a href="#installation" class="text-slate-600 hover:text-slate-900"
+                                >Installation</a
+                            >
+                        </li>
+                    </div>
+                </template>
+                <template x-if="currentSection === 'configuration'">
+                    <div class="space-y-2">
+                        <li>
+                            <a href="#configuration" class="text-slate-600 hover:text-slate-900"
+                                >Configuration</a
+                            >
+                        </li>
+                    </div>
+                </template>
+                <template x-if="currentSection === 'features'">
+                    <div class="space-y-2">
+                        <li>
+                            <a href="#features" class="text-slate-600 hover:text-slate-900"
+                                >Features</a
+                            >
+                        </li>
+                    </div>
+                </template>
+                <template x-if="currentSection === 'styling'">
+                    <div class="space-y-2">
+                        <li>
+                            <a href="#styling" class="text-slate-600 hover:text-slate-900"
+                                >Styling</a
+                            >
+                        </li>
+                    </div>
+                </template>
+                <template x-if="currentSection === 'sorting'">
+                    <div class="space-y-2">
+                        <li>
+                            <a href="#sorting" class="text-slate-600 hover:text-slate-900"
+                                >Sorting Options</a
+                            >
+                        </li>
+                    </div>
+                </template>
+                <template x-if="currentSection === 'responsive-design'">
+                    <div class="space-y-2">
+                        <li>
+                            <a href="#responsive-design" class="text-slate-600 hover:text-slate-900"
+                                >Responsive Design</a
+                            >
+                        </li>
+                    </div>
+                </template>
+                <template x-if="currentSection === 'examples'">
+                    <div class="space-y-2">
+                        <li>
+                            <a href="#examples" class="text-slate-600 hover:text-slate-900"
+                                >Examples</a
+                            >
+                        </li>
+                    </div>
+                </template>
+                <template x-if="currentSection === 'contributing'">
+                    <div class="space-y-2">
+                        <li>
+                            <a href="#contributing" class="text-slate-600 hover:text-slate-900"
+                                >Contributing</a
+                            >
+                        </li>
+                    </div>
+                </template>
+            </ul>
+        </aside>
+
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('visibility', () => ({
+                    currentSection: 'introduction',
+                }));
+            });
+        </script>
+        <script src="https://www.peterbenoit.com/js/badge.js"></script>
+    </body>
+</html>
