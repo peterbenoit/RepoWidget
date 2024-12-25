@@ -268,16 +268,16 @@
 
             <div>
                 <h2 class="text-sm font-semibold text-slate-900 px-3 mb-2">
-                    Configuring &amp; Contributing
+                    Demo &amp; Contributing
                 </h2>
                 <ul class="space-y-2">
                     <li>
                         <a
-                            href="#examples"
-                            @click.prevent="currentSection = 'examples'"
-                            :class="currentSection === 'examples' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
+                            href="#config"
+                            @click.prevent="currentSection = 'config'"
+                            :class="currentSection === 'config' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
                             class="block px-3 py-2 rounded-md transition"
-                            >Configuration</a
+                            >Demo</a
                         >
                     </li>
                     <li>
@@ -301,29 +301,72 @@
                             GitHub Repository Widget
                         </h2>
                         <p class="text-lg text-slate-600 mb-8">
-                            A lightweight, customizable widget to showcase your GitHub repositories
-                            on any website. Features responsive design, caching, and beautiful
-                            repository cards with rich metadata.
+                            Show off your GitHub projects with style using this lightweight widget.
+                            It's built to make your repositories look great on any website, with
+                            rich metadata and smooth animations that bring your code to life.
                         </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+                            <div class="bg-white p-6 rounded-lg shadow-sm">
+                                <h3 class="text-xl font-semibold text-slate-800 mb-3">
+                                    Quick Setup
+                                </h3>
+                                <p class="text-slate-600">
+                                    Drop in a few lines of code and you're ready to go. The widget
+                                    handles everything from fetching your repos to displaying them
+                                    beautifully.
+                                </p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg shadow-sm">
+                                <h3 class="text-xl font-semibold text-slate-800 mb-3">
+                                    Smart Caching
+                                </h3>
+                                <p class="text-slate-600">
+                                    Built-in caching keeps things fast and efficient, while making
+                                    sure your repository data stays fresh and up-to-date.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div x-show="currentSection === 'installation'" class="space-y-8 m-8">
                     <h2 class="text-3xl font-bold text-slate-900 mb-6">Installation</h2>
                     <p class="text-slate-600">
-                        To use the GitHub Repository Widget, include the script in your HTML:
+                        To integrate the GitHub Repository Widget into your website, follow these
+                        steps. This widget allows you to dynamically display your GitHub
+                        repositories with customizable styles and sorting options, enhancing the
+                        interactivity and visual appeal of your site.
+                    </p>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">
+                        Step 1: Include the Script
+                    </h3>
+                    <p class="text-slate-600">
+                        First, include the widget's JavaScript file in your HTML. This script
+                        contains all the necessary logic to fetch and display your repositories.
+                        Ensure the path is correct relative to your HTML file:
                     </p>
                     <pre
                         class="language-html rounded-lg p-4"
                     ><code class="language-html">&lt;script src="path/to/repoWidget.js"&gt;&lt;/script&gt;</code></pre>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">
+                        Step 2: Add a Container Element
+                    </h3>
                     <p class="text-slate-600">
-                        Add a container element where the widget will be rendered:
+                        Next, add a container element where the widget will render the repository
+                        cards. This element acts as a placeholder in your HTML structure, allowing
+                        the widget to dynamically insert content:
                     </p>
                     <pre
                         class="language-html rounded-lg p-4"
                     ><code class="language-html">&lt;div id="my-repos"&gt;&lt;/div&gt;</code></pre>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">
+                        Step 3: Initialize the Widget
+                    </h3>
                     <p class="text-slate-600">
-                        Initialize the widget with your GitHub username and container ID:
+                        Finally, initialize the widget by calling the
+                        <code>createRepoWidget</code> function. This function requires your GitHub
+                        username and the ID of the container element. It fetches your repositories
+                        and displays them according to the specified configuration:
                     </p>
                     <pre
                         class="language-javascript rounded-lg p-4"
@@ -331,43 +374,160 @@
     username: 'your-github-username',
     containerId: 'my-repos'
 });</code></pre>
+                    <p class="text-slate-600">
+                        By following these steps, you ensure that the widget is correctly set up to
+                        retrieve and display your GitHub repositories. This setup is crucial for
+                        maintaining a seamless user experience and ensuring that your website
+                        remains up-to-date with your latest projects.
+                    </p>
                 </div>
 
                 <div x-show="currentSection === 'configuration'" class="space-y-8 m-8">
                     <h2 class="text-3xl font-bold text-slate-900 mb-6">Configuration</h2>
-                    <p class="text-slate-600">
-                        The widget provides several configuration options to customize its behavior
-                        and appearance:
-                    </p>
-                    <ul class="space-y-4 text-slate-600">
-                        <li><strong>username</strong>: Your GitHub username (required)</li>
-                        <li>
-                            <strong>containerId</strong>: ID of the container element (required)
-                        </li>
-                        <li>
-                            <strong>columns</strong>: Number of columns for different screen sizes
-                        </li>
-                        <li><strong>cardStyles</strong>: Custom styles for repository cards</li>
-                        <li><strong>textStyles</strong>: Custom styles for text elements</li>
-                        <li><strong>scaleOnHover</strong>: Scale factor on hover</li>
-                        <li>
-                            <strong>maxRepos</strong>: Maximum number of repositories to display
-                        </li>
-                        <li><strong>sortBy</strong>: Sort criteria (e.g., 'stars', 'forks')</li>
-                    </ul>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-3">Basic Setup</h3>
+                            <div class="space-y-4 text-slate-600">
+                                <p>Two things you'll need to get started:</p>
+                                <ul class="list-disc list-inside">
+                                    <li>
+                                        <code class="text-blue-600">username</code> - Your GitHub
+                                        username
+                                    </li>
+                                    <li>
+                                        <code class="text-blue-600">containerId</code> - Where you
+                                        want the repos to show up
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-3">
+                                Layout Options
+                            </h3>
+                            <div class="space-y-4 text-slate-600">
+                                <p>Control how your repos are displayed:</p>
+                                <ul class="list-disc list-inside">
+                                    <li>
+                                        <code class="text-blue-600">columns</code> - How many repos
+                                        per row
+                                    </li>
+                                    <li>
+                                        <code class="text-blue-600">maxRepos</code> - Total number
+                                        of repos to show
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-3">Visual Tweaks</h3>
+                            <div class="space-y-4 text-slate-600">
+                                <p>Make it match your site:</p>
+                                <ul class="list-disc list-inside">
+                                    <li>
+                                        <code class="text-blue-600">cardStyles</code> - Custom card
+                                        appearance
+                                    </li>
+                                    <li>
+                                        <code class="text-blue-600">textStyles</code> - Text colors
+                                        and fonts
+                                    </li>
+                                    <li>
+                                        <code class="text-blue-600">scaleOnHover</code> - Hover
+                                        animation size
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-3">Display Order</h3>
+                            <div class="space-y-4 text-slate-600">
+                                <p>Choose how to sort your repos:</p>
+                                <ul class="list-disc list-inside">
+                                    <li>
+                                        <code class="text-blue-600">sortBy</code> - Order by stars,
+                                        forks, size, or name
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div x-show="currentSection === 'features'" class="space-y-8 m-8">
                     <h2 class="text-3xl font-bold text-slate-900 mb-6">Features</h2>
-                    <ul class="space-y-4 text-slate-600">
-                        <li>Fully customizable styling</li>
-                        <li>Responsive grid layout</li>
-                        <li>Local caching for better performance</li>
-                        <li>Language color coding</li>
-                        <li>Multiple sorting options</li>
-                        <li>Hover animations</li>
-                        <li>Configurable display limits</li>
-                    </ul>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-3">Smart Caching</h3>
+                            <div class="space-y-4 text-slate-600">
+                                <p>
+                                    Data is cached locally for 24 hours, keeping your site snappy
+                                    while ensuring content stays fresh.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-3">
+                                Language Colors
+                            </h3>
+                            <div class="space-y-4 text-slate-600">
+                                <p>
+                                    Automatically detects and displays the right colors for
+                                    different programming languages.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-3">
+                                Responsive Grid
+                            </h3>
+                            <div class="space-y-4 text-slate-600">
+                                <p>
+                                    Adapts seamlessly from mobile to desktop with a smart column
+                                    layout that just works.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-3">
+                                Custom Styling
+                            </h3>
+                            <div class="space-y-4 text-slate-600">
+                                <p>
+                                    Tweak colors, shadows, and animations to match your site's look
+                                    and feel perfectly.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-3">Smart Sorting</h3>
+                            <div class="space-y-4 text-slate-600">
+                                <p>
+                                    Display repos by stars, forks, size, or name - your choice,
+                                    updated in real-time.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-3">Rich Metadata</h3>
+                            <div class="space-y-4 text-slate-600">
+                                <p>
+                                    Shows stars, forks, and language stats to give visitors the full
+                                    picture of your work.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div x-show="currentSection === 'styling'" class="space-y-8 m-8">
@@ -435,13 +595,15 @@
 });</code></pre>
                 </div>
 
-                <div x-show="currentSection === 'examples'" class="flex">
-                    <div class="demo-area">
-                        <h2 class="text-3xl font-bold text-slate-900 mb-6 ml-8 mt-8">Example</h2>
+                <div x-show="currentSection === 'config'" class="flex">
+                    <div class="demo-area m-8">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-6">Demo</h2>
                         <p class="text-slate-600 ml-8">
-                            Here are some examples of how to use the GitHub Repository Widget in
-                            different scenarios:
+                            The GitHub Repository Widget is highly configurable. You can edit its
+                            appearance and behavior using various options by using the RepoWidget
+                            settings button on the right.
                         </p>
+
                         <div id="repo-container"></div>
 
                         <div class="sidebar" id="color-controls">
@@ -459,6 +621,7 @@
                                         id="username"
                                         value="peterbenoit"
                                         class="w-full h-10 px-2 border border-gray-600 rounded"
+                                        autocomplete="off"
                                     />
                                 </div>
                                 <div class="flex flex-col">
@@ -468,6 +631,7 @@
                                         id="containerId"
                                         value="repo-container"
                                         class="w-full h-10 px-2 border border-gray-600 rounded"
+                                        autocomplete="off"
                                     />
                                 </div>
                                 <div class="flex flex-col">
