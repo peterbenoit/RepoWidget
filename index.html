@@ -13,6 +13,30 @@
         <style>
             body {
                 font-family: 'Inter', sans-serif;
+                display: flex;
+                flex-direction: row; /* Changed to row to accommodate nav and aside */
+                height: 100vh;
+                margin: 0;
+            }
+            nav,
+            aside {
+                flex: 0 0 64px; /* Fixed width for nav and aside */
+            }
+            main {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden; /* Ensure no overflow */
+            }
+            .content {
+                flex: 1;
+                overflow: auto;
+                display: flex;
+                flex-direction: column;
+            }
+            iframe {
+                flex: 1;
+                border: none;
             }
         </style>
         <link
@@ -140,83 +164,93 @@
             </div>
         </nav>
 
-        <main class="ml-64 mr-64 p-8">
-            <div x-show="currentSection === 'introduction'" class="space-y-8">
-                <div>
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">GitHub Repository Widget</h2>
-                    <p class="text-lg text-slate-600 mb-8">
-                        A lightweight, customizable widget to showcase your GitHub repositories on
-                        any website. Features responsive design, caching, and beautiful repository
-                        cards with rich metadata.
-                    </p>
+        <main class="ml-64 mr-64">
+            <div class="content">
+                <div x-show="currentSection === 'introduction'" class="space-y-8 m-8">
+                    <div>
+                        <h2 class="text-3xl font-bold text-slate-900 mb-4">
+                            GitHub Repository Widget
+                        </h2>
+                        <p class="text-lg text-slate-600 mb-8">
+                            A lightweight, customizable widget to showcase your GitHub repositories
+                            on any website. Features responsive design, caching, and beautiful
+                            repository cards with rich metadata.
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <div x-show="currentSection === 'installation'" class="space-y-6">
-                <h2 class="text-3xl font-bold text-slate-900 mb-6">Installation</h2>
-                <p class="text-slate-600">
-                    To use the GitHub Repository Widget, include the script in your HTML:
-                </p>
-                <pre
-                    class="language-html rounded-lg p-4"
-                ><code class="language-html">&lt;script src="path/to/repoWidget.js"&gt;&lt;/script&gt;</code></pre>
-                <p class="text-slate-600">
-                    Add a container element where the widget will be rendered:
-                </p>
-                <pre
-                    class="language-html rounded-lg p-4"
-                ><code class="language-html">&lt;div id="my-repos"&gt;&lt;/div&gt;</code></pre>
-                <p class="text-slate-600">
-                    Initialize the widget with your GitHub username and container ID:
-                </p>
-                <pre
-                    class="language-javascript rounded-lg p-4"
-                ><code class="language-javascript">createRepoWidget({
+                <div x-show="currentSection === 'installation'" class="space-y-8 m-8">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Installation</h2>
+                    <p class="text-slate-600">
+                        To use the GitHub Repository Widget, include the script in your HTML:
+                    </p>
+                    <pre
+                        class="language-html rounded-lg p-4"
+                    ><code class="language-html">&lt;script src="path/to/repoWidget.js"&gt;&lt;/script&gt;</code></pre>
+                    <p class="text-slate-600">
+                        Add a container element where the widget will be rendered:
+                    </p>
+                    <pre
+                        class="language-html rounded-lg p-4"
+                    ><code class="language-html">&lt;div id="my-repos"&gt;&lt;/div&gt;</code></pre>
+                    <p class="text-slate-600">
+                        Initialize the widget with your GitHub username and container ID:
+                    </p>
+                    <pre
+                        class="language-javascript rounded-lg p-4"
+                    ><code class="language-javascript">createRepoWidget({
     username: 'your-github-username',
     containerId: 'my-repos'
 });</code></pre>
-            </div>
+                </div>
 
-            <div x-show="currentSection === 'configuration'" class="space-y-8">
-                <h2 class="text-3xl font-bold text-slate-900 mb-6">Configuration</h2>
-                <p class="text-slate-600">
-                    The widget provides several configuration options to customize its behavior and
-                    appearance:
-                </p>
-                <ul class="space-y-4 text-slate-600">
-                    <li><strong>username</strong>: Your GitHub username (required)</li>
-                    <li><strong>containerId</strong>: ID of the container element (required)</li>
-                    <li><strong>columns</strong>: Number of columns for different screen sizes</li>
-                    <li><strong>cardStyles</strong>: Custom styles for repository cards</li>
-                    <li><strong>textStyles</strong>: Custom styles for text elements</li>
-                    <li><strong>scaleOnHover</strong>: Scale factor on hover</li>
-                    <li><strong>maxRepos</strong>: Maximum number of repositories to display</li>
-                    <li><strong>sortBy</strong>: Sort criteria (e.g., 'stars', 'forks')</li>
-                </ul>
-            </div>
+                <div x-show="currentSection === 'configuration'" class="space-y-8 m-8">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Configuration</h2>
+                    <p class="text-slate-600">
+                        The widget provides several configuration options to customize its behavior
+                        and appearance:
+                    </p>
+                    <ul class="space-y-4 text-slate-600">
+                        <li><strong>username</strong>: Your GitHub username (required)</li>
+                        <li>
+                            <strong>containerId</strong>: ID of the container element (required)
+                        </li>
+                        <li>
+                            <strong>columns</strong>: Number of columns for different screen sizes
+                        </li>
+                        <li><strong>cardStyles</strong>: Custom styles for repository cards</li>
+                        <li><strong>textStyles</strong>: Custom styles for text elements</li>
+                        <li><strong>scaleOnHover</strong>: Scale factor on hover</li>
+                        <li>
+                            <strong>maxRepos</strong>: Maximum number of repositories to display
+                        </li>
+                        <li><strong>sortBy</strong>: Sort criteria (e.g., 'stars', 'forks')</li>
+                    </ul>
+                </div>
 
-            <div x-show="currentSection === 'features'" class="space-y-8">
-                <h2 class="text-3xl font-bold text-slate-900 mb-6">Features</h2>
-                <ul class="space-y-4 text-slate-600">
-                    <li>Fully customizable styling</li>
-                    <li>Responsive grid layout</li>
-                    <li>Local caching for better performance</li>
-                    <li>Language color coding</li>
-                    <li>Multiple sorting options</li>
-                    <li>Hover animations</li>
-                    <li>Configurable display limits</li>
-                </ul>
-            </div>
+                <div x-show="currentSection === 'features'" class="space-y-8 m-8">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Features</h2>
+                    <ul class="space-y-4 text-slate-600">
+                        <li>Fully customizable styling</li>
+                        <li>Responsive grid layout</li>
+                        <li>Local caching for better performance</li>
+                        <li>Language color coding</li>
+                        <li>Multiple sorting options</li>
+                        <li>Hover animations</li>
+                        <li>Configurable display limits</li>
+                    </ul>
+                </div>
 
-            <div x-show="currentSection === 'styling'" class="space-y-8">
-                <h2 class="text-3xl font-bold text-slate-900 mb-6">Styling</h2>
-                <p class="text-slate-600">
-                    Customize the appearance of the repository cards using the
-                    <strong>cardStyles</strong> and <strong>textStyles</strong> options. Example:
-                </p>
-                <pre
-                    class="language-javascript rounded-lg p-4"
-                ><code class="language-javascript">createRepoWidget({
+                <div x-show="currentSection === 'styling'" class="space-y-8 m-8">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Styling</h2>
+                    <p class="text-slate-600">
+                        Customize the appearance of the repository cards using the
+                        <strong>cardStyles</strong> and <strong>textStyles</strong> options.
+                        Example:
+                    </p>
+                    <pre
+                        class="language-javascript rounded-lg p-4"
+                    ><code class="language-javascript">createRepoWidget({
     username: 'github-username',
     containerId: 'my-repos',
     cardStyles: {
@@ -229,83 +263,82 @@
         iconColor: '#718096'
     }
 });</code></pre>
-            </div>
+                </div>
 
-            <div x-show="currentSection === 'sorting'" class="space-y-8">
-                <h2 class="text-3xl font-bold text-slate-900 mb-6">Sorting Options</h2>
-                <p class="text-slate-600">
-                    The widget allows sorting repositories by various criteria. Use the
-                    <strong>sortBy</strong> option to specify the sorting method:
-                </p>
-                <ul class="space-y-4 text-slate-600">
-                    <li>
-                        <strong>stars</strong>: Display most starred repositories first (default)
-                    </li>
-                    <li><strong>forks</strong>: Sort by number of repository forks</li>
-                    <li><strong>size</strong>: Order by repository size</li>
-                    <li><strong>name</strong>: Alphabetical sorting by repository name</li>
-                </ul>
-                <pre
-                    class="language-javascript rounded-lg p-4"
-                ><code class="language-javascript">createRepoWidget({
+                <div x-show="currentSection === 'sorting'" class="space-y-8 m-8">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Sorting Options</h2>
+                    <p class="text-slate-600">
+                        The widget allows sorting repositories by various criteria. Use the
+                        <strong>sortBy</strong> option to specify the sorting method:
+                    </p>
+                    <ul class="space-y-4 text-slate-600">
+                        <li>
+                            <strong>stars</strong>: Display most starred repositories first
+                            (default)
+                        </li>
+                        <li><strong>forks</strong>: Sort by number of repository forks</li>
+                        <li><strong>size</strong>: Order by repository size</li>
+                        <li><strong>name</strong>: Alphabetical sorting by repository name</li>
+                    </ul>
+                    <pre
+                        class="language-javascript rounded-lg p-4"
+                    ><code class="language-javascript">createRepoWidget({
     username: 'github-username',
     containerId: 'my-repos',
     sortBy: 'forks',
     maxRepos: 6
 });</code></pre>
-            </div>
+                </div>
 
-            <div x-show="currentSection === 'responsive-design'" class="space-y-8">
-                <h2 class="text-3xl font-bold text-slate-900 mb-6">Responsive Design</h2>
-                <p class="text-slate-600">
-                    The widget automatically adjusts its layout based on screen size. Customize the
-                    number of columns for different devices using the
-                    <strong>columns</strong> option:
-                </p>
-                <pre
-                    class="language-javascript rounded-lg p-4"
-                ><code class="language-javascript">createRepoWidget({
+                <div x-show="currentSection === 'responsive-design'" class="space-y-8 m-8">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Responsive Design</h2>
+                    <p class="text-slate-600">
+                        The widget automatically adjusts its layout based on screen size. Customize
+                        the number of columns for different devices using the
+                        <strong>columns</strong> option:
+                    </p>
+                    <pre
+                        class="language-javascript rounded-lg p-4"
+                    ><code class="language-javascript">createRepoWidget({
     username: 'github-username',
     containerId: 'my-repos',
     columns: { mobile: 1, tablet: 2, desktop: 3 }
 });</code></pre>
-            </div>
+                </div>
 
-            <div x-show="currentSection === 'examples'" class="space-y-8">
-                <h2 class="text-3xl font-bold text-slate-900 mb-6">Examples</h2>
-                <p class="text-slate-600">
-                    Here are some examples of how to use the GitHub Repository Widget in different
-                    scenarios:
-                </p>
-                <!-- Add example code snippets or use cases here -->
-            </div>
+                <div x-show="currentSection === 'examples'" class="flex">
+                    <iframe src="demo.html" class="h-[1000px]"></iframe>
+                </div>
 
-            <div x-show="currentSection === 'contributing'" class="space-y-8">
-                <h2 class="text-3xl font-bold text-slate-900 mb-6">Contributing</h2>
-                <p class="text-slate-600">
-                    Contributions are welcome! Feel free to submit issues and pull requests. Follow
-                    these steps to contribute:
-                </p>
-                <ol class="list-decimal list-inside space-y-2 text-slate-600">
-                    <li>Fork the repository</li>
-                    <li>
-                        Create your feature branch (<code
-                            class="font-mono bg-gray-100 px-2 py-0.5 rounded"
-                            >git checkout -b feature/amazing-feature</code
-                        >)
-                    </li>
-                    <li>
-                        Commit your changes (<code class="font-mono bg-gray-100 px-2 py-0.5 rounded"
-                            >git commit -m 'Add amazing feature'</code
-                        >)
-                    </li>
-                    <li>
-                        Push to the branch (<code class="font-mono bg-gray-100 px-2 py-0.5 rounded"
-                            >git push origin feature/amazing-feature</code
-                        >)
-                    </li>
-                    <li>Open a Pull Request</li>
-                </ol>
+                <div x-show="currentSection === 'contributing'" class="space-y-8 m-8">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Contributing</h2>
+                    <p class="text-slate-600">
+                        Contributions are welcome! Feel free to submit issues and pull requests.
+                        Follow these steps to contribute:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-2 text-slate-600">
+                        <li>Fork the repository</li>
+                        <li>
+                            Create your feature branch (<code
+                                class="font-mono bg-gray-100 px-2 py-0.5 rounded"
+                                >git checkout -b feature/amazing-feature</code
+                            >)
+                        </li>
+                        <li>
+                            Commit your changes (<code
+                                class="font-mono bg-gray-100 px-2 py-0.5 rounded"
+                                >git commit -m 'Add amazing feature'</code
+                            >)
+                        </li>
+                        <li>
+                            Push to the branch (<code
+                                class="font-mono bg-gray-100 px-2 py-0.5 rounded"
+                                >git push origin feature/amazing-feature</code
+                            >)
+                        </li>
+                        <li>Open a Pull Request</li>
+                    </ol>
+                </div>
             </div>
         </main>
 
