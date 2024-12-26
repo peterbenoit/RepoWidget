@@ -138,15 +138,18 @@ function createRepoWidget({
             const languageColor = languageColors[repo.language] || '#cccccc';
 
             card.innerHTML = `
-					<a href="${
-                        repo.html_url
-                    }" target="_blank" style="text-decoration: none; color: inherit; display: block; padding: 16px;">
+				<a href="${
+                    repo.html_url
+                }" target="_blank" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; padding: 16px;">
+					<div style="flex: 1;">
 						<h3 style="font-size: 1.25rem; font-weight: bold; color: ${textStyles.titleColor || '#333333'};">${
                 repo.name
             }</h3>
 						<p style="color: ${textStyles.descriptionColor || '#666666'}; margin: 8px 0;">${
                 repo.description || 'No description provided'
             }</p>
+					</div>
+					<div style="margin-top: auto;">
 						<div style="display: flex; align-items: center; color: ${
                             textStyles.iconColor || '#888888'
                         }; font-size: 0.875rem;">
@@ -170,8 +173,9 @@ function createRepoWidget({
 						<div style="color: ${
                             textStyles.sizeColor || '#aaaaaa'
                         }; font-size: 0.75rem; margin-top: 8px;">Size: ${repo.size} KB</div>
-					</a>
-				`;
+					</div>
+				</a>
+			`;
 
             repoContainer.appendChild(card);
         });
