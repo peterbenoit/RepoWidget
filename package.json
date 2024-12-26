@@ -6,7 +6,8 @@
     "scripts": {
         "build": "webpack --mode production",
         "dev": "webpack --watch --mode development",
-        "start": "browser-sync start --server 'dist' --files 'dist/**/*'"
+        "serve": "browser-sync start --server 'dist' --files 'dist/**/*'",
+        "start": "concurrently \"npm run dev\" \"npm run serve\""
     },
     "keywords": [
         "documentation"
