@@ -1,8 +1,9 @@
 {
     "name": "repowidget",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "type": "module",
     "description": "A lightweight, customizable widget to showcase GitHub repositories on any website",
+    "homepage": "https://www.repowidget.com",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
     "files": [
@@ -35,7 +36,6 @@
     "bugs": {
         "url": "https://github.com/peterbenoit/RepoWidget/issues"
     },
-    "homepage": "https://github.com/peterbenoit/RepoWidget#readme",
     "devDependencies": {
         "@rollup/plugin-commonjs": "^28.0.2",
         "@rollup/plugin-node-resolve": "^16.0.0",
