@@ -1,6 +1,6 @@
 {
     "name": "repowidget",
-    "version": "1.0.1",
+    "version": "1.0.5",
     "type": "module",
     "description": "A lightweight, customizable widget to showcase GitHub repositories on any website",
     "main": "dist/index.js",
@@ -12,6 +12,12 @@
     "scripts": {
         "build": "rollup -c",
         "dev": "rollup -c -w"
+    },
+    "exports": {
+        ".": {
+            "import": "./dist/index.esm.js",
+            "require": "./dist/index.js"
+        }
     },
     "keywords": [
         "github",
