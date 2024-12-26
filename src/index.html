@@ -64,27 +64,6 @@
                 margin-bottom: 20px;
             }
 
-            #repo-container {
-                padding: 1.5rem;
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 1.5rem;
-                width: 100%;
-            }
-
-            #repo-container > div {
-                background-color: #ffffff;
-                border-radius: 8px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                overflow: hidden;
-                transition: transform 0.3s;
-                padding: 1rem;
-            }
-
-            #repo-container > div:hover {
-                transform: scale(1.05);
-            }
-
             .sidebar {
                 position: fixed;
                 top: 0;
@@ -622,13 +601,18 @@ createRepoWidget({
                 <div x-show="currentSection === 'config'" class="flex">
                     <div class="demo-area m-8">
                         <h2 class="text-3xl font-bold text-slate-900 mb-6">Demo</h2>
-                        <p class="text-slate-600 ml-8">
+                        <p class="text-slate-600">
                             The GitHub Repository Widget is highly configurable. You can edit its
                             appearance and behavior using various options by using the settings
                             button on the right.
                         </p>
 
-                        <div id="repo-container" role="region" aria-live="polite"></div>
+                        <div
+                            id="repo-container"
+                            role="region"
+                            aria-live="polite"
+                            class="mt-4"
+                        ></div>
 
                         <div class="sidebar" id="color-controls" aria-expanded="false">
                             <div class="flex justify-between items-center mb-4">
