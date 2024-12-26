@@ -6,7 +6,7 @@ function createRepoWidget({
     textStyles = {}, // Optional custom styles for text and icon colors
     scaleOnHover = 1.05, // Default scale factor on hover; set to 0 or false to disable
     maxRepos = columns.desktop === 1 ? 10 : columns.desktop * 2, // Default maxRepos is double the desktop column count
-    sortBy = 'stars', // Sorting parameter; options: "stars", "forks", "size", "name"
+    sortBy = 'stars', // Sorting parameter; options: "stars", "forks", "size", "name", "updated"
 }) {
     const repoContainer = document.getElementById(containerId);
 
@@ -103,6 +103,8 @@ function createRepoWidget({
                 return repos.sort((a, b) => b.size - a.size);
             case 'name':
                 return repos.sort((a, b) => a.name.localeCompare(b.name));
+            case 'updated':
+                return repos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
             default:
                 return repos;
         }
