@@ -352,42 +352,44 @@
                 <div x-show="currentSection === 'installation'" class="space-y-8 m-8">
                     <h2 class="text-3xl font-bold text-slate-900 mb-6">Installation</h2>
                     <p class="text-slate-600">
-                        To integrate the GitHub Repository Widget into your website, follow these
-                        steps. This widget allows you to dynamically display your GitHub
+                        To integrate the GitHub Repository Widget into your website, you have two
+                        options. This widget allows you to dynamically display your GitHub
                         repositories with customizable styles and sorting options, enhancing the
                         interactivity and visual appeal of your site.
                     </p>
                     <h3 class="text-xl font-semibold text-slate-800 mb-4">
-                        Step 1: Include the Script
+                        Option 1: Install via npm
                     </h3>
                     <p class="text-slate-600">
-                        First, include the widget's JavaScript file in your HTML. This script
-                        contains all the necessary logic to fetch and display your repositories.
-                        Ensure the path is correct relative to your HTML file:
+                        If you're using a build system or module bundler, you can install the widget
+                        using npm:
+                    </p>
+                    <pre
+                        class="language-bash rounded-lg p-4"
+                    ><code class="language-bash">npm install repowidget</code></pre>
+                    <p class="text-slate-600">
+                        After installation, import and initialize the widget in your JavaScript
+                        code:
+                    </p>
+                    <pre
+                        class="language-javascript rounded-lg p-4"
+                    ><code class="language-javascript">import { createRepoWidget } from 'repowidget';
+
+createRepoWidget({
+    username: 'your-github-username',
+    containerId: 'my-repos'
+});</code></pre>
+                    <h3 class="text-xl font-semibold text-slate-800 mb-4">
+                        Option 2: Include the Script Directly
+                    </h3>
+                    <p class="text-slate-600">
+                        Alternatively, you can include the widget's JavaScript file directly in your
+                        HTML. This method is suitable if you prefer not to use npm:
                     </p>
                     <pre
                         class="language-html rounded-lg p-4"
                     ><code class="language-html">&lt;script src="path/to/repoWidget.js"&gt;&lt;/script&gt;</code></pre>
-                    <h3 class="text-xl font-semibold text-slate-800 mb-4">
-                        Step 2: Add a Container Element
-                    </h3>
-                    <p class="text-slate-600">
-                        Next, add a container element where the widget will render the repository
-                        cards. This element acts as a placeholder in your HTML structure, allowing
-                        the widget to dynamically insert content:
-                    </p>
-                    <pre
-                        class="language-html rounded-lg p-4"
-                    ><code class="language-html">&lt;div id="my-repos"&gt;&lt;/div&gt;</code></pre>
-                    <h3 class="text-xl font-semibold text-slate-800 mb-4">
-                        Step 3: Initialize the Widget
-                    </h3>
-                    <p class="text-slate-600">
-                        Finally, initialize the widget by calling the
-                        <code>createRepoWidget</code> function. This function requires your GitHub
-                        username and the ID of the container element. It fetches your repositories
-                        and displays them according to the specified configuration:
-                    </p>
+                    <p class="text-slate-600">Then, initialize the widget in your script:</p>
                     <pre
                         class="language-javascript rounded-lg p-4"
                     ><code class="language-javascript">createRepoWidget({
@@ -395,10 +397,8 @@
     containerId: 'my-repos'
 });</code></pre>
                     <p class="text-slate-600">
-                        By following these steps, you ensure that the widget is correctly set up to
-                        retrieve and display your GitHub repositories. This setup is crucial for
-                        maintaining a seamless user experience and ensuring that your website
-                        remains up-to-date with your latest projects.
+                        Choose the method that best fits your project setup to ensure the widget is
+                        correctly set up to retrieve and display your GitHub repositories.
                     </p>
                 </div>
 
