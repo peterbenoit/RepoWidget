@@ -69,6 +69,18 @@
         // Cache response for 1 day
         const CACHE_EXPIRATION = 24 * 60 * 60 * 1000;
 
+        async function fetchCommitCount(repo) {
+            const response = await fetch(
+                `https://api.github.com/repos/${repo.owner.login}/${repo.name}/commits`
+            );
+            if (!response.ok) {
+                console.error('GitHub API error:', response.statusText);
+                return 0;
+            }
+            const commits = await response.json();
+            return commits.length;
+        }
+
         async function fetchRepos() {
             const cacheKey = `repos_${username}`;
             const cachedData = localStorage.getItem(cacheKey);
@@ -86,6 +98,10 @@
             }
 
             const repos = await response.json();
+
+            for (const repo of repos) {
+                repo.commit_count = await fetchCommitCount(repo);
+            }
 
             localStorage.setItem(cacheKey, JSON.stringify(repos));
             localStorage.setItem(`${cacheKey}_timestamp`, now);
@@ -106,6 +122,8 @@
                     return repos.sort((a, b) => a.name.localeCompare(b.name));
                 case 'updated':
                     return repos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+                case 'commits':
+                    return repos.sort((a, b) => b.commit_count - a.commit_count);
                 default:
                     return repos;
             }
@@ -113,14 +131,15 @@
 
         async function initializeWidget() {
             let repos = await fetchRepos();
-
-            // Sort and limit the repositories to display based on maxRepos
             repos = sortRepositories(repos).slice(0, maxRepos);
 
             repoContainer.innerHTML = '';
 
+            // Example of adding ARIA attributes and improving semantic HTML
             repos.forEach((repo) => {
-                const card = document.createElement('div');
+                const card = document.createElement('article');
+                card.setAttribute('role', 'region');
+                card.setAttribute('aria-labelledby', `repo-title-${repo.name}`);
                 card.style.cssText = `
 					background: #fff;
 					box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -141,11 +160,13 @@
                 card.innerHTML = `
 					<a href="${
                         repo.html_url
-                    }" target="_blank" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; padding: 16px;">
-						<div style="flex: 1;">
-							<h3 style="font-size: 1.25rem; font-weight: bold; color: ${textStyles.titleColor || '#333333'};">${
+                    }" target="_blank" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%; padding: 16px;" aria-label="Repository ${
                     repo.name
-                }</h3>
+                }">
+						<div style="flex: 1;">
+							<h3 id="repo-title-${repo.name}" style="font-size: 1.25rem; font-weight: bold; color: ${
+                    textStyles.titleColor || '#333333'
+                };">${repo.name}</h3>
 							<p style="color: ${textStyles.descriptionColor || '#666666'}; margin: 8px 0;">${
                     repo.description || 'No description provided'
                 }</p>
