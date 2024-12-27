@@ -69,42 +69,55 @@
         // Cache response for 1 day
         const CACHE_EXPIRATION = 24 * 60 * 60 * 1000;
 
-        async function fetchCommitCount(repo) {
-            const response = await fetch(
-                `https://api.github.com/repos/${repo.owner.login}/${repo.name}/commits`
-            );
-            if (!response.ok) {
-                console.error('GitHub API error:', response.statusText);
-                return 0;
-            }
-            const commits = await response.json();
-            return commits.length;
-        }
+        // async function fetchCommitCount(repo) {
+        //     const response = await fetch(
+        //         `https://api.github.com/repos/${repo.owner.login}/${repo.name}/commits`
+        //     );
+        //     if (!response.ok) {
+        //         console.error('GitHub API error:', response.statusText);
+        //         return 0;
+        //     }
+        //     const commits = await response.json();
+        //     return commits.length;
+        // }
 
         async function fetchRepos() {
             const cacheKey = `repos_${username}`;
             const cachedData = localStorage.getItem(cacheKey);
+            const cachedETag = localStorage.getItem(`${cacheKey}_etag`);
             const cacheTimestamp = localStorage.getItem(`${cacheKey}_timestamp`);
             const now = Date.now();
+            const headers = {};
 
-            if (cachedData && cacheTimestamp && now - cacheTimestamp < CACHE_EXPIRATION) {
+            if (cachedETag) {
+                headers['If-None-Match'] = cachedETag;
+            }
+
+            const response = await fetch(`https://api.github.com/users/${username}/repos`, {
+                headers,
+            });
+
+            if (response.status === 304 && cachedData) {
                 return JSON.parse(cachedData);
             }
 
-            const response = await fetch(`https://api.github.com/users/${username}/repos`);
             if (!response.ok) {
                 console.error('GitHub API error:', response.statusText);
                 return [];
             }
 
             const repos = await response.json();
+            const eTag = response.headers.get('ETag');
 
-            for (const repo of repos) {
-                repo.commit_count = await fetchCommitCount(repo);
-            }
+            // for (const repo of repos) {
+            //     repo.commit_count = await fetchCommitCount(repo);
+            // }
 
             localStorage.setItem(cacheKey, JSON.stringify(repos));
             localStorage.setItem(`${cacheKey}_timestamp`, now);
+            if (eTag) {
+                localStorage.setItem(`${cacheKey}_etag`, eTag);
+            }
 
             return repos;
         }
@@ -122,8 +135,8 @@
                     return repos.sort((a, b) => a.name.localeCompare(b.name));
                 case 'updated':
                     return repos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-                case 'commits':
-                    return repos.sort((a, b) => b.commit_count - a.commit_count);
+                // case 'commits':
+                //     return repos.sort((a, b) => b.commit_count - a.commit_count);
                 default:
                     return repos;
             }
