@@ -7,7 +7,8 @@
         "build": "webpack --mode production",
         "dev": "webpack --watch --mode development",
         "serve": "browser-sync start --server 'dist' --files 'dist/**/*'",
-        "start": "concurrently \"npm run dev\" \"npm run serve\""
+        "start": "concurrently \"npm run dev\" \"npm run serve\"",
+        "copy": "node copy.js"
     },
     "keywords": [
         "documentation"
