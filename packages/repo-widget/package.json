@@ -1,6 +1,6 @@
 {
     "name": "repowidget",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "type": "module",
     "description": "A lightweight, customizable widget to showcase GitHub repositories on any website",
     "homepage": "https://www.repowidget.com",
