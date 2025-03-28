@@ -2,23 +2,32 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>GitHub Repository Widget Documentation</title>
-        <!-- Add SEO meta tags -->
+        <title>GitHub Repository Widget | Beautiful GitHub Repo Displays</title>
+        <!-- Enhanced SEO meta tags -->
         <meta
             name="description"
-            content="GitHub Repository Widget - A lightweight, customizable widget to showcase your GitHub repositories"
+            content="RepoWidget - A lightweight, customizable widget to showcase GitHub repositories on any website with smart caching and beautiful styling"
         />
-        <meta name="keywords" content="GitHub, widget, repositories, JavaScript" />
+        <meta
+            name="keywords"
+            content="GitHub, repository widget, portfolio, developer tools, code showcase"
+        />
 
-        <!-- Add Open Graph tags -->
-        <meta property="og:title" content="GitHub Repository Widget" />
-        <meta property="og:description" content="Showcase your GitHub repositories with style" />
+        <!-- Improved Open Graph tags -->
+        <meta property="og:title" content="RepoWidget - Beautiful GitHub Repository Display" />
+        <meta
+            property="og:description"
+            content="Showcase your GitHub repositories with style and customization"
+        />
         <meta property="og:image" content="/images/preview.jpg" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.repowidget.com" />
 
-        <!-- Add Twitter Card tags -->
+        <!-- Enhanced Twitter Card tags -->
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="GitHub Repository Widget" />
+        <meta name="twitter:title" content="RepoWidget - GitHub Repository Display" />
         <meta name="twitter:description" content="Showcase your GitHub repositories with style" />
+        <meta name="twitter:image" content="/images/preview.jpg" />
 
         <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
@@ -26,7 +35,7 @@
 
         <link href="output.css" rel="stylesheet" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
             rel="stylesheet"
@@ -34,53 +43,362 @@
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
-            body {
-                font-family: 'Inter', sans-serif;
-                display: flex;
-                flex-direction: row; /* Changed to row to accommodate nav and aside */
-                height: 100vh;
-                margin: 0;
-            }
-            nav,
-            aside {
-                flex: 0 0 64px; /* Fixed width for nav and aside */
-            }
-            main {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                overflow: hidden; /* Ensure no overflow */
-            }
-            .content {
-                flex: 1;
-                overflow: auto;
-                display: flex;
-                flex-direction: column;
-            }
-            button {
-                padding: 8px 16px;
-                font-size: 16px;
-                cursor: pointer;
-                margin-bottom: 20px;
+            :root {
+                --primary: #3b82f6;
+                --primary-dark: #2563eb;
+                --primary-light: #dbeafe;
+                --secondary: #22c55e;
+                --accent: #f59e0b;
+                --dark: #0f172a;
+                --light: #f8fafc;
+                --gray-100: #f1f5f9;
+                --gray-200: #e2e8f0;
+                --gray-300: #cbd5e1;
+                --gray-400: #94a3b8;
+                --gray-500: #64748b;
+                --gray-600: #475569;
+                --gray-700: #334155;
+                --gray-800: #1e293b;
+                --gray-900: #0f172a;
+                --sidebar-width: 280px;
+                --right-sidebar-width: 250px;
+                --header-height: 64px;
+                --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+                --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             }
 
+            html {
+                scroll-behavior: smooth;
+                scroll-padding-top: 80px;
+            }
+
+            body {
+                font-family: 'Inter', sans-serif;
+                color: var(--gray-800);
+                background-color: var(--gray-100);
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                margin: 0;
+                position: relative;
+            }
+
+            .skip-link {
+                position: absolute;
+                top: -999px;
+                left: -999px;
+                background: var(--primary);
+                color: white;
+                padding: 1rem;
+                z-index: 9999;
+                border-radius: 0 0 4px 4px;
+            }
+
+            .skip-link:focus {
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            @media (min-width: 1024px) {
+                body {
+                    flex-direction: row;
+                    height: 100vh;
+                    overflow: hidden;
+                }
+                main {
+                    margin-top: 0;
+                    margin-left: var(--sidebar-width);
+                    margin-right: 0; /* Remove right margin */
+                    width: calc(100% - var(--sidebar-width)); /* Adjust width calculation */
+                    overflow-y: auto;
+                }
+            }
+
+            aside.right-sidebar {
+                display: none;
+            }
+
+            header {
+                height: var(--header-height);
+                display: flex;
+                align-items: center;
+                padding: 0 1.5rem;
+                background-color: white;
+                border-bottom: 1px solid var(--gray-200);
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 50;
+            }
+
+            .sidebar-toggle {
+                display: block;
+                padding: 0.5rem;
+                background: none;
+                border: none;
+                color: var(--gray-600);
+                margin-right: 1rem;
+                cursor: pointer;
+            }
+
+            @media (min-width: 1024px) {
+                .sidebar-toggle {
+                    display: none;
+                }
+
+                header {
+                    display: none;
+                }
+            }
+
+            nav.left-sidebar {
+                width: 100%;
+                height: 100%;
+                background-color: white;
+                border-right: 1px solid var(--gray-200);
+                padding: 2rem 0;
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                z-index: 40;
+                overflow-y: auto;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            nav.left-sidebar.open {
+                transform: translateX(0);
+            }
+
+            @media (min-width: 1024px) {
+                nav.left-sidebar {
+                    width: var(--sidebar-width);
+                    transform: none;
+                    padding-top: 2rem;
+                    box-shadow: var(--shadow-md);
+                }
+            }
+
+            main {
+                margin-top: var(--header-height);
+                padding: 0;
+                width: 100%;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            @media (min-width: 1024px) {
+                main {
+                    margin-top: 0;
+                    margin-left: var(--sidebar-width);
+                    margin-right: var(--right-sidebar-width);
+                    width: calc(100% - var(--sidebar-width) - var(--right-sidebar-width));
+                    overflow-y: auto;
+                }
+            }
+
+            .section-content {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 2rem 1rem;
+            }
+
+            @media (min-width: 768px) {
+                .section-content {
+                    padding: 3rem 2rem;
+                }
+            }
+
+            aside.right-sidebar {
+                display: none;
+                width: var(--right-sidebar-width);
+                background-color: white;
+                border-left: 1px solid var(--gray-200);
+                padding: 2rem 1rem;
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                overflow-y: auto;
+                box-shadow: var(--shadow-md);
+            }
+
+            @media (min-width: 1024px) {
+                aside.right-sidebar {
+                    display: block;
+                }
+            }
+
+            .nav-section {
+                margin-bottom: 2rem;
+                padding: 0 1.5rem;
+            }
+
+            .nav-section h2 {
+                font-size: 0.875rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: var(--gray-500);
+                margin-bottom: 0.75rem;
+                padding: 0 0.75rem;
+            }
+
+            .nav-section a {
+                display: block;
+                padding: 0.5rem 0.75rem;
+                color: var(--gray-700);
+                text-decoration: none;
+                border-radius: 0.375rem;
+                transition: all 0.2s;
+                font-size: 0.925rem;
+            }
+
+            .nav-section a:hover {
+                background-color: var(--gray-100);
+                color: var(--gray-900);
+            }
+
+            .nav-section a.active {
+                background-color: var(--primary-light);
+                color: var(--primary-dark);
+                font-weight: 500;
+            }
+
+            .right-sidebar h3 {
+                font-size: 0.875rem;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                color: var(--gray-500);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+
+            .right-sidebar a,
+            .right-sidebar span {
+                display: block;
+                padding: 0.25rem 0;
+                color: var(--gray-600);
+                text-decoration: none;
+                font-size: 0.875rem;
+            }
+
+            .right-sidebar a:hover {
+                color: var(--primary);
+            }
+
+            .right-sidebar span {
+                color: var(--gray-400);
+            }
+
+            .right-sidebar li {
+                list-style-type: none;
+                padding-left: 1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-bottom: 1.5rem;
+                color: var(--gray-900);
+                scroll-margin-top: 2rem;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                color: var(--gray-800);
+                scroll-margin-top: 2rem;
+            }
+
+            p {
+                margin-bottom: 1.5rem;
+                line-height: 1.7;
+            }
+
+            /* Code blocks */
+            pre[class*='language-'] {
+                border-radius: 0.5rem;
+                margin: 1.5rem 0;
+                box-shadow: var(--shadow);
+                max-width: 100%;
+                overflow-x: auto;
+            }
+
+            /* Feature cards */
+            .feature-card {
+                background-color: white;
+                border-radius: 0.5rem;
+                padding: 1.5rem;
+                box-shadow: var(--shadow);
+                transition: transform 0.2s, box-shadow 0.2s;
+                height: 100%;
+            }
+
+            .feature-card:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--shadow-md);
+            }
+
+            .feature-card h3 {
+                margin-top: 0;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .feature-icon {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 2.5rem;
+                height: 2.5rem;
+                background-color: var(--primary-light);
+                color: var(--primary-dark);
+                border-radius: 0.375rem;
+                margin-bottom: 1rem;
+            }
+
+            /* Configurable widget panel */
             .sidebar {
                 position: fixed;
                 top: 0;
                 right: -350px;
-                width: 350px;
+                width: 330px;
                 height: 100%;
-                background-color: #333333;
-                color: #ffffff;
-                padding: 20px;
+                background-color: var(--gray-800);
+                color: white;
+                padding: 1.5rem;
                 z-index: 90;
                 transition: right 0.3s ease;
                 overflow-y: auto;
+                box-shadow: var(--shadow-lg);
+                border-left: 1px solid var(--gray-700);
             }
 
             .sidebar input,
             .sidebar select {
-                color: #000;
+                color: var(--gray-800);
+                background-color: white;
+                border-radius: 0.375rem;
+                border: 1px solid var(--gray-300);
+                padding: 0.5rem 0.75rem;
+                transition: all 0.2s;
+                width: 100%;
+            }
+
+            .sidebar input:focus,
+            .sidebar select:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
             }
 
             .sidebar.visible {
@@ -91,81 +409,141 @@
                 right: 350px;
             }
 
-            .controls-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-                margin-top: 10px;
-            }
-
-            .controls-grid label {
-                display: block;
-                margin-bottom: 5px;
-                font-size: 14px;
-                color: #ffffff;
-            }
-
-            .controls-grid input[type='color'] {
-                width: 100%;
-                height: 40px;
-                border: none;
-                cursor: pointer;
-            }
-
-            .config-output {
-                margin-top: 20px;
-                background-color: #222;
-                padding: 10px;
-                border-radius: 5px;
-                color: #ffffff;
-                font-size: 0.9rem;
-            }
-
-            .config-output h4 {
-                margin-bottom: 10px;
-            }
-
-            .config-output pre {
-                white-space: pre-wrap;
-                word-wrap: break-word;
-            }
-
             .toggle-button {
                 position: fixed;
                 top: 180px;
-                right: 0rem;
-                background-color: #e74c3c;
+                right: 0;
+                background-color: var(--primary);
                 border: none;
-                color: #ffffff;
-                padding: 10px;
-                border-radius: 5px;
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
+                color: white;
+                padding: 0.75rem;
+                border-radius: 0.375rem 0 0 0.375rem;
                 cursor: pointer;
-                transition: right 0.3s ease;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-                z-index: 90;
+                transition: all 0.3s ease;
+                box-shadow: var(--shadow-md);
+                z-index: 89;
             }
 
             .toggle-button:hover {
-                background-color: #c0392b;
+                background-color: var(--primary-dark);
             }
 
-            .toggle-button svg {
-                width: 24px;
-                height: 24px;
-                fill: #ffffff;
-            }
-
-            .close-button {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                background: none;
-                color: #ffffff;
-                border: none;
-                font-size: 18px;
+            /* Custom button styles */
+            .btn {
+                display: inline-block;
+                font-weight: 500;
+                padding: 0.625rem 1.25rem;
+                border-radius: 0.375rem;
+                text-decoration: none;
+                transition: all 0.2s;
                 cursor: pointer;
+                border: none;
+            }
+
+            .btn-primary {
+                background-color: var(--primary);
+                color: white;
+            }
+
+            .btn-primary:hover {
+                background-color: var(--primary-dark);
+            }
+
+            .btn-secondary {
+                background-color: var(--secondary);
+                color: white;
+            }
+
+            .btn-secondary:hover {
+                background-color: #15803d;
+            }
+
+            /* Demo repo container specific styles */
+            #repo-container {
+                margin: 2rem 0;
+                min-height: 400px;
+                border-radius: 0.5rem;
+                background-color: var(--light);
+                box-shadow: var(--shadow);
+                padding: 1rem;
+            }
+
+            /* Documentation sections */
+            .doc-section {
+                margin-bottom: 3rem;
+            }
+
+            /* Config grid */
+            .config-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            @media (min-width: 640px) {
+                .config-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            /* Table styles */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 1.5rem 0;
+                font-size: 0.9rem;
+            }
+
+            th,
+            td {
+                padding: 0.75rem 1rem;
+                border-bottom: 1px solid var(--gray-200);
+            }
+
+            th {
+                background-color: var(--gray-100);
+                font-weight: 600;
+                text-align: left;
+            }
+
+            tbody tr:hover {
+                background-color: var(--gray-50);
+            }
+
+            /* Badges and tags */
+            .badge {
+                display: inline-block;
+                padding: 0.25rem 0.5rem;
+                border-radius: 9999px;
+                font-size: 0.75rem;
+                font-weight: 500;
+                margin-right: 0.5rem;
+            }
+
+            .badge-blue {
+                background-color: var(--primary-light);
+                color: var(--primary-dark);
+            }
+
+            .badge-green {
+                background-color: #dcfce7;
+                color: #166534;
+            }
+
+            .badge-yellow {
+                background-color: #fef9c3;
+                color: #854d0e;
+            }
+
+            /* Change from bg-blue-50 to bg-blue-100 for better contrast */
+            .mt-8.p-4.bg-blue-50.border-l-4.border-blue-500 {
+                background-color: #dbeafe; /* bg-blue-100 */
+            }
+
+            /* Also adjust any other similar notice containers */
+            .p-4.bg-blue-50.rounded-lg,
+            .p-4.bg-blue-50.border-l-4.border-blue-500.rounded.mt-6 {
+                background-color: #dbeafe; /* bg-blue-100 */
             }
         </style>
         <link
@@ -180,115 +558,171 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
     </head>
-    <body class="bg-slate-50" x-data="{ currentSection: 'introduction' }">
+    <body
+        x-data="{
+        currentSection: 'introduction',
+        sidebarOpen: false,
+        toggleSidebar() { this.sidebarOpen = !this.sidebarOpen; }
+    }"
+    >
         <a href="#main-content" class="skip-link">Skip to main content</a>
-        <nav
-            class="fixed top-0 left-0 h-full w-64 bg-[#f7f7f7] border-r border-slate-200 p-6 overflow-y-auto"
-        >
-            <div class="mb-8">
-                <img src="images/repowidget.png" alt="Repowidget.com" />
-                <a
-                    href="https://github.com/peterbenoit/RepoWidget"
-                    class="text-sm text-slate-500 hover:text-slate-700 mt-2 block"
-                    >View on GitHub →</a
+
+        <!-- Mobile Header -->
+        <header>
+            <button @click="toggleSidebar" class="sidebar-toggle">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                 >
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <img src="images/repowidget.png" alt="RepoWidget" style="height: 32px" />
+        </header>
+
+        <!-- Left Navigation Sidebar -->
+        <nav class="left-sidebar" :class="{ 'open': sidebarOpen }">
+            <div class="p-4 border-b border-gray-200">
+                <img src="images/repowidget.png" alt="RepoWidget" class="h-8 mb-2" />
+                <div class="flex justify-between items-center">
+                    <a
+                        href="https://github.com/peterbenoit/RepoWidget"
+                        class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path
+                                d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                            ></path>
+                            <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                        </svg>
+                        GitHub
+                    </a>
+                    <span class="badge badge-blue">v1.0.9</span>
+                    <button
+                        @click="toggleSidebar"
+                        class="lg:hidden text-gray-500 hover:text-gray-900"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
             </div>
 
-            <div class="mb-8">
-                <h2 class="text-sm font-semibold text-slate-900 px-3 mb-2">Getting Started</h2>
-                <ul class="space-y-2">
+            <div class="nav-section">
+                <h2>Getting Started</h2>
+                <ul class="space-y-1">
                     <li>
                         <a
                             href="#introduction"
-                            @click.prevent="currentSection = 'introduction'"
-                            :class="currentSection === 'introduction' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
-                            class="block px-3 py-2 rounded-md transition"
+                            @click.prevent="currentSection = 'introduction'; sidebarOpen = false"
+                            :class="{ 'active': currentSection === 'introduction' }"
                             >Introduction</a
                         >
                     </li>
                     <li>
                         <a
                             href="#installation"
-                            @click.prevent="currentSection = 'installation'"
-                            :class="currentSection === 'installation' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
-                            class="block px-3 py-2 rounded-md transition"
+                            @click.prevent="currentSection = 'installation'; sidebarOpen = false"
+                            :class="{ 'active': currentSection === 'installation' }"
                             >Installation</a
                         >
                     </li>
                     <li>
                         <a
                             href="#configuration"
-                            @click.prevent="currentSection = 'configuration'"
-                            :class="currentSection === 'configuration' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
-                            class="block px-3 py-2 rounded-md transition"
+                            @click.prevent="currentSection = 'configuration'; sidebarOpen = false"
+                            :class="{ 'active': currentSection === 'configuration' }"
                             >Configuration</a
                         >
                     </li>
                     <li>
                         <a
                             href="#features"
-                            @click.prevent="currentSection = 'features'"
-                            :class="currentSection === 'features' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
-                            class="block px-3 py-2 rounded-md transition"
+                            @click.prevent="currentSection = 'features'; sidebarOpen = false"
+                            :class="{ 'active': currentSection === 'features' }"
                             >Features</a
                         >
                     </li>
                 </ul>
             </div>
 
-            <div class="mb-8">
-                <h2 class="text-sm font-semibold text-slate-900 px-3 mb-2">Usage</h2>
-                <ul class="space-y-2">
+            <div class="nav-section">
+                <h2>Usage Guide</h2>
+                <ul class="space-y-1">
                     <li>
                         <a
                             href="#styling"
-                            @click.prevent="currentSection = 'styling'"
-                            :class="currentSection === 'styling' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
-                            class="block px-3 py-2 rounded-md transition"
+                            @click.prevent="currentSection = 'styling'; sidebarOpen = false"
+                            :class="{ 'active': currentSection === 'styling' }"
                             >Styling</a
                         >
                     </li>
                     <li>
                         <a
                             href="#sorting"
-                            @click.prevent="currentSection = 'sorting'"
-                            :class="currentSection === 'sorting' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
-                            class="block px-3 py-2 rounded-md transition"
+                            @click.prevent="currentSection = 'sorting'; sidebarOpen = false"
+                            :class="{ 'active': currentSection === 'sorting' }"
                             >Sorting Options</a
                         >
                     </li>
                     <li>
                         <a
                             href="#responsive-design"
-                            @click.prevent="currentSection = 'responsive-design'"
-                            :class="currentSection === 'responsive-design' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
-                            class="block px-3 py-2 rounded-md transition"
+                            @click.prevent="currentSection = 'responsive-design'; sidebarOpen = false"
+                            :class="{ 'active': currentSection === 'responsive-design' }"
                             >Responsive Design</a
                         >
                     </li>
                 </ul>
             </div>
 
-            <div>
-                <h2 class="text-sm font-semibold text-slate-900 px-3 mb-2">
-                    Demo &amp; Contributing
-                </h2>
-                <ul class="space-y-2">
+            <div class="nav-section">
+                <h2>Demo & Community</h2>
+                <ul class="space-y-1">
                     <li>
                         <a
                             href="#config"
-                            @click.prevent="currentSection = 'config'"
-                            :class="currentSection === 'config' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
-                            class="block px-3 py-2 rounded-md transition"
-                            >Demo</a
+                            @click.prevent="currentSection = 'config'; sidebarOpen = false"
+                            :class="{ 'active': currentSection === 'config' }"
+                            >Interactive Demo</a
                         >
                     </li>
                     <li>
                         <a
                             href="#contributing"
-                            @click.prevent="currentSection = 'contributing'"
-                            :class="currentSection === 'contributing' ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:text-slate-900'"
-                            class="block px-3 py-2 rounded-md transition"
+                            @click.prevent="currentSection = 'contributing'; sidebarOpen = false"
+                            :class="{ 'active': currentSection === 'contributing' }"
                             >Contributing</a
                         >
                     </li>
@@ -296,258 +730,494 @@
             </div>
         </nav>
 
-        <main class="ml-32 mr-64">
-            <div class="content">
-                <div x-show="currentSection === 'introduction'" class="space-y-8 m-8">
-                    <div>
-                        <h2 class="text-3xl font-bold text-slate-900 mb-4">
-                            GitHub Repository Widget
-                        </h2>
-                        <p class="text-lg text-slate-600 mb-8">
-                            Show off your GitHub projects with style using this lightweight widget.
-                            It's built to make your repositories look great on any website, with
-                            rich metadata and smooth animations that bring your code to life.
-                        </p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-                            <div class="bg-white p-6 rounded-lg shadow-sm">
-                                <h3 class="text-xl font-semibold text-slate-800 mb-3">
-                                    Quick Setup
-                                </h3>
-                                <p class="text-slate-600">
-                                    Drop in a few lines of code and you're ready to go. The widget
-                                    handles everything from fetching your repos to displaying them
-                                    beautifully.
-                                </p>
+        <!-- Main Content -->
+        <main id="main-content">
+            <!-- Introduction Section -->
+            <div x-show="currentSection === 'introduction'" class="section-content">
+                <div class="doc-section">
+                    <h2>GitHub Repository Widget</h2>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="badge badge-blue">JavaScript</span>
+                        <span class="badge badge-green">MIT License</span>
+                        <span class="badge badge-yellow">Customizable</span>
+                    </div>
+                    <p class="text-lg">
+                        Show off your GitHub projects with style using this lightweight widget. It's
+                        built to make your repositories look great on any website, with rich
+                        metadata and smooth animations that bring your code to life.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
                             </div>
-                            <div class="bg-white p-6 rounded-lg shadow-sm">
-                                <h3 class="text-xl font-semibold text-slate-800 mb-3">
-                                    Smart Caching
-                                </h3>
-                                <p class="text-slate-600">
-                                    Built-in caching keeps things fast and efficient, while making
-                                    sure your repository data stays fresh and up-to-date.
-                                </p>
+                            <h3>Quick Setup</h3>
+                            <p>
+                                Drop in a few lines of code and you're ready to go. The widget
+                                handles everything from fetching your repos to displaying them
+                                beautifully.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                                    ></path>
+                                </svg>
                             </div>
+                            <h3>Smart Caching</h3>
+                            <p>
+                                Built-in caching keeps things fast and efficient, while making sure
+                                your repository data stays fresh and up-to-date.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                </svg>
+                            </div>
+                            <h3>Beautiful Design</h3>
+                            <p>
+                                Professionally designed cards display your repos with language
+                                colors, stars, forks, and other key metrics that showcase your work.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                            </div>
+                            <h3>Responsive</h3>
+                            <p>
+                                Automatically adapts to different screen sizes with customizable
+                                column layouts for mobile, tablet, and desktop views.
+                            </p>
                         </div>
                     </div>
-                </div>
 
-                <div x-show="currentSection === 'installation'" class="space-y-8 m-8">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Installation</h2>
-                    <p class="text-slate-600">
+                    <div class="mt-8 p-4 bg-blue-100 border-l-4 border-blue-500 rounded">
+                        <h3 class="text-lg font-medium text-blue-800 mb-2">Ready to try it?</h3>
+                        <p class="text-blue-700">
+                            Jump to the
+                            <a
+                                href="#installation"
+                                @click.prevent="currentSection = 'installation'"
+                                class="text-blue-600 underline hover:no-underline"
+                                >installation guide</a
+                            >
+                            or check out the
+                            <a
+                                href="#config"
+                                @click.prevent="currentSection = 'config'"
+                                class="text-blue-600 underline hover:no-underline"
+                                >interactive demo</a
+                            >.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Installation Section -->
+            <div x-show="currentSection === 'installation'" class="section-content">
+                <div class="doc-section">
+                    <h2>Installation</h2>
+                    <p>
                         To integrate the GitHub Repository Widget into your website, you have two
                         options. This widget allows you to dynamically display your GitHub
                         repositories with customizable styles and sorting options, enhancing the
                         interactivity and visual appeal of your site.
                     </p>
-                    <h3 class="text-xl font-semibold text-slate-800 mb-4">
-                        Option 1: Install via npm
-                    </h3>
-                    <p class="text-slate-600">
+
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 mb-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="text-blue-600"
+                            >
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            <h3 class="text-lg font-semibold mt-0 mb-0">Quick Overview</h3>
+                        </div>
+                        <ol class="list-decimal list-inside text-gray-700 space-y-1">
+                            <li>Choose between npm installation or direct script inclusion</li>
+                            <li>Add a container element to your HTML</li>
+                            <li>Initialize the widget with your GitHub username</li>
+                            <li>Customize appearance and behavior as needed</li>
+                        </ol>
+                    </div>
+
+                    <h3>Option 1: Install via npm</h3>
+                    <p>
                         If you're using a build system or module bundler, you can install the widget
                         using npm:
                     </p>
                     <pre
-                        class="language-bash rounded-lg p-4"
+                        class="language-bash"
                     ><code class="language-bash">npm install repowidget</code></pre>
-                    <p class="text-slate-600">
+
+                    <p>
                         After installation, import and initialize the widget in your JavaScript
                         code:
                     </p>
+
                     <pre
-                        class="language-javascript rounded-lg p-4"
+                        class="language-javascript"
                     ><code class="language-javascript">import { createRepoWidget } from 'repowidget';
 
 createRepoWidget({
     username: 'your-github-username',
     containerId: 'my-repos'
 });</code></pre>
-                    <h3 class="text-xl font-semibold text-slate-800 mb-4">
-                        Option 2: Include the Script Directly
-                    </h3>
-                    <p class="text-slate-600">
+
+                    <h3>Option 2: Include the Script Directly</h3>
+                    <p>
                         Alternatively, you can include the widget's JavaScript file directly in your
                         HTML. This method is suitable if you prefer not to use npm:
                     </p>
+
                     <pre
-                        class="language-html rounded-lg p-4"
-                    ><code class="language-html">&lt;script src="path/to/repoWidget.js"&gt;&lt;/script&gt;</code></pre>
-                    <p class="text-slate-600">Then, initialize the widget in your script:</p>
+                        class="language-html"
+                    ><code class="language-html">&lt;!-- Add the container where you want the repositories to appear -->
+&lt;div id="my-repos">&lt;/div>
+
+&lt;!-- Include the RepoWidget script -->
+&lt;script src="https://www.repowidget.com/bundle.js">&lt;/script>
+
+&lt;!-- Initialize the widget -->
+&lt;script>
+    createRepoWidget({
+        username: 'your-github-username',
+        containerId: 'my-repos'
+    });
+&lt;/script></code></pre>
+
+                    <div class="p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded mt-6">
+                        <h4 class="font-medium text-yellow-800 mb-1">Note</h4>
+                        <p class="text-yellow-700 mb-0">
+                            For production use, consider downloading the bundle.js file and hosting
+                            it on your own server to avoid any potential disruptions from
+                            third-party hosting.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuration Section -->
+            <div x-show="currentSection === 'configuration'" class="section-content">
+                <div class="doc-section">
+                    <h2>Configuration</h2>
+                    <p>
+                        RepoWidget is highly customizable through its configuration options. These
+                        options control everything from the data source to the visual presentation
+                        of your GitHub repositories.
+                    </p>
+
+                    <h3>Configuration Options</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Option</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>username</code></td>
+                                <td>string</td>
+                                <td><em>required</em></td>
+                                <td>Your GitHub username</td>
+                            </tr>
+                            <tr>
+                                <td><code>containerId</code></td>
+                                <td>string</td>
+                                <td><em>required</em></td>
+                                <td>ID of the container element</td>
+                            </tr>
+                            <tr>
+                                <td><code>columns</code></td>
+                                <td>object</td>
+                                <td><code>{mobile: 1, tablet: 2, desktop: 3}</code></td>
+                                <td>Number of columns for different screen sizes</td>
+                            </tr>
+                            <tr>
+                                <td><code>cardStyles</code></td>
+                                <td>object</td>
+                                <td><code>{}</code></td>
+                                <td>Custom styles for repository cards</td>
+                            </tr>
+                            <tr>
+                                <td><code>textStyles</code></td>
+                                <td>object</td>
+                                <td><code>{}</code></td>
+                                <td>Custom styles for text elements</td>
+                            </tr>
+                            <tr>
+                                <td><code>scaleOnHover</code></td>
+                                <td>number/boolean</td>
+                                <td><code>1.05</code></td>
+                                <td>Scale factor on hover (0 or false to disable)</td>
+                            </tr>
+                            <tr>
+                                <td><code>maxRepos</code></td>
+                                <td>number</td>
+                                <td><code>columns.desktop * 2</code></td>
+                                <td>Maximum number of repositories to display</td>
+                            </tr>
+                            <tr>
+                                <td><code>sortBy</code></td>
+                                <td>string</td>
+                                <td><code>'stars'</code></td>
+                                <td>Sort criteria ('stars', 'forks', 'size', 'name', 'updated')</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Basic Example</h3>
+                    <p>Here's a simple configuration to get started:</p>
+
                     <pre
-                        class="language-javascript rounded-lg p-4"
+                        class="language-javascript"
                     ><code class="language-javascript">createRepoWidget({
-    username: 'your-github-username',
-    containerId: 'my-repos'
+    username: 'octocat',           // GitHub username
+    containerId: 'my-repos',       // Container element ID
+    maxRepos: 6,                   // Show only 6 repos
+    sortBy: 'stars'                // Sort by stars
 });</code></pre>
-                    <p class="text-slate-600">
-                        Choose the method that best fits your project setup to ensure the widget is
-                        correctly set up to retrieve and display your GitHub repositories.
-                    </p>
-                </div>
 
-                <div x-show="currentSection === 'configuration'" class="space-y-8 m-8">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Configuration</h2>
+                    <h3>Advanced Example</h3>
+                    <p>Here's a more advanced configuration with custom styling:</p>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="bg-white p-6 rounded-lg shadow-sm">
-                            <h3 class="text-xl font-semibold text-slate-800 mb-3">Basic Setup</h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p>Two things you'll need to get started:</p>
-                                <ul class="list-disc list-inside">
-                                    <li>
-                                        <code class="text-blue-600">username</code> - Your GitHub
-                                        username
-                                    </li>
-                                    <li>
-                                        <code class="text-blue-600">containerId</code> - Where you
-                                        want the repos to show up
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-lg shadow-sm">
-                            <h3 class="text-xl font-semibold text-slate-800 mb-3">
-                                Layout Options
-                            </h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p>Control how your repos are displayed:</p>
-                                <ul class="list-disc list-inside">
-                                    <li>
-                                        <code class="text-blue-600">columns</code> - How many repos
-                                        per row
-                                    </li>
-                                    <li>
-                                        <code class="text-blue-600">maxRepos</code> - Total number
-                                        of repos to show
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-lg shadow-sm">
-                            <h3 class="text-xl font-semibold text-slate-800 mb-3">Visual Tweaks</h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p>Make it match your site:</p>
-                                <ul class="list-disc list-inside">
-                                    <li>
-                                        <code class="text-blue-600">cardStyles</code> - Custom card
-                                        appearance
-                                    </li>
-                                    <li>
-                                        <code class="text-blue-600">textStyles</code> - Text colors
-                                        and fonts
-                                    </li>
-                                    <li>
-                                        <code class="text-blue-600">scaleOnHover</code> - Hover
-                                        animation size
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-lg shadow-sm">
-                            <h3 class="text-xl font-semibold text-slate-800 mb-3">Display Order</h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p>Choose how to sort your repos:</p>
-                                <ul class="list-disc list-inside">
-                                    <li>
-                                        <code class="text-blue-600">sortBy</code> - Order by stars,
-                                        forks, size, name or updated
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div x-show="currentSection === 'features'" class="space-y-8 m-8">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Features</h2>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="bg-white p-6 rounded-lg shadow-sm">
-                            <h3 class="text-xl font-semibold text-slate-800 mb-3">Smart Caching</h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p>
-                                    Data is cached locally for 24 hours, keeping your site snappy
-                                    while ensuring content stays fresh.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-lg shadow-sm">
-                            <h3 class="text-xl font-semibold text-slate-800 mb-3">
-                                Language Colors
-                            </h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p>
-                                    Automatically detects and displays the right colors for
-                                    different programming languages.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-lg shadow-sm">
-                            <h3 class="text-xl font-semibold text-slate-800 mb-3">
-                                Responsive Grid
-                            </h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p>
-                                    Adapts seamlessly from mobile to desktop with a smart column
-                                    layout that just works.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-lg shadow-sm">
-                            <h3 class="text-xl font-semibold text-slate-800 mb-3">
-                                Custom Styling
-                            </h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p>
-                                    Tweak colors, shadows, and animations to match your site's look
-                                    and feel perfectly.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-lg shadow-sm">
-                            <h3 class="text-xl font-semibold text-slate-800 mb-3">Smart Sorting</h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p>
-                                    Display repos by stars, forks, size, or name - your choice,
-                                    updated in real-time.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-lg shadow-sm">
-                            <h3 class="text-xl font-semibold text-slate-800 mb-3">Rich Metadata</h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p>
-                                    Shows stars, forks, and language stats to give visitors the full
-                                    picture of your work.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div x-show="currentSection === 'styling'" class="space-y-8 m-8">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Styling</h2>
-                    <p class="text-slate-600">
-                        Customize the appearance of the repository cards using the
-                        <strong>cardStyles</strong> and <strong>textStyles</strong> options.
-                        Example:
-                    </p>
                     <pre
-                        class="language-javascript rounded-lg p-4"
+                        class="language-javascript"
+                    ><code class="language-javascript">createRepoWidget({
+    username: 'octocat',
+    containerId: 'my-repos',
+    columns: {
+        mobile: 1,
+        tablet: 2,
+        desktop: 4
+    },
+    cardStyles: {
+        backgroundColor: '#f8f9fa',
+        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+        borderRadius: '8px',
+        border: '1px solid #e9ecef'
+    },
+    textStyles: {
+        titleColor: '#212529',
+        descriptionColor: '#495057',
+        iconColor: '#6c757d'
+    },
+    scaleOnHover: 1.03,
+    sortBy: 'updated',
+    maxRepos: 8
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div x-show="currentSection === 'features'" class="section-content">
+                <div class="doc-section">
+                    <h2>Features</h2>
+                    <p>
+                        RepoWidget is packed with features designed to make your GitHub repositories
+                        look great and provide a seamless user experience.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="feature-card">
+                            <h3>Smart Caching</h3>
+                            <p>
+                                Data is cached locally for 24 hours, keeping your site snappy while
+                                ensuring content stays fresh. This reduces API calls to GitHub and
+                                improves load times for returning visitors.
+                            </p>
+                        </div>
+
+                        <div class="feature-card">
+                            <h3>Language Colors</h3>
+                            <p>
+                                Automatically detects and displays the right colors for different
+                                programming languages, giving your repositories a professional look
+                                with visual language identification.
+                            </p>
+                        </div>
+
+                        <div class="feature-card">
+                            <h3>Responsive Grid</h3>
+                            <p>
+                                Adapts seamlessly from mobile to desktop with a smart column layout
+                                that adjusts based on screen size. Customize the number of columns
+                                for mobile, tablet, and desktop views.
+                            </p>
+                        </div>
+
+                        <div class="feature-card">
+                            <h3>Custom Styling</h3>
+                            <p>
+                                Tweak colors, shadows, and animations to match your site's look and
+                                feel perfectly. Extensive styling options let you control everything
+                                from card background to text colors.
+                            </p>
+                        </div>
+
+                        <div class="feature-card">
+                            <h3>Smart Sorting</h3>
+                            <p>
+                                Display repos by stars, forks, size, name or update date - your
+                                choice, updated in real-time. Easily highlight your most popular or
+                                recently updated projects.
+                            </p>
+                        </div>
+
+                        <div class="feature-card">
+                            <h3>Rich Metadata</h3>
+                            <p>
+                                Shows stars, forks, and language stats to give visitors the full
+                                picture of your work. Each repository card contains key information
+                                that helps users understand your projects at a glance.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Styling Section -->
+            <div x-show="currentSection === 'styling'" class="section-content">
+                <div class="doc-section">
+                    <h2>Styling</h2>
+                    <p>
+                        RepoWidget offers extensive styling options to ensure the widget matches
+                        your website's design. You can customize colors, shadows, borders, and more
+                        using the <code>cardStyles</code> and <code>textStyles</code> configuration
+                        options.
+                    </p>
+
+                    <h3>Card Styling</h3>
+                    <p>
+                        Use the <code>cardStyles</code> object to customize the appearance of
+                        repository cards:
+                    </p>
+
+                    <pre
+                        class="language-javascript"
+                    ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'my-repos',
+    cardStyles: {
+        backgroundColor: '#ffffff',         // Card background color
+        boxShadow: '5px 5px 15px #d1d1d1',  // Custom shadow
+        borderRadius: '12px',               // Rounded corners
+        border: '1px solid #e1e4e8',        // Border
+        padding: '20px'                     // Inner spacing
+    }
+});</code></pre>
+
+                    <h3>Text Styling</h3>
+                    <p>Use the <code>textStyles</code> object to customize text colors:</p>
+
+                    <pre
+                        class="language-javascript"
+                    ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'my-repos',
+    textStyles: {
+        titleColor: '#2d3748',           // Repository name color
+        descriptionColor: '#4a5568',     // Description text color
+        iconColor: '#718096'             // Icon color (for stars, forks)
+    }
+});</code></pre>
+
+                    <h3>Hover Effects</h3>
+                    <p>Control the hover effect using the <code>scaleOnHover</code> option:</p>
+
+                    <pre
+                        class="language-javascript"
+                    ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'my-repos',
+    scaleOnHover: 1.05,  // Cards grow by 5% on hover
+    // Use 0 or false to disable hover effect:
+    // scaleOnHover: 0
+});</code></pre>
+
+                    <h3>Styling Examples</h3>
+                    <p>Here are some preset styling examples you can use or modify:</p>
+
+                    <h4>Neumorphic Style</h4>
+                    <pre
+                        class="language-javascript"
                     ><code class="language-javascript">createRepoWidget({
     username: 'github-username',
     containerId: 'my-repos',
     cardStyles: {
         background: 'linear-gradient(145deg, #ffffff, #f0f0f0)',
-        boxShadow: '5px 5px 15px #d1d1d1, -5px -5px 15px #ffffff'
+        boxShadow: '5px 5px 15px #d1d1d1, -5px -5px 15px #ffffff',
+        borderRadius: '16px',
+        border: 'none'
     },
     textStyles: {
         titleColor: '#2d3748',
@@ -555,507 +1225,486 @@ createRepoWidget({
         iconColor: '#718096'
     }
 });</code></pre>
-                </div>
 
-                <div x-show="currentSection === 'sorting'" class="space-y-8 m-8">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Sorting Options</h2>
-                    <p class="text-slate-600">
-                        The widget allows sorting repositories by various criteria. Use the
-                        <strong>sortBy</strong> option to specify the sorting method:
-                    </p>
-                    <ul class="space-y-4 text-slate-600">
-                        <li>
-                            <strong>stars</strong>: Display most starred repositories first
-                            (default)
-                        </li>
-                        <li><strong>forks</strong>: Sort by number of repository forks</li>
-                        <li><strong>size</strong>: Order by repository size</li>
-                        <li><strong>name</strong>: Alphabetical sorting by repository name</li>
-                    </ul>
+                    <h4>Flat Design</h4>
                     <pre
-                        class="language-javascript rounded-lg p-4"
+                        class="language-javascript"
+                    ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'my-repos',
+    cardStyles: {
+        backgroundColor: '#f7fafc',
+        boxShadow: 'none',
+        borderRadius: '4px',
+        border: '1px solid #e2e8f0'
+    },
+    textStyles: {
+        titleColor: '#1a202c',
+        descriptionColor: '#4a5568',
+        iconColor: '#a0aec0'
+    },
+    scaleOnHover: 0 // Disable hover effect
+});</code></pre>
+
+                    <h4>Dark Mode</h4>
+                    <pre
+                        class="language-javascript"
+                    ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'my-repos',
+    cardStyles: {
+        backgroundColor: '#2d3748',
+        boxShadow: '0 4px 6px rgba(0,0,0,0.2)',
+        borderRadius: '8px',
+        border: '1px solid #4a5568'
+    },
+    textStyles: {
+        titleColor: '#f7fafc',
+        descriptionColor: '#e2e8f0',
+        iconColor: '#a0aec0'
+    }
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- Sorting Options Section -->
+            <div x-show="currentSection === 'sorting'" class="section-content">
+                <div class="doc-section">
+                    <h2>Sorting Options</h2>
+                    <p>
+                        RepoWidget provides flexible sorting capabilities through the
+                        <code>sortBy</code>
+                        parameter, allowing you to present your repositories in the order that best
+                        highlights your work.
+                    </p>
+
+                    <h3>Available Sorting Methods</h3>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Value</th>
+                                    <th>Description</th>
+                                    <th>Best For</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>'stars'</code></td>
+                                    <td>Sort by number of stars (descending)</td>
+                                    <td>Showcasing your most popular repositories</td>
+                                </tr>
+                                <tr>
+                                    <td><code>'forks'</code></td>
+                                    <td>Sort by number of forks (descending)</td>
+                                    <td>Highlighting projects with community contributions</td>
+                                </tr>
+                                <tr>
+                                    <td><code>'size'</code></td>
+                                    <td>Sort by repository size (descending)</td>
+                                    <td>Showing your largest or most substantial projects</td>
+                                </tr>
+                                <tr>
+                                    <td><code>'name'</code></td>
+                                    <td>Sort alphabetically by name</td>
+                                    <td>Creating an organized, easy-to-scan listing</td>
+                                </tr>
+                                <tr>
+                                    <td><code>'updated'</code></td>
+                                    <td>Sort by most recently updated</td>
+                                    <td>
+                                        Highlighting your active or recently maintained projects
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Sorting Examples</h3>
+                    <p>Here are examples of different sorting configurations:</p>
+
+                    <h4>Sort by Stars (Default)</h4>
+                    <pre
+                        class="language-javascript"
+                    ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'my-repos',
+    sortBy: 'stars'
+});</code></pre>
+
+                    <h4>Show Most Forked Repositories</h4>
+                    <pre
+                        class="language-javascript"
                     ><code class="language-javascript">createRepoWidget({
     username: 'github-username',
     containerId: 'my-repos',
     sortBy: 'forks',
-    maxRepos: 6
+    maxRepos: 6  // Limit to top 6 most forked repos
 });</code></pre>
-                </div>
 
-                <div x-show="currentSection === 'responsive-design'" class="space-y-8 m-8">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Responsive Design</h2>
-                    <p class="text-slate-600">
-                        The widget automatically adjusts its layout based on screen size. Customize
-                        the number of columns for different devices using the
-                        <strong>columns</strong> option:
-                    </p>
+                    <h4>Alphabetical Sorting</h4>
                     <pre
-                        class="language-javascript rounded-lg p-4"
+                        class="language-javascript"
                     ><code class="language-javascript">createRepoWidget({
     username: 'github-username',
     containerId: 'my-repos',
-    columns: { mobile: 1, tablet: 2, desktop: 3 }
+    sortBy: 'name'
 });</code></pre>
-                </div>
 
-                <div x-show="currentSection === 'config'" class="flex">
-                    <div class="demo-area m-8">
-                        <h2 class="text-3xl font-bold text-slate-900 mb-6">Demo</h2>
-                        <p class="text-slate-600">
-                            The GitHub Repository Widget is highly configurable. You can edit its
-                            appearance and behavior using various options by using the settings
-                            button on the right.
+                    <h4>Recently Updated Projects</h4>
+                    <pre
+                        class="language-javascript"
+                    ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'my-repos',
+    sortBy: 'updated',
+    maxRepos: 10  // Show top 10 most recently updated repos
+});</code></pre>
+
+                    <div class="p-4 bg-blue-100 border-l-4 border-blue-500 rounded mt-6">
+                        <h4 class="font-medium text-blue-800 mb-1">Pro Tip</h4>
+                        <p class="text-blue-700 mb-0">
+                            Combine <code>sortBy</code> with <code>maxRepos</code> to create focused
+                            displays, like "My top 3 starred projects" or "My 5 most recent
+                            updates".
                         </p>
-
-                        <div
-                            id="repo-container"
-                            role="region"
-                            aria-live="polite"
-                            class="mt-4"
-                        ></div>
-
-                        <div class="sidebar" id="color-controls" aria-expanded="false">
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-lg font-semibold">Customize RepoWidget</h3>
-                                <button id="close-controls" class="text-lg focus:outline-none">
-                                    &times;
-                                </button>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4 mb-4">
-                                <div class="flex flex-col">
-                                    <label class="text-sm font-medium mb-1">GitHub Username</label>
-                                    <input
-                                        type="text"
-                                        id="username"
-                                        value="peterbenoit"
-                                        class="w-full h-10 px-2 border border-gray-600 rounded"
-                                        autocomplete="off"
-                                    />
-                                </div>
-                                <div class="flex flex-col">
-                                    <label class="text-sm font-medium mb-1">Target ID</label>
-                                    <input
-                                        type="text"
-                                        id="containerId"
-                                        value="repo-container"
-                                        class="w-full h-10 px-2 border border-gray-600 rounded"
-                                        autocomplete="off"
-                                    />
-                                </div>
-                                <div class="flex flex-col">
-                                    <label class="text-sm font-medium mb-1">Sort By</label>
-                                    <select
-                                        id="sortBy"
-                                        class="w-full h-10 px-2 border border-gray-600 rounded"
-                                    >
-                                        <option value="stars">Stars</option>
-                                        <option value="forks">Forks</option>
-                                        <option value="size">Size</option>
-                                        <option value="name">Name</option>
-                                        <option value="updated" selected>Updated</option>
-                                    </select>
-                                </div>
-                                <div class="flex flex-col">
-                                    <label class="text-sm font-medium mb-1">Max Repos</label>
-                                    <input
-                                        type="number"
-                                        id="maxRepos"
-                                        value="8"
-                                        min="1"
-                                        class="w-full h-10 px-2 border border-gray-600 rounded"
-                                    />
-                                </div>
-                                <div class="flex flex-col">
-                                    <label class="text-sm font-medium mb-1">Mobile</label>
-                                    <input
-                                        type="number"
-                                        id="columnsMobile"
-                                        value="1"
-                                        min="1"
-                                        max="4"
-                                        class="w-full h-10 px-2 border border-gray-600 rounded"
-                                    />
-                                </div>
-                                <div class="flex flex-col">
-                                    <label class="text-sm font-medium mb-1">Tablet</label>
-                                    <input
-                                        type="number"
-                                        id="columnsTablet"
-                                        value="2"
-                                        min="1"
-                                        max="4"
-                                        class="w-full h-10 px-2 border border-gray-600 rounded"
-                                    />
-                                </div>
-                                <div class="flex flex-col">
-                                    <label class="text-sm font-medium mb-1">Desktop</label>
-                                    <input
-                                        type="number"
-                                        id="columnsDesktop"
-                                        value="4"
-                                        min="1"
-                                        max="6"
-                                        class="w-full h-10 px-2 border border-gray-600 rounded"
-                                    />
-                                </div>
-                                <div class="flex flex-col">
-                                    <label class="text-sm font-medium mb-1">Scale</label>
-                                    <input
-                                        type="number"
-                                        id="scaleOnHover"
-                                        value="1.02"
-                                        step="0.01"
-                                        min="1"
-                                        max="2"
-                                        class="w-full h-10 px-2 border border-gray-600 rounded"
-                                    />
-                                </div>
-                                <div class="flex flex-col">
-                                    <label class="text-sm font-medium mb-1">Title Color</label>
-                                    <input
-                                        type="color"
-                                        id="titleColor"
-                                        value="#333333"
-                                        class="w-full h-10 border border-gray-600 rounded"
-                                    />
-                                </div>
-                                <div class="flex flex-col">
-                                    <label class="text-sm font-medium mb-1"
-                                        >Description Color</label
-                                    >
-                                    <input
-                                        type="color"
-                                        id="descriptionColor"
-                                        value="#666666"
-                                        class="w-full h-10 border border-gray-600 rounded"
-                                    />
-                                </div>
-                                <div class="flex flex-col">
-                                    <label class="text-sm font-medium mb-1">Icon Color</label>
-                                    <input
-                                        type="color"
-                                        id="iconColor"
-                                        value="#888888"
-                                        class="w-full h-10 border border-gray-600 rounded"
-                                    />
-                                </div>
-                                <div class="flex flex-col">
-                                    <label class="text-sm font-medium mb-1">Background Color</label>
-                                    <input
-                                        type="color"
-                                        id="backgroundColor"
-                                        value="#ffffff"
-                                        class="w-full h-10 border border-gray-600 rounded"
-                                    />
-                                </div>
-                            </div>
-                            <button
-                                id="apply-config"
-                                class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
-                            >
-                                Apply
-                            </button>
-
-                            <div class="mt-6 bg-gray-700 p-4 rounded">
-                                <div class="flex justify-between items-center">
-                                    <h4 class="text-sm font-medium mb-2 text-white">
-                                        Configuration:
-                                    </h4>
-                                    <button
-                                        id="copy-config"
-                                        class="text-blue-300 text-xs hover:text-blue-500 relative"
-                                    >
-                                        Copy
-                                        <span
-                                            id="copy-tooltip"
-                                            class="absolute bottom-full mb-1 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded opacity-0 transition-opacity duration-300"
-                                            >Copied!</span
-                                        >
-                                    </button>
-                                </div>
-                                <pre
-                                    id="config-display"
-                                    class="text-xs bg-gray-800 p-2 rounded text-gray-300 overflow-auto"
-                                ></pre>
-                            </div>
-                        </div>
-
-                        <button
-                            id="toggle-controls"
-                            class="toggle-button"
-                            aria-label="Toggle widget controls"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="1.5em"
-                                height="1.5em"
-                                viewBox="0 0 16 16"
-                                class="w-6 h-6"
-                            >
-                                <path
-                                    fill="none"
-                                    stroke="currentColor"
-                                    d="M8 4.5h6m-12 0h2.5m0 0a2 2 0 1 0 4 0a2 2 0 0 0-4 0Zm-2.5 7h6m3.5 0H14m-2.5 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0Z"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <div x-show="currentSection === 'contributing'" class="space-y-8 m-8">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Contributing</h2>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="bg-white p-6 rounded-lg shadow-sm">
-                            <h3 class="text-xl font-semibold text-slate-800 mb-3">
-                                Ready to Help?
-                            </h3>
-                            <p class="text-slate-600 mb-4">
-                                We welcome contributions from developers of all skill levels.
-                                Whether you're fixing bugs, adding features, or improving
-                                documentation - your help makes this widget better.
-                            </p>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-lg shadow-sm">
-                            <h3 class="text-xl font-semibold text-slate-800 mb-3">
-                                Quick Start Guide
-                            </h3>
-                            <div class="space-y-3 text-slate-600">
-                                <div class="flex items-center gap-3">
-                                    <span
-                                        class="bg-blue-100 text-blue-700 rounded-full w-6 h-6 flex items-center justify-center font-semibold"
-                                        >1</span
-                                    >
-                                    <span>Fork the repository</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <span
-                                        class="bg-blue-100 text-blue-700 rounded-full w-6 h-6 flex items-center justify-center font-semibold"
-                                        >2</span
-                                    >
-                                    <code class="bg-slate-100 px-2 py-1 rounded"
-                                        >git checkout -b feature/amazing-feature</code
-                                    >
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <span
-                                        class="bg-blue-100 text-blue-700 rounded-full w-6 h-6 flex items-center justify-center font-semibold"
-                                        >3</span
-                                    >
-                                    <code class="bg-slate-100 px-2 py-1 rounded"
-                                        >git commit -m 'Add amazing feature'</code
-                                    >
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <span
-                                        class="bg-blue-100 text-blue-700 rounded-full w-6 h-6 flex items-center justify-center font-semibold"
-                                        >4</span
-                                    >
-                                    <code class="bg-slate-100 px-2 py-1 rounded"
-                                        >git push origin feature/amazing-feature</code
-                                    >
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <span
-                                        class="bg-blue-100 text-blue-700 rounded-full w-6 h-6 flex items-center justify-center font-semibold"
-                                        >5</span
-                                    >
-                                    <span>Open a Pull Request</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Responsive Design Section -->
+            <div x-show="currentSection === 'responsive-design'" class="section-content">
+                <div class="doc-section">
+                    <h2>Responsive Design</h2>
+                    <p>
+                        RepoWidget is built with responsiveness in mind, automatically adapting to
+                        different screen sizes to provide the optimal viewing experience across
+                        devices from mobile phones to large desktop monitors.
+                    </p>
+
+                    <h3>Configuring Columns for Different Devices</h3>
+                    <p>
+                        Use the <code>columns</code> object to specify the number of cards to
+                        display per row on different screen sizes:
+                    </p>
+
+                    <pre
+                        class="language-javascript"
+                    ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'my-repos',
+    columns: {
+        mobile: 1,   // 1 column on phones (< 640px)
+        tablet: 2,   // 2 columns on tablets (640px - 1023px)
+        desktop: 4   // 4 columns on desktop (≥ 1024px)
+    }
+});</code></pre>
+
+                    <h3>Breakpoints</h3>
+                    <p>The widget uses the following breakpoints for responsive behavior:</p>
+                    <ul>
+                        <li><strong>Mobile:</strong> &lt; 640px</li>
+                        <li><strong>Tablet:</strong> 640px - 1023px</li>
+                        <li><strong>Desktop:</strong> ≥ 1024px</li>
+                    </ul>
+
+                    <h3>Examples for Different Layouts</h3>
+
+                    <h4>Minimal Layout (Good for Sidebars)</h4>
+                    <pre
+                        class="language-javascript"
+                    ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'sidebar-repos',
+    columns: {
+        mobile: 1,
+        tablet: 1,
+        desktop: 1
+    },
+    maxRepos: 3
+});</code></pre>
+
+                    <h4>Standard Layout</h4>
+                    <pre
+                        class="language-javascript"
+                    ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'main-repos',
+    columns: {
+        mobile: 1,
+        tablet: 2,
+        desktop: 3
+    }
+});</code></pre>
+
+                    <h4>Gallery Layout</h4>
+                    <pre
+                        class="language-javascript"
+                    ><code class="language-javascript">createRepoWidget({
+    username: 'github-username',
+    containerId: 'gallery-repos',
+    columns: {
+        mobile: 1,
+        tablet: 3,
+        desktop: 5
+    },
+    maxRepos: 10
+});</code></pre>
+
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 mt-6">
+                        <h4 class="font-medium text-gray-800 mb-1">
+                            Styling for Responsive Displays
+                        </h4>
+                        <p class="text-gray-700 mb-0">
+                            When designing for multiple screen sizes, consider using simpler card
+                            styles for mobile to ensure all information remains readable on smaller
+                            displays. The widget will handle layout adjustments automatically, but
+                            you might want to test your custom styles across different devices.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Demo Section -->
+            <div x-show="currentSection === 'config'" class="section-content">
+                <div class="doc-section">
+                    <h2>Interactive Demo</h2>
+                    <p>
+                        Try out different configurations for the GitHub Repository Widget below. Use
+                        the settings panel to customize the appearance and behavior of the widget.
+                    </p>
+
+                    <div class="mb-4 p-4 bg-blue-100 rounded-lg">
+                        <p class="mb-0">
+                            Click the
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="inline"
+                            >
+                                <path
+                                    d="M8 4.5h6m-12 0h2.5m0 0a2 2 0 1 0 4 0a2 2 0 0 0-4 0Zm-2.5 7h6m3.5 0H14m-2.5 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0Z"
+                                ></path>
+                            </svg>
+                            button on the right to open the configuration panel.
+                        </p>
+                    </div>
+
+                    <div id="repo-container" role="region" aria-live="polite" class="mt-4"></div>
+
+                    <div class="sidebar" id="color-controls" aria-expanded="false">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-semibold mb-0">Configuration Panel</h3>
+                            <button
+                                id="close-controls"
+                                class="text-lg focus:outline-none hover:text-gray-300"
+                            >
+                                &times;
+                            </button>
+                        </div>
+
+                        <div class="config-grid mb-6">
+                            <div class="flex flex-col mb-4">
+                                <label class="text-sm font-medium mb-1">GitHub Username</label>
+                                <input
+                                    type="text"
+                                    id="username"
+                                    value="peterbenoit"
+                                    class="w-full px-3 py-2"
+                                    autocomplete="off"
+                                />
+                            </div>
+                            <div class="flex flex-col mb-4">
+                                <label class="text-sm font-medium mb-1">Container ID</label>
+                                <input
+                                    type="text"
+                                    id="containerId"
+                                    value="repo-container"
+                                    class="w-full px-3 py-2"
+                                    autocomplete="off"
+                                />
+                            </div>
+                            <div class="flex flex-col mb-4">
+                                <label class="text-sm font-medium mb-1">Sort By</label>
+                                <select id="sortBy" class="w-full px-3 py-2">
+                                    <option value="stars">Stars</option>
+                                    <option value="forks">Forks</option>
+                                    <option value="size">Size</option>
+                                    <option value="name">Name</option>
+                                    <option value="updated" selected>Updated</option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col mb-4">
+                                <label class="text-sm font-medium mb-1">Max Repos</label>
+                                <input
+                                    type="number"
+                                    id="maxRepos"
+                                    value="8"
+                                    min="1"
+                                    class="w-full px-3 py-2"
+                                />
+                            </div>
+                            <div class="flex flex-col mb-4">
+                                <label class="text-sm font-medium mb-1">Mobile Columns</label>
+                                <input
+                                    type="number"
+                                    id="columnsMobile"
+                                    value="1"
+                                    min="1"
+                                    max="4"
+                                    class="w-full px-3 py-2"
+                                />
+                            </div>
+                            <div class="flex flex-col mb-4">
+                                <label class="text-sm font-medium mb-1">Tablet Columns</label>
+                                <input
+                                    type="number"
+                                    id="columnsTablet"
+                                    value="2"
+                                    min="1"
+                                    max="4"
+                                    class="w-full px-3 py-2"
+                                />
+                            </div>
+                            <div class="flex flex-col mb-4">
+                                <label class="text-sm font-medium mb-1">Desktop Columns</label>
+                                <input
+                                    type="number"
+                                    id="columnsDesktop"
+                                    value="4"
+                                    min="1"
+                                    max="6"
+                                    class="w-full px-3 py-2"
+                                />
+                            </div>
+                            <div class="flex flex-col mb-4">
+                                <label class="text-sm font-medium mb-1">Scale on Hover</label>
+                                <input
+                                    type="number"
+                                    id="scaleOnHover"
+                                    value="1.02"
+                                    step="0.01"
+                                    min="1"
+                                    max="2"
+                                    class="w-full px-3 py-2"
+                                />
+                            </div>
+                            <div class="flex flex-col mb-4">
+                                <label class="text-sm font-medium mb-1">Title Color</label>
+                                <input
+                                    type="color"
+                                    id="titleColor"
+                                    value="#333333"
+                                    class="w-full h-10"
+                                />
+                            </div>
+                            <div class="flex flex-col mb-4">
+                                <label class="text-sm font-medium mb-1">Description Color</label>
+                                <input
+                                    type="color"
+                                    id="descriptionColor"
+                                    value="#666666"
+                                    class="w-full h-10"
+                                />
+                            </div>
+                            <div class="flex flex-col mb-4">
+                                <label class="text-sm font-medium mb-1">Icon Color</label>
+                                <input
+                                    type="color"
+                                    id="iconColor"
+                                    value="#888888"
+                                    class="w-full h-10"
+                                />
+                            </div>
+                            <div class="flex flex-col mb-4">
+                                <label class="text-sm font-medium mb-1">Background Color</label>
+                                <input
+                                    type="color"
+                                    id="backgroundColor"
+                                    value="#ffffff"
+                                    class="w-full h-10"
+                                />
+                            </div>
+                        </div>
+
+                        <button id="apply-config" class="btn btn-primary w-full py-3 mb-6">
+                            Apply Configuration
+                        </button>
+
+                        <div class="bg-gray-700 p-4 rounded">
+                            <div class="flex justify-between items-center">
+                                <h4 class="text-sm font-medium mb-2 text-white">
+                                    Configuration Code:
+                                </h4>
+                                <button
+                                    id="copy-config"
+                                    class="text-blue-300 text-xs hover:text-blue-100 relative"
+                                >
+                                    Copy
+                                    <span
+                                        id="copy-tooltip"
+                                        class="absolute bottom-full mb-1 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded opacity-0 transition-opacity duration-300"
+                                        >Copied!</span
+                                    >
+                                </button>
+                            </div>
+                            <pre
+                                id="config-display"
+                                class="text-xs bg-gray-800 p-2 rounded text-gray-300 overflow-auto"
+                            ></pre>
+                        </div>
+                    </div>
+
+                    <button
+                        id="toggle-controls"
+                        class="toggle-button"
+                        aria-label="Toggle widget controls"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="1.5em"
+                            height="1.5em"
+                            viewBox="0 0 16 16"
+                            class="w-6 h-6"
+                        >
+                            <path
+                                fill="none"
+                                stroke="currentColor"
+                                d="M8 4.5h6m-12 0h2.5m0 0a2 2 0 1 0 4 0a2 2 0 0 0-4 0Zm-2.5 7h6m3.5 0H14m-2.5 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0Z"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contributing Section -->
+            <div x-show="currentSection === 'contributing'" class="section-content">
+                <div class="doc-section">
+                    <h2>Contributing</h2>
+                    <p>
+                        We welcome contributions from developers of all skill levels. Whether you're
+                        fixing bugs, adding features, or improving documentation - your help makes
+                        this widget better.
+                    </p>
+
+                    <h3>Quick Start Guide</h3>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-1">
+                        <li>Fork the repository</li>
+                        <li>Clone your forked repository</li>
+                        <li>Create a new branch for your feature or fix</li>
+                        <li>Make your changes and commit them</li>
+                        <li>Push your branch to your forked repository</li>
+                        <li>Open a Pull Request</li>
+                    </ol>
+                </div>
+            </div>
         </main>
-
-        <aside
-            class="fixed top-0 right-0 h-full w-64 bg-white border-l border-slate-200 p-6 overflow-y-auto"
-        >
-            <h3 class="font-semibold text-slate-900 mb-4">On This Page</h3>
-            <ul class="text-sm">
-                <template x-if="currentSection === 'introduction'">
-                    <div class="space-y-2">
-                        <li>
-                            <a href="#introduction" class="text-slate-600 hover:text-slate-900"
-                                >Introduction</a
-                            >
-                        </li>
-                    </div>
-                </template>
-                <template x-if="currentSection === 'installation'">
-                    <div class="space-y-2">
-                        <li>
-                            <a href="#installation" class="text-slate-600 hover:text-slate-900"
-                                >Installation</a
-                            >
-                        </li>
-                        <li>
-                            <span href="#installation" class="text-slate-600">Install via npm</span>
-                        </li>
-                        <li>
-                            <span href="#installation" class="text-slate-600"
-                                >Include the Script Directly</span
-                            >
-                        </li>
-                    </div>
-                </template>
-                <template x-if="currentSection === 'configuration'">
-                    <div class="space-y-2">
-                        <li>
-                            <a href="#configuration" class="text-slate-600 hover:text-slate-900"
-                                >Configuration</a
-                            >
-                        </li>
-                    </div>
-                </template>
-                <template x-if="currentSection === 'features'">
-                    <div class="space-y-2">
-                        <li>
-                            <a href="#features" class="text-slate-600 hover:text-slate-900"
-                                >Features</a
-                            >
-                        </li>
-                    </div>
-                </template>
-                <template x-if="currentSection === 'styling'">
-                    <div class="space-y-2">
-                        <li>
-                            <a href="#styling" class="text-slate-600 hover:text-slate-900"
-                                >Styling</a
-                            >
-                        </li>
-                    </div>
-                </template>
-                <template x-if="currentSection === 'sorting'">
-                    <div class="space-y-2">
-                        <li>
-                            <a href="#sorting" class="text-slate-600 hover:text-slate-900"
-                                >Sorting Options</a
-                            >
-                        </li>
-                    </div>
-                </template>
-                <template x-if="currentSection === 'responsive-design'">
-                    <div class="space-y-2">
-                        <li>
-                            <a href="#responsive-design" class="text-slate-600 hover:text-slate-900"
-                                >Responsive Design</a
-                            >
-                        </li>
-                    </div>
-                </template>
-                <template x-if="currentSection === 'config'">
-                    <div class="space-y-2">
-                        <li>
-                            <a href="#config" class="text-slate-600 hover:text-slate-900">Demo</a>
-                        </li>
-                    </div>
-                </template>
-                <template x-if="currentSection === 'contributing'">
-                    <div class="space-y-2">
-                        <li>
-                            <a href="#contributing" class="text-slate-600 hover:text-slate-900"
-                                >Contributing</a
-                            >
-                        </li>
-                    </div>
-                </template>
-            </ul>
-        </aside>
-
-        <!-- <script src="repoWidget.js"></script> -->
-        <script src="bundle.js"></script>
-        <script>
-            document.addEventListener('alpine:init', () => {
-                Alpine.data('visibility', () => ({
-                    currentSection: 'introduction',
-                }));
-            });
-
-            function initializeWidget() {
-                const username = document.getElementById('username').value;
-                const containerId = document.getElementById('containerId').value;
-                const columns = {
-                    mobile: parseInt(document.getElementById('columnsMobile').value),
-                    tablet: parseInt(document.getElementById('columnsTablet').value),
-                    desktop: parseInt(document.getElementById('columnsDesktop').value),
-                };
-                const scaleOnHover = parseFloat(document.getElementById('scaleOnHover').value);
-                const sortBy = document.getElementById('sortBy').value;
-                const maxRepos = parseInt(document.getElementById('maxRepos').value); // New maxRepos setting
-                const titleColor = document.getElementById('titleColor').value;
-                const descriptionColor = document.getElementById('descriptionColor').value;
-                const iconColor = document.getElementById('iconColor').value;
-                const backgroundColor = document.getElementById('backgroundColor').value;
-
-                createRepoWidget({
-                    username,
-                    containerId,
-                    columns,
-                    cardStyles: { backgroundColor },
-                    textStyles: { titleColor, descriptionColor, iconColor },
-                    scaleOnHover,
-                    sortBy,
-                    maxRepos,
-                });
-
-                updateConfigDisplay();
-            }
-
-            function updateConfigDisplay() {
-                const config = {
-                    username: document.getElementById('username').value,
-                    containerId: document.getElementById('containerId').value,
-                    columns: {
-                        mobile: parseInt(document.getElementById('columnsMobile').value),
-                        tablet: parseInt(document.getElementById('columnsTablet').value),
-                        desktop: parseInt(document.getElementById('columnsDesktop').value),
-                    },
-                    cardStyles: {
-                        backgroundColor: document.getElementById('backgroundColor').value,
-                    },
-                    textStyles: {
-                        titleColor: document.getElementById('titleColor').value,
-                        descriptionColor: document.getElementById('descriptionColor').value,
-                        iconColor: document.getElementById('iconColor').value,
-                    },
-                    scaleOnHover: parseFloat(document.getElementById('scaleOnHover').value),
-                    sortBy: document.getElementById('sortBy').value,
-                    maxRepos: parseInt(document.getElementById('maxRepos').value),
-                };
-                document.getElementById('config-display').textContent = JSON.stringify(
-                    config,
-                    null,
-                    2
-                );
-            }
-
-            document.getElementById('apply-config').addEventListener('click', initializeWidget);
-
-            document.getElementById('copy-config').addEventListener('click', () => {
-                const configText = document.getElementById('config-display').textContent;
-                navigator.clipboard.writeText(configText).then(() => {
-                    const tooltip = document.getElementById('copy-tooltip');
-                    tooltip.style.opacity = 1;
-                    setTimeout(() => (tooltip.style.opacity = 0), 1500);
-                });
-            });
-
-            const colorControls = document.getElementById('color-controls');
-            const toggleControls = document.getElementById('toggle-controls');
-
-            toggleControls.addEventListener('click', () => {
-                colorControls.classList.toggle('visible');
-            });
-
-            document.getElementById('close-controls').addEventListener('click', () => {
-                colorControls.classList.remove('visible');
-            });
-
-            initializeWidget();
-        </script>
-        <script async src="https://www.peterbenoit.com/js/badge.js"></script>
     </body>
 </html>
