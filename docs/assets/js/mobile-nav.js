@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', function () {
 	const overlay = document.querySelector('.overlay');
 	const navLinkItems = document.querySelectorAll('.nav-link a');
 
+	if (!mobileNavToggle || !navLinks || !overlay) {
+		return; // Safety check in case elements don't exist
+	}
+
 	// Function to toggle the mobile menu
 	function toggleMobileNav() {
 		navLinks.classList.toggle('active');
@@ -14,12 +18,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		// Toggle between menu and close icons
 		const icon = mobileNavToggle.querySelector('i');
-		if (icon.classList.contains('fa-bars')) {
-			icon.classList.remove('fa-bars');
-			icon.classList.add('fa-times');
-		} else {
-			icon.classList.remove('fa-times');
-			icon.classList.add('fa-bars');
+		if (icon) {
+			if (icon.classList.contains('fa-bars')) {
+				icon.classList.remove('fa-bars');
+				icon.classList.add('fa-times');
+			} else {
+				icon.classList.remove('fa-times');
+				icon.classList.add('fa-bars');
+			}
 		}
 	}
 
@@ -43,8 +49,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
 			navLinks.classList.remove('active');
 			overlay.classList.remove('active');
-			mobileNavToggle.querySelector('i').classList.remove('fa-times');
-			mobileNavToggle.querySelector('i').classList.add('fa-bars');
+			const icon = mobileNavToggle.querySelector('i');
+			if (icon) {
+				icon.classList.remove('fa-times');
+				icon.classList.add('fa-bars');
+			}
 		}
 	});
 });
