@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Documentation Hub Example - RepoWidget</title>
+        <style>
+            :root {
+                --primary: #f9826c;
+                --secondary: #6f42c1;
+                --text-color: #24292e;
+                --text-muted: #6a737d;
+                --bg-color: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --border-color: #e1e4e8;
+                --sidebar-width: 280px;
+                --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: var(--font);
+                line-height: 1.5;
+                color: var(--text-color);
+                background-color: var(--bg-color);
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            .layout {
+                display: flex;
+                flex: 1;
+            }
+
+            .sidebar {
+                width: var(--sidebar-width);
+                background-color: var(--bg-secondary);
+                border-right: 1px solid var(--border-color);
+                padding: 2rem 1rem;
+                overflow-y: auto;
+            }
+
+            .sidebar-fixed {
+                position: sticky;
+                top: 0;
+                height: 100vh;
+                overflow-y: auto;
+                padding-bottom: 2rem;
+            }
+
+            .main-content {
+                flex: 1;
+                padding: 2rem;
+                overflow-y: auto;
+            }
+
+            header {
+                background-color: var(--primary);
+                color: white;
+                padding: 1.5rem 0;
+            }
+
+            .header-container {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 0 2rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: white;
+                text-decoration: none;
+            }
+
+            .logo i {
+                margin-right: 0.7rem;
+                font-size: 1.8rem;
+            }
+
+            .search-bar {
+                display: flex;
+                max-width: 500px;
+                width: 100%;
+                margin: 0 1rem;
+            }
+
+            .search-input {
+                flex: 1;
+                padding: 0.5rem 1rem;
+                border: none;
+                border-radius: 6px 0 0 6px;
+                font-size: 1rem;
+            }
+
+            .search-btn {
+                background-color: white;
+                color: var(--text-color);
+                border: none;
+                border-radius: 0 6px 6px 0;
+                padding: 0.5rem 1rem;
+                cursor: pointer;
+                font-weight: 600;
+            }
+
+            .nav-links {
+                display: flex;
+                list-style: none;
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                color: white;
+                text-decoration: none;
+                font-weight: 500;
+                opacity: 0.9;
+                transition: opacity 0.2s;
+            }
+
+            .nav-links a:hover {
+                opacity: 1;
+            }
+
+            .container {
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+                color: var(--text-color);
+            }
+
+            h2 {
+                font-size: 1.8rem;
+                margin: 2.5rem 0 1rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            h3 {
+                font-size: 1.3rem;
+                margin: 1.5rem 0 0.75rem;
+            }
+
+            p {
+                margin-bottom: 1.5rem;
+            }
+
+            .intro {
+                max-width: 800px;
+                margin-bottom: 2.5rem;
+            }
+
+            .nav-category {
+                margin-bottom: 1.5rem;
+            }
+
+            .nav-title {
+                font-size: 0.85rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                margin-bottom: 0.5rem;
+                letter-spacing: 0.5px;
+            }
+
+            .nav-list {
+                list-style: none;
+                margin-left: 0.5rem;
+            }
+
+            .nav-list li {
+                margin-bottom: 0.25rem;
+            }
+
+            .nav-list a {
+                display: block;
+                padding: 0.4rem 0.5rem;
+                color: var(--text-color);
+                text-decoration: none;
+                border-radius: 4px;
+                transition: background-color 0.2s;
+            }
+
+            .nav-list a:hover {
+                background-color: #e1e4e8;
+            }
+
+            .nav-list a.active {
+                background-color: #e1e4e8;
+                font-weight: 600;
+            }
+
+            .doc-section {
+                margin-bottom: 3rem;
+            }
+
+            .doc-content {
+                max-width: 800px;
+            }
+
+            .featured-repos {
+                margin: 2rem 0;
+            }
+
+            .related-repos {
+                margin-top: 3rem;
+            }
+
+            .breadcrumb {
+                margin-bottom: 2rem;
+                color: var(--text-muted);
+            }
+
+            .breadcrumb a {
+                color: var(--primary);
+                text-decoration: none;
+            }
+
+            .breadcrumb a:hover {
+                text-decoration: underline;
+            }
+
+            .breadcrumb span {
+                margin: 0 0.5rem;
+            }
+
+            .tab-links {
+                display: flex;
+                border-bottom: 1px solid var(--border-color);
+                margin-bottom: 1.5rem;
+            }
+
+            .tab-link {
+                padding: 0.75rem 1.25rem;
+                font-weight: 600;
+                color: var(--text-muted);
+                cursor: pointer;
+                border-bottom: 2px solid transparent;
+            }
+
+            .tab-link.active {
+                color: var(--primary);
+                border-bottom: 2px solid var(--primary);
+            }
+
+            .tab-content {
+                display: none;
+            }
+
+            .tab-content.active {
+                display: block;
+            }
+
+            footer {
+                background-color: var(--bg-secondary);
+                border-top: 1px solid var(--border-color);
+                padding: 2rem;
+                margin-top: 2rem;
+            }
+
+            .footer-content {
+                max-width: 1400px;
+                margin: 0 auto;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .repo-section {
+                margin-top: 2rem;
+            }
+
+            .repo-section h3 {
+                display: flex;
+                align-items: center;
+            }
+
+            .repo-section h3 i {
+                margin-right: 0.5rem;
+                color: var(--secondary);
+            }
+
+            .repo-section .description {
+                color: var(--text-muted);
+                margin-bottom: 1.5rem;
+            }
+
+            @media (max-width: 1024px) {
+                .layout {
+                    flex-direction: column;
+                }
+
+                .sidebar {
+                    width: 100%;
+                    height: auto;
+                    border-right: none;
+                    border-bottom: 1px solid var(--border-color);
+                    padding: 1rem;
+                }
+
+                .sidebar-fixed {
+                    position: relative;
+                    height: auto;
+                }
+
+                .main-content {
+                    padding: 1rem;
+                }
+            }
+        </style>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        />
+    </head>
+    <body>
+        <header>
+            <div class="header-container">
+                <a href="#" class="logo">
+                    <i class="fas fa-book"></i>
+                    DevDocs Hub
+                </a>
+                <div class="search-bar">
+                    <input type="text" class="search-input" placeholder="Search documentation..." />
+                    <button class="search-btn">Search</button>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Docs</a></li>
+                    <li><a href="#">API</a></li>
+                    <li><a href="#">GitHub</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="layout">
+            <aside class="sidebar">
+                <div class="sidebar-fixed">
+                    <div class="nav-category">
+                        <div class="nav-title">Getting Started</div>
+                        <ul class="nav-list">
+                            <li><a href="#" class="active">Introduction</a></li>
+                            <li><a href="#">Quick Start</a></li>
+                            <li><a href="#">Installation</a></li>
+                            <li><a href="#">Configuration</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-category">
+                        <div class="nav-title">Core Concepts</div>
+                        <ul class="nav-list">
+                            <li><a href="#">Architecture</a></li>
+                            <li><a href="#">Components</a></li>
+                            <li><a href="#">State Management</a></li>
+                            <li><a href="#">Routing</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-category">
+                        <div class="nav-title">Advanced</div>
+                        <ul class="nav-list">
+                            <li><a href="#">Server-Side Rendering</a></li>
+                            <li><a href="#">Performance Optimization</a></li>
+                            <li><a href="#">Security</a></li>
+                            <li><a href="#">Testing</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-category">
+                        <div class="nav-title">Resources</div>
+                        <ul class="nav-list">
+                            <li><a href="#">API Reference</a></li>
+                            <li><a href="#">Examples</a></li>
+                            <li><a href="#">Tutorials</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <div class="container">
+                    <div class="breadcrumb">
+                        <a href="#">Home</a> <span>/</span> <a href="#">Documentation</a>
+                        <span>/</span> Introduction
+                    </div>
+
+                    <div class="doc-section">
+                        <div class="doc-content">
+                            <h1>Introduction to DevDocs Hub</h1>
+                            <p class="intro">
+                                Welcome to DevDocs Hub, a centralized documentation platform that
+                                brings together all our project resources, guides, and API
+                                references in one place. This documentation will help you get
+                                started with our ecosystem and explore the various tools we offer.
+                            </p>
+
+                            <div class="tab-links">
+                                <div class="tab-link active" data-tab="overview">Overview</div>
+                                <div class="tab-link" data-tab="repositories">Repositories</div>
+                                <div class="tab-link" data-tab="guides">Guides</div>
+                                <div class="tab-link" data-tab="api">API</div>
+                            </div>
+
+                            <div class="tab-content active" id="overview">
+                                <h2>What is DevDocs Hub?</h2>
+                                <p>
+                                    DevDocs Hub is a comprehensive documentation center that
+                                    aggregates and organizes information about our open-source
+                                    projects. It provides developers with a single source of truth
+                                    for all our tools, libraries, and frameworks.
+                                </p>
+                                <p>
+                                    Our platform makes it easy to discover projects, understand
+                                    their purposes, and find the resources needed to implement them
+                                    in your applications. Whether you're looking for quick start
+                                    guides, API references, or advanced usage scenarios, you'll find
+                                    everything you need here.
+                                </p>
+
+                                <h2>Key Features</h2>
+                                <p>
+                                    <strong>Centralized Documentation:</strong> Find all project
+                                    documentation in one place.<br />
+                                    <strong>Comprehensive API References:</strong> Detailed API
+                                    documentation with examples and use cases.<br />
+                                    <strong>Interactive Examples:</strong> Try out code snippets
+                                    directly in your browser.<br />
+                                    <strong>Project Discovery:</strong> Explore our project
+                                    ecosystem and understand how different components work
+                                    together.<br />
+                                    <strong>Versioned Documentation:</strong> Access documentation
+                                    for both the latest and previous releases.
+                                </p>
+                            </div>
+
+                            <div class="tab-content" id="repositories">
+                                <h2>Core Repositories</h2>
+                                <p>
+                                    Explore our main project repositories that form the foundation
+                                    of our developer ecosystem. These repositories are actively
+                                    maintained and regularly updated with new features and
+                                    improvements.
+                                </p>
+
+                                <div class="repo-section">
+                                    <h3><i class="fas fa-cube"></i> Core Libraries</h3>
+                                    <p class="description">
+                                        Our fundamental libraries that power the ecosystem and
+                                        provide essential functionality for all our tools and
+                                        applications.
+                                    </p>
+                                    <div id="core-repos"></div>
+                                </div>
+
+                                <div class="repo-section">
+                                    <h3><i class="fas fa-tools"></i> Developer Tools</h3>
+                                    <p class="description">
+                                        Tools designed to improve developer experience, speed up
+                                        workflows, and solve common development challenges.
+                                    </p>
+                                    <div id="tools-repos"></div>
+                                </div>
+
+                                <div class="repo-section">
+                                    <h3>
+                                        <i class="fas fa-book-open"></i> Documentation & Examples
+                                    </h3>
+                                    <p class="description">
+                                        Repositories containing examples, starter kits, and
+                                        additional documentation to help you learn and implement our
+                                        libraries.
+                                    </p>
+                                    <div id="docs-repos"></div>
+                                </div>
+                            </div>
+
+                            <div class="tab-content" id="guides">
+                                <h2>Getting Started Guides</h2>
+                                <p>
+                                    These guides will help you quickly get up and running with our
+                                    projects. Each guide provides step-by-step instructions and
+                                    explanations to ensure a smooth onboarding experience.
+                                </p>
+
+                                <h3>Basic Guides</h3>
+                                <ul>
+                                    <li><a href="#">Installation & Setup</a></li>
+                                    <li><a href="#">Your First Project</a></li>
+                                    <li><a href="#">Understanding the Architecture</a></li>
+                                    <li><a href="#">Common Use Cases</a></li>
+                                </ul>
+
+                                <h3>Advanced Guides</h3>
+                                <ul>
+                                    <li><a href="#">Performance Optimization</a></li>
+                                    <li><a href="#">Custom Extensions</a></li>
+                                    <li><a href="#">Integration with Other Tools</a></li>
+                                    <li><a href="#">Deployment Strategies</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="tab-content" id="api">
+                                <h2>API Reference</h2>
+                                <p>
+                                    Comprehensive API documentation for all our libraries and tools.
+                                    Each API reference includes parameters, return types, examples,
+                                    and common usage patterns.
+                                </p>
+
+                                <h3>Available API References:</h3>
+                                <ul>
+                                    <li><a href="#">Core API</a></li>
+                                    <li><a href="#">Client SDK</a></li>
+                                    <li><a href="#">Server Components</a></li>
+                                    <li><a href="#">Data Models</a></li>
+                                    <li><a href="#">Utility Functions</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="related-repos">
+                        <h2>Related Projects</h2>
+                        <p>
+                            Check out these related projects that might be useful for your
+                            development needs:
+                        </p>
+                        <div id="related-repos"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div>
+                    <p>&copy; 2025 DevDocs Hub. All rights reserved.</p>
+                </div>
+                <div>
+                    <a href="#">GitHub</a> | <a href="#">Twitter</a> | <a href="#">Discord</a> |
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+        </footer>
+
+        <script src="../assets/js/repoWidget.min.js"></script>
+        <script>
+            // Initialize tabs
+            document.querySelectorAll('.tab-link').forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.tab-link').forEach(function (t) {
+                        t.classList.remove('active');
+                    });
+
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+
+                    // Hide all tab content
+                    document.querySelectorAll('.tab-content').forEach(function (content) {
+                        content.classList.remove('active');
+                    });
+
+                    // Show the corresponding tab content
+                    document.getElementById(this.getAttribute('data-tab')).classList.add('active');
+                });
+            });
+
+            // Initialize RepoWidget for core repositories (React)
+            createRepoWidget({
+                username: 'facebook',
+                containerId: 'core-repos',
+                maxRepos: 3,
+                sortBy: 'stars',
+                columns: {
+                    mobile: 1,
+                    tablet: 2,
+                    desktop: 3,
+                },
+                cardStyles: {
+                    backgroundColor: '#ffffff',
+                    borderRadius: '6px',
+                    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid #e1e4e8',
+                },
+                textStyles: {
+                    titleColor: '#24292e',
+                    descriptionColor: '#586069',
+                    iconColor: '#f9826c',
+                },
+            });
+
+            // Initialize RepoWidget for tool repositories (Google)
+            createRepoWidget({
+                username: 'google',
+                containerId: 'tools-repos',
+                maxRepos: 3,
+                sortBy: 'stars',
+                columns: {
+                    mobile: 1,
+                    tablet: 2,
+                    desktop: 3,
+                },
+                cardStyles: {
+                    backgroundColor: '#ffffff',
+                    borderRadius: '6px',
+                    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid #e1e4e8',
+                },
+                textStyles: {
+                    titleColor: '#24292e',
+                    descriptionColor: '#586069',
+                    iconColor: '#6f42c1',
+                },
+            });
+
+            // Initialize RepoWidget for documentation repositories (Mozilla)
+            createRepoWidget({
+                username: 'mozilla',
+                containerId: 'docs-repos',
+                maxRepos: 3,
+                sortBy: 'updated',
+                columns: {
+                    mobile: 1,
+                    tablet: 2,
+                    desktop: 3,
+                },
+                cardStyles: {
+                    backgroundColor: '#ffffff',
+                    borderRadius: '6px',
+                    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid #e1e4e8',
+                },
+                textStyles: {
+                    titleColor: '#24292e',
+                    descriptionColor: '#586069',
+                    iconColor: '#f9826c',
+                },
+            });
+
+            // Initialize RepoWidget for related repositories (Apache)
+            createRepoWidget({
+                username: 'apache',
+                containerId: 'related-repos',
+                maxRepos: 4,
+                sortBy: 'stars',
+                columns: {
+                    mobile: 1,
+                    tablet: 2,
+                    desktop: 4,
+                },
+                cardStyles: {
+                    backgroundColor: '#f6f8fa',
+                    borderRadius: '6px',
+                    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.05)',
+                    border: '1px solid #e1e4e8',
+                },
+                textStyles: {
+                    titleColor: '#24292e',
+                    descriptionColor: '#586069',
+                    iconColor: '#6f42c1',
+                },
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>RepoWidget - Professional GitHub Repository Display</title>
+        <meta
+            name="description"
+            content="A lightweight, customizable widget to showcase GitHub repositories on any website."
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        />
+        <link rel="stylesheet" href="assets/css/styles.css" />
+        <!-- Syntax highlighting -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/toolbar/prism-toolbar.min.css"
+        />
+        <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+    </head>
+    <body>
+        <header class="header">
+            <div class="container">
+                <nav class="nav">
+                    <a href="./" class="nav-logo">
+                        <i class="fa-solid fa-code-branch"></i>
+                        RepoWidget
+                    </a>
+                    <ul class="nav-links">
+                        <li class="nav-link"><a href="#features">Features</a></li>
+                        <li class="nav-link"><a href="#getting-started">Getting Started</a></li>
+                        <li class="nav-link"><a href="#documentation">Documentation</a></li>
+                        <li class="nav-link"><a href="#demo">Demo</a></li>
+                        <li class="nav-link"><a href="#examples">Examples</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="container">
+                <h1>RepoWidget</h1>
+                <p>
+                    A lightweight, customizable JavaScript widget for showcasing GitHub repositories
+                    on any website
+                </p>
+                <div class="hero-actions">
+                    <a href="#getting-started" class="btn">Get Started</a>
+                    <a href="https://github.com/peterbenoit/RepoWidget" class="btn btn-outline"
+                        ><i class="fab fa-github"></i> GitHub</a
+                    >
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="features">
+            <div class="container">
+                <h2 class="section-title">Features</h2>
+                <p class="section-subtitle">
+                    Everything you need to showcase your GitHub repositories in style
+                </p>
+
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-sync"></i>
+                        </div>
+                        <h3>Real-time Repository Data</h3>
+                        <p>
+                            Display up-to-date information about your GitHub repositories with smart
+                            caching for optimal performance.
+                        </p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-paint-brush"></i>
+                        </div>
+                        <h3>Fully Customizable</h3>
+                        <p>
+                            Customize colors, layout, responsive breakpoints, hover effects, and
+                            more to match your website design.
+                        </p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-mobile-alt"></i>
+                        </div>
+                        <h3>Responsive Design</h3>
+                        <p>
+                            Configure different column layouts for mobile, tablet, and desktop for
+                            the perfect display on any device.
+                        </p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-sort-amount-down"></i>
+                        </div>
+                        <h3>Flexible Sorting</h3>
+                        <p>
+                            Sort repositories by stars, forks, size, name, or update date to
+                            highlight your most important work.
+                        </p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <h3>Lightweight &amp; Fast</h3>
+                        <p>
+                            No dependencies and minimal footprint, ensuring your site stays fast and
+                            responsive.
+                        </p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-universal-access"></i>
+                        </div>
+                        <h3>Accessibility Built-in</h3>
+                        <p>
+                            ARIA attributes and semantic HTML ensure your repository display is
+                            accessible to all users.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="getting-started">
+            <div class="container">
+                <h2 class="section-title">Getting Started</h2>
+                <p class="section-subtitle">Up and running in three simple steps</p>
+
+                <div class="steps">
+                    <div class="step">
+                        <h3>1. Include the Library</h3>
+                        <p>Add the RepoWidget script to your HTML page:</p>
+                        <pre
+                            class="code-block language-html"
+                        ><code>&lt;script src="https://cdn.jsdelivr.net/gh/peterbenoit/RepoWidget@latest/dist/repoWidget.min.js"&gt;&lt;/script&gt;</code></pre>
+                        <p>Or install via npm:</p>
+                        <pre
+                            class="code-block language-bash"
+                        ><code>npm install repo-widget</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h3>2. Create a Container</h3>
+                        <p>Add a container element where you want the repositories to appear:</p>
+                        <pre
+                            class="code-block language-html"
+                        ><code>&lt;div id="repo-container"&gt;&lt;/div&gt;</code></pre>
+                    </div>
+
+                    <div class="step">
+                        <h3>3. Initialize the Widget</h3>
+                        <p>Call the widget with your GitHub username and container ID:</p>
+                        <pre class="code-block language-javascript"><code>createRepoWidget({
+    username: "peterbenoit",
+    containerId: "repo-container"
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="demo">
+            <div class="container">
+                <h2 class="section-title">Live Demo</h2>
+                <p class="section-subtitle">
+                    See the widget in action with real-time configuration
+                </p>
+
+                <div class="controls">
+                    <div class="control-row">
+                        <div class="control-item">
+                            <label for="username">GitHub Username</label>
+                            <input type="text" id="username" value="peterbenoit" />
+                        </div>
+                        <div class="control-item">
+                            <label for="maxRepos">Max Repositories</label>
+                            <input type="number" id="maxRepos" value="6" min="1" max="30" />
+                        </div>
+                        <div class="control-item">
+                            <label for="sortBy">Sort By</label>
+                            <select id="sortBy">
+                                <option value="stars">Stars</option>
+                                <option value="forks">Forks</option>
+                                <option value="size">Size</option>
+                                <option value="name">Name</option>
+                                <option value="updated">Last Updated</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Column Layout</label>
+                        <div class="control-row">
+                            <div class="control-item">
+                                <label for="columnsMobile">Mobile</label>
+                                <input type="number" id="columnsMobile" value="1" min="1" max="4" />
+                            </div>
+                            <div class="control-item">
+                                <label for="columnsTablet">Tablet</label>
+                                <input type="number" id="columnsTablet" value="2" min="1" max="4" />
+                            </div>
+                            <div class="control-item">
+                                <label for="columnsDesktop">Desktop</label>
+                                <input
+                                    type="number"
+                                    id="columnsDesktop"
+                                    value="3"
+                                    min="1"
+                                    max="6"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Appearance</label>
+                        <div class="control-row">
+                            <div class="control-item">
+                                <label for="scaleOnHover">Hover Scale</label>
+                                <input
+                                    type="range"
+                                    id="scaleOnHover"
+                                    value="1.05"
+                                    min="1"
+                                    max="1.2"
+                                    step="0.01"
+                                />
+                                <span id="scaleValue">1.05</span>
+                            </div>
+                            <div class="control-item">
+                                <label for="backgroundColor">Background Color</label>
+                                <input type="color" id="backgroundColor" value="#ffffff" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Text Colors</label>
+                        <div class="control-row">
+                            <div class="control-item">
+                                <label for="titleColor">Title Color</label>
+                                <input type="color" id="titleColor" value="#333333" />
+                            </div>
+                            <div class="control-item">
+                                <label for="descriptionColor">Description Color</label>
+                                <input type="color" id="descriptionColor" value="#666666" />
+                            </div>
+                            <div class="control-item">
+                                <label for="iconColor">Icon Color</label>
+                                <input type="color" id="iconColor" value="#888888" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="applySettings" class="btn">Apply Settings</button>
+                </div>
+
+                <div id="repo-container" class="repo-grid-demo"></div>
+
+                <div class="config-output">
+                    <h3>Configuration Code</h3>
+                    <p>Copy and paste this code into your project:</p>
+                    <pre
+                        class="code-block language-javascript"
+                    ><code id="configCode">createRepoWidget({
+    username: "peterbenoit",
+    containerId: "repo-container",
+    columns: {
+        mobile: 1,
+        tablet: 2,
+        desktop: 3
+    },
+    maxRepos: 6,
+    sortBy: "stars",
+    scaleOnHover: 1.05,
+    cardStyles: {
+        backgroundColor: "#ffffff"
+    },
+    textStyles: {
+        titleColor: "#333333",
+        descriptionColor: "#666666",
+        iconColor: "#888888"
+    }
+});</code></pre>
+                    <button id="copyConfig" class="btn">Copy Configuration</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="documentation">
+            <div class="container">
+                <h2 class="section-title">Documentation</h2>
+                <p class="section-subtitle">Detailed configuration options and API reference</p>
+
+                <div class="tabs">
+                    <div class="tab active" data-tab="options">Configuration Options</div>
+                    <div class="tab" data-tab="api">API Reference</div>
+                    <div class="tab" data-tab="examples">Code Examples</div>
+                </div>
+
+                <div class="tab-content active" id="options-content">
+                    <h3>Configuration Options</h3>
+                    <p>
+                        The RepoWidget accepts a configuration object with the following properties:
+                    </p>
+
+                    <table class="docs-table">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>username</code></td>
+                                <td>String</td>
+                                <td>Required</td>
+                                <td>GitHub username to fetch repositories from</td>
+                            </tr>
+                            <tr>
+                                <td><code>containerId</code></td>
+                                <td>String</td>
+                                <td>Required</td>
+                                <td>ID of the HTML element where repositories will be displayed</td>
+                            </tr>
+                            <tr>
+                                <td><code>columns</code></td>
+                                <td>Object</td>
+                                <td><code>{mobile: 1, tablet: 2, desktop: 3}</code></td>
+                                <td>Number of columns for different device widths</td>
+                            </tr>
+                            <tr>
+                                <td><code>maxRepos</code></td>
+                                <td>Number</td>
+                                <td>Based on columns</td>
+                                <td>Maximum number of repositories to display</td>
+                            </tr>
+                            <tr>
+                                <td><code>sortBy</code></td>
+                                <td>String</td>
+                                <td>"stars"</td>
+                                <td>Sort criteria: "stars", "forks", "size", "name", "updated"</td>
+                            </tr>
+                            <tr>
+                                <td><code>scaleOnHover</code></td>
+                                <td>Number</td>
+                                <td>1.05</td>
+                                <td>Scale factor for hover effect (set to 0 to disable)</td>
+                            </tr>
+                            <tr>
+                                <td><code>cardStyles</code></td>
+                                <td>Object</td>
+                                <td><code>{}</code></td>
+                                <td>CSS styles for repository cards</td>
+                            </tr>
+                            <tr>
+                                <td><code>textStyles</code></td>
+                                <td>Object</td>
+                                <td><code>{}</code></td>
+                                <td>CSS styles for text elements</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-content" id="api-content">
+                    <h3>API Reference</h3>
+
+                    <div class="api-section">
+                        <p>
+                            For a more detailed API reference with improved readability and
+                            extensive examples, view our
+                            <a href="api.html" class="btn">Full API Documentation</a>
+                        </p>
+
+                        <h4>createRepoWidget(options)</h4>
+                        <p>
+                            Creates and initializes the repository widget with the specified
+                            options.
+                        </p>
+                        <p><strong>Returns:</strong> Void</p>
+
+                        <h5>Options Object</h5>
+
+                        <h6><code>username</code> <small>(required)</small></h6>
+                        <p>The GitHub username whose repositories will be displayed.</p>
+
+                        <h6><code>containerId</code> <small>(required)</small></h6>
+                        <p>The ID of the HTML element where the repositories will be rendered.</p>
+
+                        <h6><code>columns</code> <small>(optional)</small></h6>
+                        <p>
+                            An object specifying the number of columns for different screen sizes.
+                        </p>
+                        <pre class="code-block language-javascript"><code>{
+    mobile: 1,  // < 640px
+    tablet: 2,  // 640px - 1024px
+    desktop: 3  // > 1024px
+}</code></pre>
+
+                        <h6><code>cardStyles</code> <small>(optional)</small></h6>
+                        <p>An object containing CSS properties for styling the repository cards.</p>
+                        <pre class="code-block language-javascript"><code>{
+    backgroundColor: '#ffffff',
+    borderRadius: '8px',
+    boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+    // Any other valid CSS properties
+}</code></pre>
+
+                        <h6><code>textStyles</code> <small>(optional)</small></h6>
+                        <p>An object with color options for different text elements.</p>
+                        <pre class="code-block language-javascript"><code>{
+    titleColor: '#333333',
+    descriptionColor: '#666666',
+    iconColor: '#888888',
+    sizeColor: '#aaaaaa'
+}</code></pre>
+
+                        <h6><code>scaleOnHover</code> <small>(optional)</small></h6>
+                        <p>The scale factor for the hover effect. Set to 0 to disable.</p>
+
+                        <h6><code>maxRepos</code> <small>(optional)</small></h6>
+                        <p>The maximum number of repositories to display.</p>
+
+                        <h6><code>sortBy</code> <small>(optional)</small></h6>
+                        <p>The criteria to sort repositories by. Options include:</p>
+                        <ul>
+                            <li><code>"stars"</code> - Sort by star count (default)</li>
+                            <li><code>"forks"</code> - Sort by fork count</li>
+                            <li><code>"size"</code> - Sort by repository size</li>
+                            <li><code>"name"</code> - Sort alphabetically by name</li>
+                            <li><code>"updated"</code> - Sort by last update date</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="examples-content">
+                    <h3>Code Examples</h3>
+
+                    <div class="example">
+                        <h4>Basic Usage</h4>
+                        <pre class="code-block language-javascript"><code>// Basic configuration
+createRepoWidget({
+    username: "peterbenoit",
+    containerId: "repo-container"
+});</code></pre>
+                    </div>
+
+                    <div class="example">
+                        <h4>Custom Layout</h4>
+                        <pre
+                            class="code-block language-javascript"
+                        ><code>// Custom responsive layout
+createRepoWidget({
+    username: "peterbenoit",
+    containerId: "repo-container",
+    columns: {
+        mobile: 1,
+        tablet: 3,
+        desktop: 4
+    },
+    maxRepos: 8
+});</code></pre>
+                    </div>
+
+                    <div class="example">
+                        <h4>Custom Styling</h4>
+                        <pre
+                            class="code-block language-javascript"
+                        ><code>// Custom styling for cards and text
+createRepoWidget({
+    username: "peterbenoit",
+    containerId: "repo-container",
+    cardStyles: {
+        backgroundColor: "#f8f9fa",
+        borderRadius: "12px",
+        boxShadow: "0 10px 15px rgba(0,0,0,0.05)"
+    },
+    textStyles: {
+        titleColor: "#212529",
+        descriptionColor: "#495057",
+        iconColor: "#6c757d"
+    },
+    scaleOnHover: 1.08
+});</code></pre>
+                    </div>
+
+                    <div class="example">
+                        <h4>Custom Sorting</h4>
+                        <pre
+                            class="code-block language-javascript"
+                        ><code>// Sort by most recently updated repositories
+createRepoWidget({
+    username: "peterbenoit",
+    containerId: "repo-container",
+    sortBy: "updated",
+    maxRepos: 10
+});</code></pre>
+                    </div>
+
+                    <div class="example">
+                        <h4>ES Module Import</h4>
+                        <pre
+                            class="code-block language-javascript"
+                        ><code>// If using ES modules with a bundler
+import { createRepoWidget } from 'repo-widget';
+
+createRepoWidget({
+    username: "peterbenoit",
+    containerId: "repo-container"
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="examples">
+            <div class="container">
+                <h2 class="section-title">Example Use Cases</h2>
+                <p class="section-subtitle">Real-world applications for RepoWidget</p>
+
+                <div class="use-cases">
+                    <div class="use-case-card">
+                        <div class="use-case-icon">
+                            <i class="fa-solid fa-user-circle"></i>
+                        </div>
+                        <h3>Portfolio Showcase</h3>
+                        <p>
+                            Highlight your best open-source work on your personal website or
+                            portfolio. Sort by stars or custom criteria to put your best projects
+                            front and center.
+                        </p>
+                        <div class="use-case-footer">
+                            <a href="examples/portfolio.html" class="use-case-link">
+                                View Portfolio Example <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <div class="use-case-icon">
+                            <i class="fa-solid fa-building"></i>
+                        </div>
+                        <h3>Company Open Source</h3>
+                        <p>
+                            Showcase your organization's commitment to open source software by
+                            displaying your public repositories on your company website. Perfect for
+                            tech companies wanting to highlight their contributions.
+                        </p>
+                        <div class="use-case-footer">
+                            <a href="examples/company.html" class="use-case-link">
+                                View Company Example <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <div class="use-case-icon">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                        <h3>Documentation Hub</h3>
+                        <p>
+                            Create a centralized view of all your project repositories to make it
+                            easier for users and contributors to find what they need. Ideal for
+                            organizations with multiple related projects.
+                        </p>
+                        <div class="use-case-footer">
+                            <a href="examples/documentation-hub.html" class="use-case-link">
+                                View Documentation Example <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h3>RepoWidget</h3>
+                        <p>
+                            A lightweight, customizable widget for showcasing GitHub repositories on
+                            any website.
+                        </p>
+                        <ul class="social-links">
+                            <li class="social-link">
+                                <a
+                                    href="https://github.com/peterbenoit/RepoWidget"
+                                    aria-label="GitHub Repository"
+                                >
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </li>
+                            <li class="social-link">
+                                <a
+                                    href="https://www.npmjs.com/package/repo-widget"
+                                    aria-label="NPM Package"
+                                >
+                                    <i class="fab fa-npm"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h3>Documentation</h3>
+                        <ul class="footer-links">
+                            <li class="footer-link">
+                                <a href="#getting-started">Getting Started</a>
+                            </li>
+                            <li class="footer-link"><a href="#documentation">API Reference</a></li>
+                            <li class="footer-link"><a href="#examples">Examples</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul class="footer-links">
+                            <li class="footer-link">
+                                <a href="https://github.com/peterbenoit/RepoWidget/issues"
+                                    >Report Issues</a
+                                >
+                            </li>
+                            <li class="footer-link">
+                                <a
+                                    href="https://github.com/peterbenoit/RepoWidget/blob/main/LICENSE"
+                                    >License</a
+                                >
+                            </li>
+                            <li class="footer-link">
+                                <a href="https://github.com/peterbenoit/RepoWidget/releases"
+                                    >Changelog</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="copyright">
+                    &copy; 2025 RepoWidget. Created by
+                    <a href="https://github.com/peterbenoit">Peter Benoit</a>. Released under the
+                    MIT License.
+                </div>
+            </div>
+        </footer>
+
+        <script src="assets/js/repoWidget.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/toolbar/prism-toolbar.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+        <script src="assets/js/docs.js"></script>
+    </body>
+</html>

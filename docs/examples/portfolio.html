@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Developer Portfolio Example - RepoWidget</title>
+        <style>
+            :root {
+                --primary: #0366d6;
+                --accent: #28a745;
+                --text-primary: #24292e;
+                --text-secondary: #6a737d;
+                --bg-body: #f9f9fc;
+                --bg-card: #ffffff;
+                --border: #e1e4e8;
+                --radius: 8px;
+                --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: var(--font);
+                line-height: 1.6;
+                color: var(--text-primary);
+                background-color: var(--bg-body);
+                padding-bottom: 4rem;
+            }
+
+            a {
+                color: var(--primary);
+                text-decoration: none;
+                transition: color 0.2s;
+            }
+
+            a:hover {
+                color: #0256b3;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 1.5rem;
+            }
+
+            header {
+                background: linear-gradient(135deg, var(--primary) 0%, #0550ae 100%);
+                color: white;
+                padding: 6rem 0 8rem;
+                clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+                margin-bottom: 3rem;
+            }
+
+            .header-content {
+                display: flex;
+                align-items: center;
+                gap: 3rem;
+            }
+
+            .avatar {
+                width: 180px;
+                height: 180px;
+                border-radius: 50%;
+                border: 4px solid rgba(255, 255, 255, 0.8);
+                object-fit: cover;
+            }
+
+            .header-text h1 {
+                font-size: 2.8rem;
+                margin-bottom: 1rem;
+                font-weight: 700;
+            }
+
+            .header-text p {
+                font-size: 1.25rem;
+                margin-bottom: 1.5rem;
+                max-width: 600px;
+                opacity: 0.9;
+                line-height: 1.7;
+            }
+
+            .social-links {
+                display: flex;
+                gap: 1.25rem;
+                list-style: none;
+            }
+
+            .social-links a {
+                color: white;
+                font-size: 1.5rem;
+                opacity: 0.8;
+                transition: all 0.2s;
+            }
+
+            .social-links a:hover {
+                opacity: 1;
+                transform: translateY(-3px);
+            }
+
+            .stats {
+                display: flex;
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+
+            .stat {
+                opacity: 0.9;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .stat i {
+                font-size: 1.1rem;
+            }
+
+            section {
+                margin-bottom: 4rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                position: relative;
+                display: inline-block;
+            }
+
+            h2::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: -10px;
+                width: 50px;
+                height: 4px;
+                background-color: var(--accent);
+                border-radius: 2px;
+            }
+
+            .section-intro {
+                font-size: 1.1rem;
+                color: var(--text-secondary);
+                max-width: 800px;
+                margin-bottom: 2.5rem;
+            }
+
+            .section-title-bar {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 3rem;
+            }
+
+            .skills {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                margin-bottom: 2rem;
+            }
+
+            .skill {
+                background-color: #f1f8ff;
+                color: var(--primary);
+                border: 1px solid #c8e1ff;
+                border-radius: 50px;
+                padding: 0.4rem 1rem;
+                font-size: 0.9rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .skill i {
+                font-size: 0.9rem;
+            }
+
+            .card {
+                background-color: var(--bg-card);
+                border-radius: var(--radius);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                padding: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .card-title {
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+                color: var(--text-primary);
+            }
+
+            .card-content {
+                color: var(--text-secondary);
+            }
+
+            .featured {
+                position: relative;
+                background: linear-gradient(to right, #f8f9fa, #fff);
+                border-left: 5px solid var(--accent);
+                padding-left: 2rem;
+            }
+
+            .experience-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 2rem;
+            }
+
+            .project-categories {
+                display: flex;
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .category-button {
+                padding: 0.5rem 1.25rem;
+                background-color: #f6f8fa;
+                border: 1px solid var(--border);
+                border-radius: 50px;
+                font-size: 0.9rem;
+                cursor: pointer;
+                transition: all 0.2s;
+                font-weight: 500;
+            }
+
+            .category-button:hover {
+                background-color: #f0f0f0;
+            }
+
+            .category-button.active {
+                background-color: var(--primary);
+                color: white;
+                border-color: var(--primary);
+            }
+
+            .contact-form {
+                background-color: white;
+                border-radius: var(--radius);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                padding: 2.5rem;
+                margin-top: 2rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .form-label {
+                display: block;
+                margin-bottom: 0.5rem;
+                color: var(--text-primary);
+                font-weight: 500;
+            }
+
+            .form-control {
+                width: 100%;
+                padding: 0.75rem 1rem;
+                font-size: 1rem;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                background-color: #f6f8fa;
+                transition: border-color 0.2s, box-shadow 0.2s;
+            }
+
+            .form-control:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.2);
+            }
+
+            textarea.form-control {
+                min-height: 150px;
+                resize: vertical;
+            }
+
+            .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                font-weight: 600;
+                border-radius: var(--radius);
+                cursor: pointer;
+                transition: all 0.2s;
+                border: none;
+            }
+
+            .btn-primary {
+                background-color: var(--primary);
+                color: white;
+            }
+
+            .btn-primary:hover {
+                background-color: #0256b3;
+                transform: translateY(-2px);
+            }
+
+            /* Footer */
+            footer {
+                background-color: #24292e;
+                color: rgba(255, 255, 255, 0.7);
+                padding: 3rem 0;
+                margin-top: 5rem;
+            }
+
+            .footer-content {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 4rem;
+                flex-wrap: wrap;
+            }
+
+            .footer-column {
+                min-width: 200px;
+            }
+
+            .footer-column h4 {
+                color: white;
+                font-size: 1.2rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .footer-links {
+                list-style: none;
+            }
+
+            .footer-links li {
+                margin-bottom: 0.5rem;
+            }
+
+            .footer-links a {
+                color: rgba(255, 255, 255, 0.7);
+                transition: color 0.2s;
+            }
+
+            .footer-links a:hover {
+                color: white;
+            }
+
+            .copyright {
+                text-align: center;
+                margin-top: 3rem;
+                padding-top: 1.5rem;
+                color: rgba(255, 255, 255, 0.5);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            @media (max-width: 768px) {
+                .header-content {
+                    flex-direction: column;
+                    text-align: center;
+                    gap: 1.5rem;
+                }
+
+                .social-links {
+                    justify-content: center;
+                }
+
+                .stats {
+                    justify-content: center;
+                }
+
+                .section-title-bar {
+                    flex-direction: column;
+                    gap: 1.5rem;
+                }
+
+                h2::after {
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+
+                .project-categories {
+                    flex-wrap: wrap;
+                }
+            }
+        </style>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        />
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <img
+                        src="https://randomuser.me/api/portraits/women/65.jpg"
+                        alt="Developer Portrait"
+                        class="avatar"
+                    />
+                    <div class="header-text">
+                        <h1>Sarah Johnson</h1>
+                        <p>
+                            Full-Stack Developer passionate about creating clean, efficient code and
+                            intuitive user experiences. Specialized in JavaScript, React, and
+                            Node.js with 5+ years of experience building modern web applications.
+                        </p>
+                        <ul class="social-links">
+                            <li>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fab fa-dev"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </li>
+                        </ul>
+
+                        <div class="stats">
+                            <div class="stat">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>San Francisco, CA</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-briefcase"></i>
+                                <span>Senior Developer @ TechCorp</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-code-branch"></i>
+                                <span>25+ Open Source Projects</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <section id="about">
+                <div class="section-title-bar">
+                    <div>
+                        <h2>About Me</h2>
+                        <p class="section-intro">
+                            I'm a seasoned full-stack developer who enjoys tackling complex problems
+                            and building responsive, user-friendly web applications. My journey in
+                            software development began over 6 years ago, and I've been passionate
+                            about learning new technologies ever since.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="skills">
+                    <span class="skill"><i class="fab fa-js"></i> JavaScript</span>
+                    <span class="skill"><i class="fab fa-react"></i> React</span>
+                    <span class="skill"><i class="fab fa-node-js"></i> Node.js</span>
+                    <span class="skill"><i class="fab fa-typescript"></i> TypeScript</span>
+                    <span class="skill"><i class="fab fa-vuejs"></i> Vue.js</span>
+                    <span class="skill"><i class="fab fa-python"></i> Python</span>
+                    <span class="skill"><i class="fas fa-database"></i> MongoDB</span>
+                    <span class="skill"><i class="fas fa-server"></i> Express</span>
+                    <span class="skill"><i class="fab fa-aws"></i> AWS</span>
+                    <span class="skill"><i class="fab fa-docker"></i> Docker</span>
+                    <span class="skill"><i class="fas fa-mobile-alt"></i> Responsive Design</span>
+                    <span class="skill"><i class="fas fa-universal-access"></i> Accessibility</span>
+                </div>
+
+                <div class="card featured">
+                    <h3 class="card-title">My Development Philosophy</h3>
+                    <div class="card-content">
+                        <p>
+                            I believe in writing clean, maintainable code that solves real problems.
+                            My approach combines technical excellence with a focus on user
+                            experience and business value. I'm passionate about performance
+                            optimization, accessibility, and creating intuitive interfaces.
+                        </p>
+                        <p>
+                            When not working on client projects, I contribute to open source and
+                            build tools that help other developers. I'm also an advocate for
+                            inclusive tech communities and mentor junior developers in my spare
+                            time.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects">
+                <div class="section-title-bar">
+                    <div>
+                        <h2>My Projects</h2>
+                        <p class="section-intro">
+                            A selection of my best open source projects and personal work. These
+                            repositories highlight my expertise in different technologies and my
+                            approach to solving various programming challenges.
+                        </p>
+                    </div>
+                    <div class="project-categories">
+                        <button class="category-button active" data-category="all">All</button>
+                        <button class="category-button" data-category="frontend">Frontend</button>
+                        <button class="category-button" data-category="backend">Backend</button>
+                        <button class="category-button" data-category="tools">Tools</button>
+                    </div>
+                </div>
+
+                <div id="featured-projects"></div>
+
+                <h3 style="margin-top: 4rem; margin-bottom: 1.5rem">Additional Projects</h3>
+                <div id="additional-projects"></div>
+            </section>
+
+            <section id="experience">
+                <h2>Work Experience</h2>
+                <p class="section-intro">
+                    I've had the privilege of working with a diverse range of companies from
+                    startups to large enterprises. Here's a snapshot of my professional journey.
+                </p>
+
+                <div class="experience-grid">
+                    <div class="card">
+                        <h3 class="card-title">Senior Frontend Developer</h3>
+                        <div class="card-content">
+                            <p><strong>TechCorp</strong> • 2022 - Present</p>
+                            <p>
+                                Lead developer for the company's flagship SaaS product. Implemented
+                                new features, improved performance, and mentored junior developers.
+                            </p>
+                            <p><strong>Technologies:</strong> React, TypeScript, GraphQL, Jest</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">Full-Stack Developer</h3>
+                        <div class="card-content">
+                            <p><strong>InnovateTech</strong> • 2019 - 2022</p>
+                            <p>
+                                Built and maintained multiple client projects. Implemented CI/CD
+                                pipelines and improved development workflows.
+                            </p>
+                            <p><strong>Technologies:</strong> Vue.js, Node.js, MongoDB, Docker</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">Frontend Developer</h3>
+                        <div class="card-content">
+                            <p><strong>WebSolutions Inc</strong> • 2017 - 2019</p>
+                            <p>
+                                Developed responsive web applications for clients across various
+                                industries. Focused on performance and accessibility.
+                            </p>
+                            <p>
+                                <strong>Technologies:</strong> JavaScript, HTML/CSS, jQuery,
+                                Bootstrap
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact">
+                <h2>Get In Touch</h2>
+                <p class="section-intro">
+                    Interested in working together? Have a project idea or just want to say hello?
+                    Fill out the form below and I'll get back to you as soon as possible.
+                </p>
+
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name" class="form-label">Name</label>
+                            <input
+                                type="text"
+                                id="name"
+                                class="form-control"
+                                placeholder="Your name"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                class="form-control"
+                                placeholder="your.email@example.com"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input
+                                type="text"
+                                id="subject"
+                                class="form-control"
+                                placeholder="What's this about?"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea
+                                id="message"
+                                class="form-control"
+                                placeholder="Tell me about your project, question, or just say hi!"
+                            ></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h4>Sarah Johnson</h4>
+                        <p>Full-Stack Developer</p>
+                        <ul class="social-links" style="margin-top: 1rem">
+                            <li>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Navigation</h4>
+                        <ul class="footer-links">
+                            <li><a href="#about">About Me</a></li>
+                            <li><a href="#projects">Projects</a></li>
+                            <li><a href="#experience">Experience</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Tutorials</a></li>
+                            <li><a href="#">Portfolio Source</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="copyright">
+                    <p>&copy; 2025 Sarah Johnson. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <script src="../assets/js/repoWidget.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Fetch and display featured personal projects
+                createRepoWidget({
+                    username: 'sindresorhus', // Example using a popular GitHub user for demonstration
+                    containerId: 'featured-projects',
+                    maxRepos: 3,
+                    sortBy: 'stars',
+                    columns: {
+                        mobile: 1,
+                        tablet: 2,
+                        desktop: 3,
+                    },
+                    cardStyles: {
+                        backgroundColor: '#ffffff',
+                        borderRadius: '8px',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                        height: '100%',
+                    },
+                    textStyles: {
+                        titleColor: '#0366d6',
+                        descriptionColor: '#586069',
+                        iconColor: '#24292e',
+                    },
+                    scaleOnHover: 1.03,
+                });
+
+                // Fetch and display additional projects
+                createRepoWidget({
+                    username: 'vercel', // Example using a tech company for demonstration
+                    containerId: 'additional-projects',
+                    maxRepos: 6,
+                    sortBy: 'updated',
+                    columns: {
+                        mobile: 1,
+                        tablet: 2,
+                        desktop: 3,
+                    },
+                    cardStyles: {
+                        backgroundColor: '#f6f8fa',
+                        borderRadius: '8px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+                        border: '1px solid #e1e4e8',
+                        height: '100%',
+                    },
+                    textStyles: {
+                        titleColor: '#24292e',
+                        descriptionColor: '#586069',
+                        iconColor: '#0366d6',
+                    },
+                    scaleOnHover: 1.02,
+                });
+
+                // Handle project category filtering
+                const categoryButtons = document.querySelectorAll('.category-button');
+
+                categoryButtons.forEach((button) => {
+                    button.addEventListener('click', () => {
+                        // Toggle active class
+                        categoryButtons.forEach((btn) => btn.classList.remove('active'));
+                        button.classList.add('active');
+
+                        // In a real implementation, you would filter the projects here
+                        // For this demo, we're just showing the visual feedback
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

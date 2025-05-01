@@ -1,3 +1,4 @@
+(function () {
     function createRepoWidget({
         username, // GitHub username
         containerId, // ID of the container element
@@ -222,4 +223,5 @@
         initializeWidget();
     }
 
-export { createRepoWidget };
+    window.createRepoWidget = createRepoWidget;
+})();
