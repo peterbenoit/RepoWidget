@@ -602,24 +602,135 @@ input[type="color"] {
 	.btn+.btn {
 		margin-left: 0.5rem;
 	}
+
+	.mobile-nav-toggle {
+		display: block;
+		z-index: 1000;
+	}
+
+	.nav-links {
+		position: fixed;
+		top: 0;
+		right: -100%;
+		width: 80%;
+		max-width: 300px;
+		height: 100vh;
+		background-color: var(--primary-color);
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		transition: right 0.3s ease;
+		box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+		z-index: 999;
+	}
+
+	.nav-links.active {
+		right: 0;
+	}
+
+	.nav-link {
+		margin: 1rem 0;
+	}
+
+	.nav {
+		position: relative;
+	}
+
+	.overlay {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 998;
+	}
+
+	.overlay.active {
+		display: block;
+	}
+
+	/* Improve mobile layout for other sections */
+	.section-title {
+		font-size: 1.75rem;
+	}
+
+	.section-subtitle {
+		font-size: 1.1rem;
+	}
+
+	.features {
+		grid-template-columns: 1fr;
+	}
+
+	.control-row {
+		flex-direction: column;
+	}
+
+	.control-item {
+		width: 100%;
+		margin-bottom: 1rem;
+	}
+
+	.tabs {
+		flex-direction: column;
+	}
+
+	.tab {
+		text-align: center;
+	}
+
+	.steps {
+		flex-direction: column;
+	}
+
+	.step {
+		width: 100%;
+		margin-bottom: 2rem;
+	}
+
+	.footer-content {
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.footer-column {
+		width: 100%;
+	}
 }
 
 @media (max-width: 576px) {
-	.btn {
-		display: block;
-		width: 100%;
+	.hero-actions {
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
 	}
 
 	.btn+.btn {
 		margin-left: 0;
-		margin-top: 0.75rem;
 	}
 
-	.hero-actions {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-		max-width: 300px;
-		margin: 2rem auto 0;
+	.use-cases {
+		grid-template-columns: 1fr;
 	}
+
+	.docs-table {
+		font-size: 0.8rem;
+	}
+}
+
+/* Mobile Navigation */
+.mobile-nav-toggle {
+	display: none;
+	background: none;
+	border: none;
+	color: white;
+	font-size: 1.5rem;
+	cursor: pointer;
+	padding: 0.5rem;
+}
+
+.mobile-nav-toggle:focus {
+	outline: none;
 }
