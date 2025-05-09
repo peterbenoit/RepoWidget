@@ -171,9 +171,3 @@ npm run build
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contact
-
-Peter Benoit - [GitHub Profile](https://github.com/peterbenoit)
-
-Project Link: [https://github.com/peterbenoit/RepoWidget](https://github.com/peterbenoit/RepoWidget)
