@@ -2,26 +2,95 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
-        <title>API Reference - RepoWidget</title>
-        <meta name="description" content="Comprehensive API reference for the RepoWidget library" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+        <!-- Primary Meta Tags -->
+        <title>API Reference - RepoWidget Documentation</title>
+        <meta name="title" content="API Reference - RepoWidget Documentation" />
+        <meta name="description" content="Comprehensive API reference for the RepoWidget library. Complete documentation with examples, parameters, and configuration options." />
+        <meta name="keywords" content="repowidget api, github widget documentation, javascript api reference, repository widget guide" />
+        <meta name="author" content="Peter Benoit" />
+        <meta name="robots" content="index, follow" />
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="7 days" />
+
+        <!-- Canonical URL -->
+        <link rel="canonical" href="https://peterbenoit.github.io/RepoWidget/api.html" />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://peterbenoit.github.io/RepoWidget/api.html" />
+        <meta property="og:title" content="API Reference - RepoWidget Documentation" />
+        <meta property="og:description" content="Comprehensive API reference for the RepoWidget library. Complete documentation with examples, parameters, and configuration options." />
+        <meta property="og:image" content="https://peterbenoit.github.io/RepoWidget/assets/images/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="RepoWidget" />
+        <meta property="og:locale" content="en_US" />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://peterbenoit.github.io/RepoWidget/api.html" />
+        <meta property="twitter:title" content="API Reference - RepoWidget Documentation" />
+        <meta property="twitter:description" content="Comprehensive API reference for the RepoWidget library. Complete documentation with examples, parameters, and configuration options." />
+        <meta property="twitter:image" content="https://peterbenoit.github.io/RepoWidget/assets/images/og-image.png" />
+        <meta property="twitter:creator" content="@peterbenoit" />
+
+        <!-- Favicons -->
+        <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png" />
+        <link rel="manifest" href="assets/manifest.json" />
+        <meta name="theme-color" content="#0366d6" />
+        <meta name="msapplication-TileColor" content="#0366d6" />
+        <meta name="msapplication-config" content="assets/browserconfig.xml" />
+
+        <!-- DNS Prefetch -->
+        <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+        <link rel="dns-prefetch" href="//api.github.com" />
+
+        <!-- Preconnect -->
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
+        <!-- CSS Resources -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="assets/css/styles.css" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/toolbar/prism-toolbar.min.css"
-        />
-        <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/toolbar/prism-toolbar.min.css" integrity="sha512-Dqf5X5AAp5789NYyWhUzDmjz6qmJ8k8pDGiQnlM6kAtjvzGlYgJ5vBSGTD2ZHJQNcaUFLI7EhDbN8XdJsKJKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <!-- Breadcrumb Navigation -->
+        <link rel="up" href="./" title="RepoWidget Home" />
+
+        <!-- Structured Data -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            "headline": "RepoWidget API Reference",
+            "description": "Comprehensive API reference for the RepoWidget library with examples and configuration options",
+            "author": {
+                "@type": "Person",
+                "name": "Peter Benoit",
+                "url": "https://www.uiguy.dev"
+            },
+            "datePublished": "2025-01-01",
+            "dateModified": "2025-01-01",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://peterbenoit.github.io/RepoWidget/api.html"
+            },
+            "publisher": {
+                "@type": "Person",
+                "name": "Peter Benoit"
+            },
+            "about": {
+                "@type": "SoftwareApplication",
+                "name": "RepoWidget"
+            }
+        }
+        </script>
+
         <style>
             /* Additional styles specific to the API reference page */
             .api-sidebar {
@@ -287,6 +356,7 @@
         </style>
     </head>
     <body>
+		<a href="https://www.uiguy.dev" rel="author" class="seo-author-link">Peter Benoit</a>
         <header class="header">
             <div class="container">
                 <nav class="nav">
@@ -448,7 +518,9 @@
                                     <span class="type-label">String</span>
                                     <span class="required-label">Required</span>
                                 </p>
-                                <p>The GitHub username whose repositories will be displayed.</p>
+                                <p class="parameter-description">
+                                    The GitHub username whose repositories will be displayed.
+                                </p>
                                 <div class="code-example">
                                     <pre
                                         class="code-block language-javascript"
@@ -472,7 +544,7 @@ createRepoWidget({
                                     <span class="type-label">String</span>
                                     <span class="required-label">Required</span>
                                 </p>
-                                <p>
+                                <p class="parameter-description">
                                     The ID of the HTML element where the repositories will be
                                     rendered.
                                 </p>
@@ -823,7 +895,7 @@ createRepoWidget({
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/toolbar/prism-toolbar.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
         <script src="assets/js/mobile-nav.js"></script>
-        <script src="https://peterbenoit.com/js/badge.js" data-mode="tracker"></script>
-        <script src="https://uiguy.dev/libs/console.js"></script>
+        <script src="https://www.peterbenoit.com/js/badge.js" data-mode="tracker"></script>
+        <script src="https://www.uiguy.dev/libs/console.js"></script>
     </body>
 </html>
