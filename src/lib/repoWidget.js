@@ -14,6 +14,7 @@
 		scaleOnHover = 1.05, // Default scale factor on hover; set to 0 or false to disable
 		maxRepos = columns.desktop === 1 ? 10 : columns.desktop * 2, // Default maxRepos is double the desktop column count
 		sortBy = 'stars', // Sorting parameter; options: "stars", "forks", "size", "name", "updated"
+		exclude = [], // Array of repository names to exclude
 	}) {
 		const repoContainer = document.getElementById(containerId);
 
@@ -132,6 +133,11 @@
 
 		async function initializeWidget() {
 			let repos = await fetchRepos();
+
+			if (exclude && exclude.length > 0) {
+				repos = repos.filter((repo) => !exclude.includes(repo.name));
+			}
+
 			repos = sortRepositories(repos).slice(0, maxRepos);
 
 			const fragment = document.createDocumentFragment();
