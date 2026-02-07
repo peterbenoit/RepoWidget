@@ -277,6 +277,10 @@
 							<option value="updated">Last Updated</option>
 						</select>
 					</div>
+					<div class="control-item">
+						<label for="exclude">Exclude Repos (comma separated)</label>
+						<input type="text" id="exclude" placeholder="repo-name-1, repo-name-2" />
+					</div>
 				</div>
 
 				<div class="control-group">
@@ -421,6 +425,12 @@
 							<td>Sort criteria: "stars", "forks", "size", "name", "updated"</td>
 						</tr>
 						<tr>
+							<td><code>exclude</code></td>
+							<td>Array</td>
+							<td><code>[]</code></td>
+							<td>Array of repository names to exclude from display</td>
+						</tr>
+						<tr>
 							<td><code>scaleOnHover</code></td>
 							<td>Number</td>
 							<td>1.05</td>
@@ -500,6 +510,10 @@
 
 					<h6><code>maxRepos</code> <small>(optional)</small></h6>
 					<p>The maximum number of repositories to display.</p>
+
+					<h6><code>exclude</code> <small>(optional)</small></h6>
+					<p>An array of repository names (strings) to exclude from the list.</p>
+					<pre class="code-block language-javascript"><code>['my-private-repo', 'forked-repo']</code></pre>
 
 					<h6><code>sortBy</code> <small>(optional)</small></h6>
 					<p>The criteria to sort repositories by. Options include:</p>

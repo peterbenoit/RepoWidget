@@ -80,6 +80,8 @@ function initializeDemo() {
 	const username = document.getElementById('username').value;
 	const maxRepos = parseInt(document.getElementById('maxRepos').value);
 	const sortBy = document.getElementById('sortBy').value;
+	const excludeInput = document.getElementById('exclude').value;
+	const exclude = excludeInput ? excludeInput.split(',').map(s => s.trim()).filter(s => s) : [];
 
 	const columns = {
 		mobile: parseInt(document.getElementById('columnsMobile').value),
@@ -99,6 +101,7 @@ function initializeDemo() {
 		columns,
 		maxRepos,
 		sortBy,
+		exclude,
 		scaleOnHover,
 		cardStyles: { backgroundColor },
 		textStyles: {
@@ -116,6 +119,8 @@ function updateConfigDisplay() {
 	const username = document.getElementById('username').value;
 	const maxRepos = parseInt(document.getElementById('maxRepos').value);
 	const sortBy = document.getElementById('sortBy').value;
+	const excludeInput = document.getElementById('exclude').value;
+	const exclude = excludeInput ? excludeInput.split(',').map(s => s.trim()).filter(s => s) : [];
 
 	const columns = {
 		mobile: parseInt(document.getElementById('columnsMobile').value),
@@ -135,6 +140,7 @@ function updateConfigDisplay() {
 		columns,
 		maxRepos,
 		sortBy,
+		exclude,
 		scaleOnHover,
 		cardStyles: { backgroundColor },
 		textStyles: { titleColor, descriptionColor, iconColor }
