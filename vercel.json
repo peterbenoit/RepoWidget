@@ -1,6 +1,7 @@
 {
-    "version": 2,
-    "outputDirectory": "docs",
-    "public": true,
-    "cleanUrls": true
+	"buildCommand": "cd docs && npm run build",
+	"outputDirectory": "docs/dist",
+	"installCommand": "cd docs && npm install",
+	"devCommand": "cd docs && npm run dev",
+	"framework": "astro"
 }
