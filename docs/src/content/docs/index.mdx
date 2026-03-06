@@ -1,0 +1,44 @@
+---
+title: RepoWidget
+description: A lightweight, customizable JavaScript widget to showcase GitHub repositories on any website.
+template: splash
+hero:
+  tagline: Display your GitHub repositories anywhere — no build tools, no dependencies, no fuss.
+  actions:
+    - text: Get Started
+      link: /getting-started/introduction/
+      icon: right-arrow
+    - text: Quick Start
+      link: /getting-started/quick-start/
+      icon: rocket
+      variant: minimal
+    - text: GitHub
+      link: https://github.com/peterbenoit/RepoWidget
+      icon: github
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Why RepoWidget?
+
+<CardGrid stagger>
+  <Card title="Real-time Data" icon="seti:json">
+    Fetches live repository info from the GitHub API with smart caching for optimal performance.
+  </Card>
+  <Card title="Fully Customizable" icon="pencil">
+    Control colors, layout, column counts, hover effects, and more to match any site design.
+  </Card>
+  <Card title="Responsive" icon="laptop">
+    Configure distinct column layouts for mobile, tablet, and desktop with a single options object.
+  </Card>
+  <Card title="Flexible Sorting" icon="list-format">
+    Sort by stars, forks, size, name, or last-updated date to surface your best work first.
+  </Card>
+  <Card title="Zero Dependencies" icon="rocket">
+    A single script tag is all it takes. No framework required, no build step needed.
+  </Card>
+  <Card title="Accessible" icon="approve-check-circle">
+    Ships with ARIA attributes and semantic HTML so every user can navigate your repos.
+  </Card>
+</CardGrid>

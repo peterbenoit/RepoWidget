@@ -1,0 +1,94 @@
+---
+title: Quick Start
+description: Get RepoWidget running on your page in under two minutes.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Get up and running in three steps.
+
+<Steps>
+
+1. **Add the script**
+
+   Paste this just before your closing `</body>` tag:
+
+   ```html
+   <script src="https://cdn.jsdelivr.net/gh/peterbenoit/RepoWidget@latest/dist/repoWidget.min.js"></script>
+   ```
+
+2. **Add a container element**
+
+   Place this `<div>` wherever you want the repositories to appear:
+
+   ```html
+   <div id="repo-container"></div>
+   ```
+
+3. **Initialize the widget**
+
+   Call `createRepoWidget` with your GitHub username and the container ID:
+
+   ```html
+   <script>
+     createRepoWidget({
+       username: 'your-github-username',
+       containerId: 'repo-container',
+     });
+   </script>
+   ```
+
+</Steps>
+
+That's it. Reload the page and your repositories will appear in a responsive card grid.
+
+## Minimal full example
+
+Here's a complete HTML page you can copy-paste to test locally:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My GitHub Repos</title>
+</head>
+<body>
+
+  <h1>My Projects</h1>
+  <div id="repo-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/gh/peterbenoit/RepoWidget@latest/dist/repoWidget.min.js"></script>
+  <script>
+    createRepoWidget({
+      username: 'peterbenoit',
+      containerId: 'repo-container',
+    });
+  </script>
+
+</body>
+</html>
+```
+
+## Customize on first run
+
+Once the basic widget is working, you can layer in options:
+
+```js
+createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repo-container',
+  maxRepos: 6,
+  sortBy: 'stars',
+  columns: { mobile: 1, tablet: 2, desktop: 3 },
+  cardStyles: { backgroundColor: '#f6f8fa', borderRadius: '8px' },
+  textStyles: { titleColor: '#24292e', descriptionColor: '#586069' },
+});
+```
+
+See [Configuration Options](/api/configuration/) for the full list of settings.
+
+<Aside type="tip">
+  Start with just `username` and `containerId`. Add more options once you can see the widget rendering.
+</Aside>

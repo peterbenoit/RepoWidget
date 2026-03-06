@@ -1,0 +1,87 @@
+---
+title: Contributing
+description: How to set up the RepoWidget development environment and submit changes.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Contributions are welcome. Here's how to get started.
+
+## Development setup
+
+<Steps>
+
+1. **Fork and clone**
+
+   ```bash
+   git clone https://github.com/your-username/RepoWidget.git
+   cd RepoWidget
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Build the widget**
+
+   ```bash
+   npm run build
+   ```
+
+   This produces `dist/repoWidget.js` and `dist/repoWidget.min.js`.
+
+4. **Run the docs locally**
+
+   ```bash
+   cd docs
+   npm install
+   npm run dev
+   ```
+
+   The docs site starts at `http://localhost:4321`.
+
+</Steps>
+
+## Project structure
+
+```
+RepoWidget/
+├── src/
+│   └── lib/
+│       └── repoWidget.js     ← widget source
+├── dist/                     ← built output (generated)
+├── docs/                     ← Astro/Starlight documentation site
+│   ├── astro.config.mjs
+│   ├── src/
+│   │   ├── components/       ← custom Astro components
+│   │   └── content/docs/     ← all MDX/Markdown pages
+│   └── public/               ← static assets
+├── build.js                  ← build script
+└── package.json
+```
+
+## Submitting changes
+
+- Open an issue first for significant changes so we can discuss the approach.
+- Keep pull requests focused — one feature or fix per PR.
+- Update docs in `docs/src/content/docs/` when changing the API or adding options.
+- Run `npm run build` before submitting to ensure the dist files are up to date.
+
+## Reporting bugs
+
+Open an issue at [github.com/peterbenoit/RepoWidget/issues](https://github.com/peterbenoit/RepoWidget/issues) and include:
+
+- What you expected to happen
+- What actually happened
+- A minimal reproduction (HTML file or CodePen link)
+- Browser and OS version
+
+<Aside type="note">
+  Please do not open issues for questions. For usage questions, check the [Configuration Options](/api/configuration/) and [Code Examples](/examples/code-examples/) pages first.
+</Aside>
+
+## License
+
+RepoWidget is released under the [MIT License](https://github.com/peterbenoit/RepoWidget/blob/main/LICENSE).

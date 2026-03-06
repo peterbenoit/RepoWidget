@@ -1,0 +1,49 @@
+---
+title: Introduction
+description: Learn what RepoWidget is, what it does, and when to use it.
+---
+
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+RepoWidget is a lightweight, zero-dependency JavaScript widget that pulls live repository data from the GitHub API and renders a responsive card grid on any webpage.
+
+Drop in a single `<script>` tag, call one function, and your GitHub repos appear — no build tools, no frameworks, no configuration files.
+
+## What it does
+
+- Fetches public repositories for any GitHub user or organization
+- Renders a responsive card grid with repo name, description, stars, forks, and language
+- Supports sorting, filtering, custom column layouts, and full CSS customization
+- Caches API responses to stay within GitHub's rate limits
+
+## When to use it
+
+<CardGrid>
+  <Card title="Personal portfolios" icon="star">
+    Show off your open-source work automatically — new repos appear without touching your site.
+  </Card>
+  <Card title="Company pages" icon="seti:github">
+    Highlight your organization's public repositories to attract contributors and showcase commitment to open source.
+  </Card>
+  <Card title="Documentation hubs" icon="open-book">
+    Give users a bird's-eye view of all related projects in one place.
+  </Card>
+  <Card title="Developer profiles" icon="laptop">
+    Any site where you want to feature GitHub activity without maintaining a manual list.
+  </Card>
+</CardGrid>
+
+## How it works
+
+1. The widget script is loaded on your page (via CDN or npm).
+2. You call `createRepoWidget()` with a config object that includes your GitHub username and a target element ID.
+3. The widget fetches your public repos from `api.github.com`, applies sorting and filtering, then injects the card grid into the target element.
+4. API responses are cached in `sessionStorage` to avoid redundant requests.
+
+<Aside type="note">
+  RepoWidget only displays **public** repositories. Private repos are never fetched.
+</Aside>
+
+## Browser support
+
+RepoWidget uses the Fetch API and CSS Grid — both supported in all modern browsers. No polyfills are included; if you need IE11 support, include a Fetch polyfill yourself.

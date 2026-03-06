@@ -31,17 +31,14 @@ async function build() {
 		.replace('})();', '');
 	fs.writeFileSync(path.join(__dirname, 'dist/repoWidget.esm.js'), esmCode);
 
-	// Copy to docs
+	// Copy minified build to docs public so the dev server and deployed site can serve it
+	fs.ensureDirSync(path.join(__dirname, 'docs/public'));
 	fs.copyFileSync(
 		path.join(__dirname, 'dist/repoWidget.min.js'),
-		path.join(__dirname, 'docs/assets/js/repoWidget.min.js')
-	);
-	fs.copyFileSync(
-		path.join(__dirname, 'src/lib/repoWidget.js'),
-		path.join(__dirname, 'docs/assets/js/repoWidget.js')
+		path.join(__dirname, 'docs/public/repoWidget.min.js')
 	);
 
-	console.log('Build complete. Files written to dist/ and docs/assets/js/');
+	console.log('Build complete. Files written to dist/ and docs/public/');
 }
 
 build().catch(err => {

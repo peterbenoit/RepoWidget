@@ -1,0 +1,281 @@
+---
+title: Code Examples
+description: Copy-ready RepoWidget configurations for common use cases — portfolio sites, company pages, dark mode, and more.
+---
+
+import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+import CodePenExample from '../../../components/CodePenExample.astro';
+
+## Basic usage
+
+The minimum required configuration: just a username and a container.
+
+<CodePenExample
+  title="Basic usage"
+  js={`createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repo-container',
+});`}
+>
+  ```js
+  createRepoWidget({
+    username: 'peterbenoit',
+    containerId: 'repo-container',
+  });
+  ```
+</CodePenExample>
+
+---
+
+## Custom layout
+
+Show more repos in a wider grid on larger screens.
+
+<CodePenExample
+  title="Custom layout"
+  js={`createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repo-container',
+  columns: {
+    mobile: 1,
+    tablet: 3,
+    desktop: 4,
+  },
+  maxRepos: 8,
+});`}
+>
+  ```js
+  createRepoWidget({
+    username: 'peterbenoit',
+    containerId: 'repo-container',
+    columns: {
+      mobile: 1,
+      tablet: 3,
+      desktop: 4,
+    },
+    maxRepos: 8,
+  });
+  ```
+</CodePenExample>
+
+---
+
+## Filtered and sorted
+
+Display only the six most recently updated repos, hiding a couple of internal projects.
+
+<CodePenExample
+  title="Filtered and sorted"
+  js={`createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repo-container',
+  sortBy: 'updated',
+  maxRepos: 6,
+  exclude: ['dotfiles', 'personal-notes'],
+});`}
+>
+  ```js
+  createRepoWidget({
+    username: 'peterbenoit',
+    containerId: 'repo-container',
+    sortBy: 'updated',
+    maxRepos: 6,
+    exclude: ['dotfiles', 'personal-notes'],
+  });
+  ```
+</CodePenExample>
+
+---
+
+## Light theme styling
+
+A clean, GitHub-like card style.
+
+<CodePenExample
+  title="Light theme styling"
+  js={`createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repo-container',
+  cardStyles: {
+    backgroundColor: '#ffffff',
+    borderRadius: '8px',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.12)',
+    border: '1px solid #e1e4e8',
+  },
+  textStyles: {
+    titleColor: '#24292e',
+    descriptionColor: '#586069',
+    iconColor: '#6a737d',
+    sizeColor: '#959da5',
+  },
+});`}
+>
+  ```js
+  createRepoWidget({
+    username: 'peterbenoit',
+    containerId: 'repo-container',
+    cardStyles: {
+      backgroundColor: '#ffffff',
+      borderRadius: '8px',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.12)',
+      border: '1px solid #e1e4e8',
+    },
+    textStyles: {
+      titleColor: '#24292e',
+      descriptionColor: '#586069',
+      iconColor: '#6a737d',
+      sizeColor: '#959da5',
+    },
+  });
+  ```
+</CodePenExample>
+
+---
+
+## Dark theme styling
+
+Card styles that complement a dark-background site.
+
+<CodePenExample
+  title="Dark theme styling"
+  js={`createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repo-container',
+  cardStyles: {
+    backgroundColor: '#2d333b',
+    borderRadius: '8px',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+    border: '1px solid #444c56',
+  },
+  textStyles: {
+    titleColor: '#e6edf3',
+    descriptionColor: '#adbac7',
+    iconColor: '#768390',
+    sizeColor: '#636e7b',
+  },
+});`}
+>
+  ```js
+  createRepoWidget({
+    username: 'peterbenoit',
+    containerId: 'repo-container',
+    cardStyles: {
+      backgroundColor: '#2d333b',
+      borderRadius: '8px',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+      border: '1px solid #444c56',
+    },
+    textStyles: {
+      titleColor: '#e6edf3',
+      descriptionColor: '#adbac7',
+      iconColor: '#768390',
+      sizeColor: '#636e7b',
+    },
+  });
+  ```
+</CodePenExample>
+
+---
+
+## Portfolio spotlight
+
+Top five most-starred repos in a single centered column, with a pronounced hover lift.
+
+<CodePenExample
+  title="Portfolio spotlight"
+  js={`createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repo-container',
+  sortBy: 'stars',
+  maxRepos: 5,
+  scaleOnHover: 1.08,
+  columns: { mobile: 1, tablet: 1, desktop: 1 },
+  cardStyles: {
+    backgroundColor: '#f6f8fa',
+    borderRadius: '12px',
+    boxShadow: '0 10px 24px rgba(0,0,0,0.06)',
+    border: '1px solid #d0d7de',
+    padding: '1.5rem',
+  },
+});`}
+>
+  ```js
+  createRepoWidget({
+    username: 'peterbenoit',
+    containerId: 'repo-container',
+    sortBy: 'stars',
+    maxRepos: 5,
+    scaleOnHover: 1.08,
+    columns: { mobile: 1, tablet: 1, desktop: 1 },
+    cardStyles: {
+      backgroundColor: '#f6f8fa',
+      borderRadius: '12px',
+      boxShadow: '0 10px 24px rgba(0,0,0,0.06)',
+      border: '1px solid #d0d7de',
+      padding: '1.5rem',
+    },
+  });
+  ```
+</CodePenExample>
+
+---
+
+## Organization page
+
+Display repositories from a GitHub organization instead of a personal account.
+
+<CodePenExample
+  title="Organization page"
+  js={`createRepoWidget({
+  username: 'microsoft',
+  containerId: 'repo-container',
+  sortBy: 'stars',
+  maxRepos: 9,
+  columns: { mobile: 1, tablet: 2, desktop: 3 },
+});`}
+>
+  ```js
+  createRepoWidget({
+    username: 'microsoft',
+    containerId: 'repo-container',
+    sortBy: 'stars',
+    maxRepos: 9,
+    columns: { mobile: 1, tablet: 2, desktop: 3 },
+  });
+  ```
+</CodePenExample>
+
+---
+
+## ES module import
+
+If you're using a bundler (Webpack, Vite, Rollup), import the named export instead of using the global script.
+
+<Tabs>
+  <TabItem label="JavaScript">
+    ```js
+    import { createRepoWidget } from 'repo-widget';
+
+    createRepoWidget({
+      username: 'peterbenoit',
+      containerId: 'repo-container',
+    });
+    ```
+  </TabItem>
+  <TabItem label="TypeScript">
+    ```ts
+    import { createRepoWidget } from 'repo-widget';
+
+    createRepoWidget({
+      username: 'peterbenoit',
+      containerId: 'repo-container',
+      sortBy: 'stars',
+      maxRepos: 6,
+    });
+    ```
+  </TabItem>
+</Tabs>
+
+<Aside type="tip">
+  Want to experiment interactively? Try the [Live Demo](/examples/demo/) to generate a config with a visual editor.
+</Aside>

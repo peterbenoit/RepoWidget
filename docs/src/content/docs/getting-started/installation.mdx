@@ -1,0 +1,75 @@
+---
+title: Installation
+description: Add RepoWidget to your project via CDN, npm, or ES module import.
+---
+
+import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+There are three ways to install RepoWidget. Choose the one that fits your workflow.
+
+## CDN (recommended for most sites)
+
+The fastest way to get started. Add this script tag before your closing `</body>` tag:
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/peterbenoit/RepoWidget@latest/dist/repoWidget.min.js"></script>
+```
+
+The CDN build is always in sync with the latest release and requires no local tooling.
+
+## npm
+
+Install via npm (or your preferred package manager) if you're using a bundler:
+
+<Tabs>
+  <TabItem label="npm">
+    ```bash
+    npm install repo-widget
+    ```
+  </TabItem>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add repo-widget
+    ```
+  </TabItem>
+  <TabItem label="yarn">
+    ```bash
+    yarn add repo-widget
+    ```
+  </TabItem>
+</Tabs>
+
+Then import in your JavaScript or TypeScript file:
+
+```js
+import { createRepoWidget } from 'repo-widget';
+```
+
+## ES module via CDN
+
+If you prefer modules without a local install:
+
+```html
+<script type="module">
+  import { createRepoWidget } from 'https://cdn.jsdelivr.net/npm/repo-widget/dist/repoWidget.esm.js';
+
+  createRepoWidget({
+    username: 'your-username',
+    containerId: 'repo-container',
+  });
+</script>
+```
+
+<Aside type="tip">
+  The CDN script tag approach (non-module) exposes `createRepoWidget` as a global function, so you can call it from any inline script without an import statement.
+</Aside>
+
+## Verifying the install
+
+After adding the script, open your browser's developer console and type:
+
+```js
+typeof createRepoWidget
+```
+
+If it returns `"function"`, the widget loaded correctly.

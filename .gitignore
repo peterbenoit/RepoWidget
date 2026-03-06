@@ -1,5 +1,8 @@
 node_modules/
 package-lock.json
 .vercel
-dist
 .DS_Store
+docs/node_modules/
+docs/dist/
+docs/.astro/
+update-documentation.md

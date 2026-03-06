@@ -1,0 +1,80 @@
+---
+interface Props {
+  title: string;
+  js: string;
+  html?: string;
+}
+
+const {
+  title,
+  js,
+  html = '<div id="repo-container"></div>',
+} = Astro.props;
+
+// dist/repoWidget.min.js is committed to the repo, so jsDelivr can serve it directly.
+// @main always tracks the latest build on the main branch.
+const SCRIPT_URL = 'https://cdn.jsdelivr.net/gh/peterbenoit/RepoWidget@main/dist/repoWidget.min.js';
+
+// Inject the script tag into the HTML panel so CodePen loads it before the JS panel runs.
+const htmlWithScript = `<script src="${SCRIPT_URL}"><\/script>\n${html}`;
+
+const penData = JSON.stringify({ title, html: htmlWithScript, js });
+---
+
+<div class="cp-example">
+  <div class="cp-example__header">
+    <span class="cp-example__title">{title}</span>
+    <form action="https://codepen.io/pen/define" method="POST" target="_blank">
+      <input type="hidden" name="data" value={penData} />
+      <button type="submit" class="cp-btn">Open in CodePen</button>
+    </form>
+  </div>
+  <slot />
+</div>
+
+<style>
+  .cp-example {
+    border: 1px solid var(--sl-color-gray-4);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin: 1.5rem 0;
+  }
+
+  .cp-example__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background: var(--sl-color-bg-sidebar);
+    border-bottom: 1px solid var(--sl-color-gray-4);
+  }
+
+  .cp-example__title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--sl-color-text);
+  }
+
+  .cp-btn {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--sl-color-gray-4);
+    border-radius: 0.25rem;
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-text);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .cp-btn:hover {
+    background: var(--sl-color-gray-7);
+  }
+
+  /* Remove top margin/radius from the code block sitting directly inside */
+  .cp-example :global(pre) {
+    margin-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+</style>

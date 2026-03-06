@@ -7,8 +7,9 @@
     "types": "dist/types/index.d.ts",
     "scripts": {
         "build": "node build.js",
-        "build:docs": "cp src/lib/repoWidget.js docs/assets/js/",
-        "dev": "http-server docs -p 3000 -c-1",
+        "build:docs": "cp dist/repoWidget.min.js docs/public/ && cd docs && npm run build",
+        "dev:docs": "cd docs && npm run dev",
+        "dev": "http-server . -p 3000 -c-1",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {

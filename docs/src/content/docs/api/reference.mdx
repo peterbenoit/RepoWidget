@@ -1,0 +1,209 @@
+---
+title: Full API Reference
+description: Detailed API documentation for the createRepoWidget function including signature, parameters, and return value.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## `createRepoWidget(options)`
+
+Creates and renders a GitHub repository widget inside a specified DOM element.
+
+### Signature
+
+```ts
+createRepoWidget(options: RepoWidgetOptions): void
+```
+
+### Return value
+
+`void` — the widget renders directly into the DOM. There is no return value to handle.
+
+---
+
+## `RepoWidgetOptions`
+
+```ts
+interface RepoWidgetOptions {
+  // Required
+  username:    string;
+  containerId: string;
+
+  // Content
+  maxRepos?:   number;
+  sortBy?:     'stars' | 'forks' | 'size' | 'name' | 'updated';
+  exclude?:    string[];
+
+  // Layout
+  columns?: {
+    mobile?:  number;
+    tablet?:  number;
+    desktop?: number;
+  };
+
+  // Appearance
+  scaleOnHover?: number;
+  cardStyles?:   Record<string, string>;
+  textStyles?: {
+    titleColor?:       string;
+    descriptionColor?: string;
+    iconColor?:        string;
+    sizeColor?:        string;
+  };
+}
+```
+
+---
+
+## Parameter details
+
+### `username` <small>required</small>
+
+**Type:** `string`
+
+GitHub username or organization name. The widget calls `https://api.github.com/users/{username}/repos` to retrieve public repositories.
+
+```js
+createRepoWidget({ username: 'peterbenoit', containerId: 'repos' });
+```
+
+---
+
+### `containerId` <small>required</small>
+
+**Type:** `string`
+
+The `id` of the element that will receive the rendered widget. The element must exist in the DOM at call time.
+
+```html
+<div id="repos"></div>
+<script>
+  createRepoWidget({ username: 'peterbenoit', containerId: 'repos' });
+</script>
+```
+
+<Aside type="caution">
+  If no element with this `id` exists, the widget silently does nothing. Make sure the element is present before calling `createRepoWidget`.
+</Aside>
+
+---
+
+### `maxRepos` <small>optional</small>
+
+**Type:** `number`
+
+Limits how many repositories are displayed after sorting. If omitted, defaults to the product of the current breakpoint's column count (e.g. `desktop * 2`).
+
+```js
+// Show only the top 6 most-starred repos
+createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repos',
+  maxRepos: 6,
+  sortBy: 'stars',
+});
+```
+
+---
+
+### `sortBy` <small>optional</small>
+
+**Type:** `'stars' | 'forks' | 'size' | 'name' | 'updated'` — **Default:** `'stars'`
+
+Determines the sort order. All numeric sorts are descending; `'name'` is ascending alphabetical.
+
+```js
+createRepoWidget({ username: 'peterbenoit', containerId: 'repos', sortBy: 'updated' });
+```
+
+---
+
+### `exclude` <small>optional</small>
+
+**Type:** `string[]` — **Default:** `[]`
+
+Repository names (exact, case-sensitive) to exclude from the list before sorting.
+
+```js
+createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repos',
+  exclude: ['dotfiles', 'archived-project'],
+});
+```
+
+---
+
+### `columns` <small>optional</small>
+
+**Type:** `{ mobile?: number; tablet?: number; desktop?: number }` — **Default:** `{ mobile: 1, tablet: 2, desktop: 3 }`
+
+Sets the CSS Grid column count at each responsive breakpoint.
+
+| Property | Breakpoint |
+|----------|-----------|
+| `mobile` | `< 640px` |
+| `tablet` | `640px – 1024px` |
+| `desktop` | `> 1024px` |
+
+```js
+createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repos',
+  columns: { mobile: 1, tablet: 2, desktop: 4 },
+});
+```
+
+---
+
+### `scaleOnHover` <small>optional</small>
+
+**Type:** `number` — **Default:** `1.05`
+
+A CSS `transform: scale()` value applied to cards on hover. Values around `1.03`–`1.08` are visually subtle. Set to `1` or `0` to disable the effect entirely.
+
+```js
+scaleOnHover: 1.08  // slightly more animated
+scaleOnHover: 0     // no hover effect
+```
+
+---
+
+### `cardStyles` <small>optional</small>
+
+**Type:** `Record<string, string>` — **Default:** `{}`
+
+An object of CSS properties (in camelCase) applied to each repository card. You can use any valid CSS property.
+
+```js
+cardStyles: {
+  backgroundColor: '#ffffff',
+  borderRadius: '8px',
+  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+  border: '1px solid #e1e4e8',
+}
+```
+
+---
+
+### `textStyles` <small>optional</small>
+
+**Type:** `object` — **Default:** `{}`
+
+Color overrides for specific text elements within each card.
+
+| Property | Target |
+|----------|--------|
+| `titleColor` | Repo name |
+| `descriptionColor` | Repo description |
+| `iconColor` | Star/fork icon colour |
+| `sizeColor` | Repo size text |
+
+```js
+textStyles: {
+  titleColor: '#24292e',
+  descriptionColor: '#586069',
+  iconColor: '#6a737d',
+  sizeColor: '#959da5',
+}
+```

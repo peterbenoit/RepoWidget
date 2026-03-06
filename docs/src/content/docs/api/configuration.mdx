@@ -1,0 +1,177 @@
+---
+title: Configuration Options
+description: Complete reference for all createRepoWidget configuration options, types, defaults, and descriptions.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+All options are passed as a single object to `createRepoWidget()`.
+
+```js
+createRepoWidget({ /* options here */ });
+```
+
+## Options reference
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `username` | `string` | **Required** | GitHub username or organization name to fetch repositories from |
+| `containerId` | `string` | **Required** | `id` of the DOM element where the widget will render |
+| `maxRepos` | `number` | Computed from `columns` | Maximum number of repositories to display |
+| `sortBy` | `string` | `"stars"` | Sort criteria — see [sortBy values](#sortby-values) |
+| `exclude` | `string[]` | `[]` | Repository names to hide from the output |
+| `columns` | `object` | `{ mobile: 1, tablet: 2, desktop: 3 }` | Column counts per breakpoint — see [columns object](#columns-object) |
+| `scaleOnHover` | `number` | `1.05` | CSS `scale` on hover. Set to `1` or `0` to disable |
+| `cardStyles` | `object` | `{}` | CSS property/value pairs applied to each card element |
+| `textStyles` | `object` | `{}` | Color overrides for text elements — see [textStyles properties](#textstyles-properties) |
+
+## Required options
+
+### `username`
+
+**Type:** `string`
+
+The GitHub username or organization whose public repositories will be displayed.
+
+```js
+createRepoWidget({ username: 'peterbenoit', containerId: 'repos' });
+// or an org:
+createRepoWidget({ username: 'microsoft', containerId: 'repos' });
+```
+
+### `containerId`
+
+**Type:** `string`
+
+The `id` attribute of the HTML element that will receive the widget output.
+
+```html
+<div id="my-repos"></div>
+
+<script>
+  createRepoWidget({ username: 'peterbenoit', containerId: 'my-repos' });
+</script>
+```
+
+## Sorting
+
+### `sortBy` values
+
+**Type:** `string` — **Default:** `"stars"`
+
+| Value | Sorts by |
+|-------|----------|
+| `"stars"` | Star count, descending |
+| `"forks"` | Fork count, descending |
+| `"size"` | Repository size, descending |
+| `"name"` | Alphabetical, ascending |
+| `"updated"` | Last-pushed date, most recent first |
+
+```js
+createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repos',
+  sortBy: 'updated',
+});
+```
+
+## Filtering
+
+### `exclude`
+
+**Type:** `string[]` — **Default:** `[]`
+
+An array of repository names to omit from the output. Names are matched exactly (case-sensitive).
+
+```js
+createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repos',
+  exclude: ['my-dotfiles', 'old-project', 'fork-i-never-touched'],
+});
+```
+
+### `maxRepos`
+
+**Type:** `number`
+
+Caps the number of repositories displayed. Applied after sorting, so combined with `sortBy: "stars"` it surfaces your top N most-starred repos.
+
+```js
+createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repos',
+  maxRepos: 6,
+  sortBy: 'stars',
+});
+```
+
+## Layout
+
+### `columns` object
+
+Controls how many cards appear per row at each viewport width.
+
+| Property | Breakpoint | Default |
+|----------|-----------|---------|
+| `mobile` | `< 640px` | `1` |
+| `tablet` | `640px – 1024px` | `2` |
+| `desktop` | `> 1024px` | `3` |
+
+```js
+createRepoWidget({
+  username: 'peterbenoit',
+  containerId: 'repos',
+  columns: { mobile: 1, tablet: 3, desktop: 4 },
+});
+```
+
+## Styling
+
+### `scaleOnHover`
+
+**Type:** `number` — **Default:** `1.05`
+
+The CSS transform scale applied when a card is hovered. Values between `1.02` and `1.1` look natural. Set to `1` or `0` to disable.
+
+```js
+scaleOnHover: 1.08   // more pronounced
+scaleOnHover: 0      // disabled
+```
+
+### `cardStyles`
+
+**Type:** `object`
+
+Any valid CSS property in camelCase format. Applied directly to each card's inline style.
+
+```js
+cardStyles: {
+  backgroundColor: '#f6f8fa',
+  borderRadius: '12px',
+  boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+  border: '1px solid #e1e4e8',
+}
+```
+
+### `textStyles` properties
+
+| Property | Applies to |
+|----------|-----------|
+| `titleColor` | Repository name |
+| `descriptionColor` | Repository description |
+| `iconColor` | Stars and forks icons |
+| `sizeColor` | Repository size label |
+
+```js
+textStyles: {
+  titleColor: '#24292e',
+  descriptionColor: '#586069',
+  iconColor: '#6a737d',
+  sizeColor: '#959da5',
+}
+```
+
+<Aside type="tip">
+  For dark-themed sites, flip the values: use light colours for titles and muted greys for descriptions to match your palette.
+</Aside>

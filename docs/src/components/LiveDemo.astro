@@ -1,0 +1,246 @@
+---
+// Interactive live demo component — no props needed
+---
+
+<div class="demo-wrapper">
+  <div class="demo-controls">
+    <div class="control-row">
+      <div class="control-item">
+        <label for="demo-username">GitHub Username</label>
+        <input type="text" id="demo-username" value="peterbenoit" />
+      </div>
+      <div class="control-item">
+        <label for="demo-maxRepos">Max Repos</label>
+        <input type="number" id="demo-maxRepos" value="6" min="1" max="30" />
+      </div>
+      <div class="control-item">
+        <label for="demo-sortBy">Sort By</label>
+        <select id="demo-sortBy">
+          <option value="stars">Stars</option>
+          <option value="forks">Forks</option>
+          <option value="size">Size</option>
+          <option value="name">Name</option>
+          <option value="updated">Last Updated</option>
+        </select>
+      </div>
+      <div class="control-item">
+        <label for="demo-exclude">Exclude Repos (comma-separated)</label>
+        <input type="text" id="demo-exclude" placeholder="repo-one, repo-two" />
+      </div>
+    </div>
+
+    <div class="control-group">
+      <span class="control-group-label">Column Layout</span>
+      <div class="control-row">
+        <div class="control-item">
+          <label for="demo-mobile">Mobile</label>
+          <input type="number" id="demo-mobile" value="1" min="1" max="4" />
+        </div>
+        <div class="control-item">
+          <label for="demo-tablet">Tablet</label>
+          <input type="number" id="demo-tablet" value="2" min="1" max="4" />
+        </div>
+        <div class="control-item">
+          <label for="demo-desktop">Desktop</label>
+          <input type="number" id="demo-desktop" value="3" min="1" max="6" />
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <span class="control-group-label">Card Colors</span>
+      <div class="control-row">
+        <div class="control-item">
+          <label for="demo-bg">Background</label>
+          <input type="color" id="demo-bg" value="#ffffff" />
+        </div>
+        <div class="control-item">
+          <label for="demo-title">Title</label>
+          <input type="color" id="demo-title" value="#333333" />
+        </div>
+        <div class="control-item">
+          <label for="demo-desc">Description</label>
+          <input type="color" id="demo-desc" value="#666666" />
+        </div>
+        <div class="control-item">
+          <label for="demo-icon">Icons</label>
+          <input type="color" id="demo-icon" value="#888888" />
+        </div>
+      </div>
+    </div>
+
+    <button id="demo-apply" class="demo-btn">Apply Settings</button>
+  </div>
+
+  <div id="demo-container"></div>
+
+  <div class="demo-output">
+    <p class="demo-output-label">Generated configuration:</p>
+    <pre id="demo-code"><code></code></pre>
+    <button id="demo-copy" class="demo-btn demo-btn--outline">Copy</button>
+  </div>
+</div>
+
+<script is:inline src="/repoWidget.min.js"></script>
+
+<script>
+  function getConfig() {
+    const exclude = document.getElementById('demo-exclude').value
+      .split(',').map(s => s.trim()).filter(Boolean);
+    return {
+      username:    document.getElementById('demo-username').value.trim() || 'peterbenoit',
+      containerId: 'demo-container',
+      maxRepos:    parseInt(document.getElementById('demo-maxRepos').value, 10),
+      sortBy:      document.getElementById('demo-sortBy').value,
+      exclude,
+      columns: {
+        mobile:  parseInt(document.getElementById('demo-mobile').value, 10),
+        tablet:  parseInt(document.getElementById('demo-tablet').value, 10),
+        desktop: parseInt(document.getElementById('demo-desktop').value, 10),
+      },
+      cardStyles:  { backgroundColor: document.getElementById('demo-bg').value },
+      textStyles: {
+        titleColor:       document.getElementById('demo-title').value,
+        descriptionColor: document.getElementById('demo-desc').value,
+        iconColor:        document.getElementById('demo-icon').value,
+      },
+    };
+  }
+
+  function updateCode(cfg) {
+    const displayCfg = { ...cfg };
+    delete displayCfg.containerId;
+    const lines = JSON.stringify(displayCfg, null, 2)
+      .replace(/"(\w+)":/g, '$1:');
+    const code = `createRepoWidget({\n  containerId: 'repo-container',\n${lines.slice(1, -1)}\n});`;
+    document.querySelector('#demo-code code').textContent = code;
+  }
+
+  function run() {
+    const cfg = getConfig();
+    document.getElementById('demo-container').innerHTML = '';
+    createRepoWidget(cfg);
+    updateCode(cfg);
+  }
+
+  document.getElementById('demo-apply').addEventListener('click', run);
+
+  document.getElementById('demo-copy').addEventListener('click', () => {
+    const text = document.querySelector('#demo-code code').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('demo-copy');
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+    });
+  });
+
+  // Run on load
+  run();
+</script>
+
+<style>
+  .demo-wrapper {
+    margin: 2rem 0;
+  }
+
+  .demo-controls {
+    background: var(--sl-color-bg-sidebar);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .control-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .control-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .control-item label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--sl-color-text);
+  }
+
+  .control-item input,
+  .control-item select {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--sl-color-gray-4);
+    border-radius: 0.25rem;
+    background: var(--sl-color-bg);
+    color: var(--sl-color-text);
+    font-size: 0.9rem;
+  }
+
+  .control-item input[type="color"] {
+    padding: 0.2rem;
+    height: 2rem;
+    cursor: pointer;
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .control-group-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--sl-color-text);
+  }
+
+  .demo-btn {
+    align-self: flex-start;
+    padding: 0.5rem 1.25rem;
+    background: var(--sl-color-text-accent);
+    color: var(--sl-color-bg);
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .demo-btn:hover {
+    opacity: 0.85;
+  }
+
+  .demo-btn--outline {
+    background: transparent;
+    border: 1px solid var(--sl-color-text-accent);
+    color: var(--sl-color-text-accent);
+    margin-top: 0.75rem;
+  }
+
+  .demo-output {
+    margin-top: 1.5rem;
+  }
+
+  .demo-output-label {
+    font-size: 0.9rem;
+    color: var(--sl-color-text);
+    margin-bottom: 0.5rem;
+  }
+
+  #demo-code {
+    background: var(--sl-color-bg-sidebar);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.25rem;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.85rem;
+  }
+</style>
