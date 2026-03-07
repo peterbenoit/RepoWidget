@@ -8,13 +8,13 @@ export default defineConfig({
 		starlight({
 			title: 'RepoWidget',
 			description: 'A lightweight, customizable JavaScript widget to showcase GitHub repositories on any website.',
-			favicon: '/favicon.svg',
 			social: [
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/peterbenoit/RepoWidget' },
 				{ icon: 'npm', label: 'npm', href: 'https://www.npmjs.com/package/repo-widget' },
 			],
 			head: [
-				{ tag: 'link', attrs: { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' } },
+				{ tag: 'link', attrs: { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' } },
+				{ tag: 'link', attrs: { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' } },
 				{ tag: 'link', attrs: { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' } },
 				{ tag: 'link', attrs: { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' } },
 				{ tag: 'meta', attrs: { name: 'author', content: 'Peter Benoit' } },
