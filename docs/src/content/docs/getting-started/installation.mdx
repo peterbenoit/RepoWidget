@@ -12,10 +12,14 @@ There are three ways to install RepoWidget. Choose the one that fits your workfl
 The fastest way to get started. Add this script tag before your closing `</body>` tag:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/peterbenoit/RepoWidget@latest/dist/repoWidget.min.js"></script>
+<!-- jsDelivr CDN (recommended) -->
+<script src="https://cdn.jsdelivr.net/npm/repowidget/dist/repoWidget.min.js"></script>
+
+<!-- or unpkg CDN -->
+<!-- <script src="https://unpkg.com/repowidget/dist/repoWidget.min.js"></script> -->
 ```
 
-The CDN build is always in sync with the latest release and requires no local tooling.
+The CDN build is always in sync with the latest npm release and requires no local tooling.
 
 ## npm
 
@@ -24,17 +28,17 @@ Install via npm (or your preferred package manager) if you're using a bundler:
 <Tabs>
   <TabItem label="npm">
     ```bash
-    npm install repo-widget
+    npm install repowidget
     ```
   </TabItem>
   <TabItem label="pnpm">
     ```bash
-    pnpm add repo-widget
+    pnpm add repowidget
     ```
   </TabItem>
   <TabItem label="yarn">
     ```bash
-    yarn add repo-widget
+    yarn add repowidget
     ```
   </TabItem>
 </Tabs>
@@ -42,7 +46,7 @@ Install via npm (or your preferred package manager) if you're using a bundler:
 Then import in your JavaScript or TypeScript file:
 
 ```js
-import { createRepoWidget } from 'repo-widget';
+import { createRepoWidget } from 'repowidget';
 ```
 
 ## ES module via CDN
@@ -51,7 +55,7 @@ If you prefer modules without a local install:
 
 ```html
 <script type="module">
-  import { createRepoWidget } from 'https://cdn.jsdelivr.net/npm/repo-widget/dist/repoWidget.esm.js';
+  import { createRepoWidget } from 'https://cdn.jsdelivr.net/npm/repowidget/dist/repoWidget.esm.js';
 
   createRepoWidget({
     username: 'your-username',

@@ -1,37 +1,42 @@
 {
-    "name": "repo-widget",
-    "version": "1.1.0",
-    "description": "A professional GitHub repository display widget for showcasing repositories on any website",
-    "main": "dist/repoWidget.js",
-    "module": "dist/repoWidget.esm.js",
-    "types": "dist/types/index.d.ts",
-    "scripts": {
-        "build": "node build.js",
-        "build:docs": "cp dist/repoWidget.min.js docs/public/ && cd docs && npm run build",
-        "dev:docs": "cd docs && npm run dev",
-        "dev": "http-server . -p 3000 -c-1",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/peterbenoit/RepoWidget.git"
-    },
-    "keywords": [
-        "github",
-        "repositories",
-        "widget",
-        "portfolio",
-        "showcase"
-    ],
-    "author": "Peter Benoit",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/peterbenoit/RepoWidget/issues"
-    },
-    "homepage": "https://github.com/peterbenoit/RepoWidget#readme",
-    "devDependencies": {
-        "fs-extra": "^11.1.0",
-        "http-server": "^14.1.1",
-        "terser": "^5.17.1"
-    }
+	"name": "repowidget",
+	"version": "1.1.0",
+	"description": "A professional GitHub repository display widget for showcasing repositories on any website",
+	"main": "dist/repoWidget.js",
+	"module": "dist/repoWidget.esm.js",
+	"types": "dist/types/index.d.ts",
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	],
+	"scripts": {
+		"build": "node build.js",
+		"build:docs": "cp dist/repoWidget.min.js docs/public/ && cd docs && npm run build",
+		"dev:docs": "cd docs && npm run dev",
+		"dev": "http-server . -p 3000 -c-1",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/peterbenoit/RepoWidget.git"
+	},
+	"keywords": [
+		"github",
+		"repositories",
+		"widget",
+		"portfolio",
+		"showcase"
+	],
+	"author": "Peter Benoit",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/peterbenoit/RepoWidget/issues"
+	},
+	"homepage": "https://github.com/peterbenoit/RepoWidget#readme",
+	"devDependencies": {
+		"fs-extra": "^11.1.0",
+		"http-server": "^14.1.1",
+		"terser": "^5.17.1"
+	}
 }

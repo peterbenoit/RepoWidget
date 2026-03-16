@@ -30,12 +30,16 @@ Visit our [demo page](https://repowidget.vercel.app/) to see RepoWidget in actio
 
 ## Quick Start
 
-### Option 1: Direct Script Include
+### Option 1: Direct Script Include (CDN)
 
 ```html
 <div id="my-github-repos"></div>
 
-<script src="https://repowidget.vercel.app/assets/js/repoWidget.min.js"></script>
+<!-- jsDelivr CDN (recommended) -->
+<script src="https://cdn.jsdelivr.net/npm/repowidget/dist/repoWidget.min.js"></script>
+<!-- or unpkg CDN -->
+<!-- <script src="https://unpkg.com/repowidget/dist/repoWidget.min.js"></script> -->
+
 <script>
     createRepoWidget({
         username: 'your-github-username',
@@ -48,11 +52,11 @@ Visit our [demo page](https://repowidget.vercel.app/) to see RepoWidget in actio
 ### Option 2: NPM Installation
 
 ```bash
-npm install repo-widget
+npm install repowidget
 ```
 
 ```javascript
-import { createRepoWidget } from 'repo-widget';
+import { createRepoWidget } from 'repowidget';
 
 createRepoWidget({
     username: 'your-github-username',
