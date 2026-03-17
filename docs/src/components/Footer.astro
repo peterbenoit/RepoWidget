@@ -1,0 +1,86 @@
+---
+import EditLink from 'virtual:starlight/components/EditLink';
+import LastUpdated from 'virtual:starlight/components/LastUpdated';
+import Pagination from 'virtual:starlight/components/Pagination';
+import config from 'virtual:starlight/user-config';
+import { Icon } from '@astrojs/starlight/components';
+---
+
+<footer class="sl-flex">
+	<div class="meta sl-flex">
+		<EditLink />
+		<LastUpdated />
+	</div>
+	<Pagination />
+
+	<div class="custom-footer">
+		<p>
+			Built by <a href="https://peterbenoit.com" target="_blank" rel="noopener noreferrer">Peter Benoit</a>. &copy; {new Date().getFullYear()}.
+			<a href="https://www.repowidget.com" target="_blank" rel="noopener noreferrer">repowidget.com</a>
+		</p>
+	</div>
+
+	{
+		config.credits && (
+			<a class="kudos sl-flex" href="https://starlight.astro.build">
+				<Icon name={'starlight'} /> {Astro.locals.t('builtWithStarlight.label')}
+			</a>
+		)
+	}
+</footer>
+
+<style>
+	@layer starlight.core {
+		footer {
+			flex-direction: column;
+			gap: 1.5rem;
+		}
+		.meta {
+			gap: 0.75rem 3rem;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			margin-top: 3rem;
+			font-size: var(--sl-text-sm);
+			color: var(--sl-color-gray-3);
+		}
+		.meta > :global(p:only-child) {
+			margin-inline-start: auto;
+		}
+
+		.custom-footer {
+			text-align: center;
+			margin-top: 2rem;
+			padding-top: 2rem;
+			border-top: 1px solid var(--sl-color-gray-5);
+			font-size: var(--sl-text-sm);
+			color: var(--sl-color-gray-3);
+		}
+
+		.custom-footer p {
+			margin: 0;
+		}
+
+		.custom-footer a {
+			color: var(--sl-color-text-accent);
+			text-decoration: none;
+			font-weight: 500;
+			transition: color 0.2s;
+		}
+
+		.custom-footer a:hover {
+			color: var(--sl-color-white);
+		}
+
+		.kudos {
+			align-items: center;
+			gap: 0.5em;
+			margin: 1.5rem auto;
+			font-size: var(--sl-text-xs);
+			text-decoration: none;
+			color: var(--sl-color-gray-3);
+		}
+		.kudos:hover {
+			color: var(--sl-color-white);
+		}
+	}
+</style>

@@ -8,6 +8,9 @@ export default defineConfig({
 		starlight({
 			title: 'RepoWidget',
 			description: 'A lightweight, customizable JavaScript widget to showcase GitHub repositories on any website.',
+			components: {
+				Footer: './src/components/Footer.astro',
+			},
 			social: [
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/peterbenoit/RepoWidget' },
 				{ icon: 'npm', label: 'npm', href: 'https://www.npmjs.com/package/repo-widget' },
