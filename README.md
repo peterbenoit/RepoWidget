@@ -10,23 +10,23 @@ A professional GitHub repository display widget for showcasing repositories on a
 
 ## Features
 
--   🔍 Display repositories from any GitHub user or organization
--   🎨 Fully customizable styling and appearance
--   📱 Responsive design with configurable column layouts
--   ⚡ Zero dependencies, lightweight and fast
--   🔄 Sort repositories by stars, forks, or last update date
--   🧩 Simple integration with any website
--   🌐 Works with vanilla JavaScript or any framework
+-   Display repositories from any GitHub user or organization
+-   Fully customizable styling and appearance
+-   Responsive design with configurable column layouts
+-   Zero dependencies, lightweight and fast
+-   Sort repositories by stars, forks, or last update date
+-   Simple integration with any website
+-   Works with vanilla JavaScript or any framework
 
 ## Demo & Examples
 
-Visit our [demo page](https://repowidget.vercel.app/) to see RepoWidget in action.
+Visit [repowidget.com](https://repowidget.com/) to see RepoWidget in action.
 
 ### Example Use Cases
 
--   [Company Open Source Page](https://repowidget.vercel.app/examples/company.html) - Showcase your company's open source projects
--   [Documentation Hub](https://repowidget.vercel.app/examples/documentation-hub.html) - Display relevant repositories in documentation
--   [Developer Portfolio](https://repowidget.vercel.app/examples/portfolio.html) - Highlight your personal projects
+-   [Code Examples](https://www.repowidget.com/examples/code-examples/) - Examples of how you can use RepoWidget
+-   [Live Demo](https://www.repowidget.com/examples/demo/) - Test out your configuration here
+
 
 ## Quick Start
 
