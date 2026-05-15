@@ -1,6 +1,6 @@
 {
 	"name": "repowidget",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"description": "A professional GitHub repository display widget for showcasing repositories on any website",
 	"main": "dist/repoWidget.js",
 	"module": "dist/repoWidget.esm.js",
@@ -33,7 +33,7 @@
 	"bugs": {
 		"url": "https://github.com/peterbenoit/RepoWidget/issues"
 	},
-	"homepage": "https://github.com/peterbenoit/RepoWidget#readme",
+	"homepage": "https://peterbenoit.com/repowidget/",
 	"devDependencies": {
 		"fs-extra": "^11.1.0",
 		"http-server": "^14.1.1",
